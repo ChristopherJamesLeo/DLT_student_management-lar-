@@ -67,6 +67,7 @@ class AttendancesController extends Controller
     {
         $attendance = Attendance::findOrFail($id);
         $statuses = Status::whereIn("id",[3,4])->get();
+        
         return view("attendances.edit")->with("attendance",$attendance)->with("statuses",$statuses);
     }
 
