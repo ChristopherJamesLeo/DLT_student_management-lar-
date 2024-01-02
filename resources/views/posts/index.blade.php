@@ -1,5 +1,7 @@
 @extends("layouts.adminindex")
-
+@section("css")
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+@endsection
 @section("caption","Post List")
 @section("content")
 
@@ -12,7 +14,7 @@
             <hr>
         </div>
 
-        <table class="table table-hover border">
+        <table class="table table-hover border" id="mytable">
             <thead>
                 <tr>
                     <th>No</th>
@@ -51,8 +53,8 @@
                     <td>{{$post->starttime}}</td>
                     <td>{{$post->endtime}}</td>
                     <td>{{$post->fee}}</td>
-                    <td>{{--$post->type->name}}</td>
-                    <td>{{--$post->tag->name}}</td>
+                    <td>{{$post->type->name}}</td>
+                    <td>{{$post->tag->name}}</td>
                     <td>{{$post->attstatus->name}}</td>
                     <td>{{$post->status->name}}</td>
                     <td>{{$post->user["name"]}}</td>
@@ -90,7 +92,7 @@
 @endsection
 
 @section("scripts")
-
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
             $(".delete-btns").click(function(){
@@ -105,6 +107,13 @@
 
                 }
             })
+
+            // for my table
+            // let table = new DataTable('#mytable');
+            $("#mytable").DataTable();
+
         })
     </script>
 @endsection
+
+{{-- index page အားလုံ data table နှင့်ချိတ်ခဲ့ရန်  --}}

@@ -1,5 +1,7 @@
 @extends("layouts.adminindex")
-
+@section("css")
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+@endsection
 @section("caption","Type List")
 @section("content")
 
@@ -44,7 +46,7 @@
 
         <hr>
     
-        <table class="table table-hover border">
+        <table id="mytable" class="table table-hover border">
             <thead>
                 <tr>
                     <th>No</th>
@@ -146,7 +148,8 @@
 @endsection
 
 @section("scripts")
-
+{{-- datatable css1 js1 --}}
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
             $(".delete-btns").click(function(){
@@ -181,6 +184,8 @@
                 $("#form_action").attr('action',`/types/${getid}`);
                 
             })
+
+            $("#mytable").DataTable();
         })
     </script>
 @endsection

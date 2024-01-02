@@ -102,7 +102,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{$post -> content}}</td>
+                                {{-- <!-- html code များ အား ဖတ်စေချင်လျှင်အသုံးပြုသည် {!! !!} သည် မည်သည့် editor မှမဆို အသုံးပြုနိုင်သငည်   --> --}}
+                                <td>{!! $post->content !!}</td>
                             </tr>
                         </tbody>
                         

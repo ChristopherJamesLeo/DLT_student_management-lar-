@@ -1,5 +1,6 @@
 @extends("layouts.adminindex")
 @section("css")
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
         .gallery {
             width: 100%;
@@ -157,6 +158,7 @@
 
 
 @section("scripts")
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
         $(document).ready(function(){
 
@@ -192,6 +194,22 @@
             $("#image").change(function(){
                 previewimages(this,".gallery")
             })
+
+            // start text editor
+      $('#content').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+
         })
 
     </script>

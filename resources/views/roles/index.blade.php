@@ -1,5 +1,7 @@
 @extends("layouts.adminindex")
-
+@section("css")
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+@endsection
 @section("caption","Role List")
 @section("content")
 
@@ -13,7 +15,7 @@
         </div>
 
     
-        <table class="table table-hover border">
+        <table id="mytable"  class="table table-hover border">
             <thead>
                 <tr>
                     <th>No</th>
@@ -78,6 +80,8 @@
 @endsection
 
 @section("scripts")
+{{-- datatable css1 js1 --}}
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function(){
@@ -93,6 +97,7 @@
 
                 }
             })
+            $("#mytable").DataTable();
         })
     </script>
 @endsection
