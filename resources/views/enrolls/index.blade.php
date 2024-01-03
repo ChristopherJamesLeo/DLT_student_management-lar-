@@ -2,7 +2,7 @@
 @section("css")
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 @endsection
-@section("caption","Attendance List")
+@section("caption","Enrolls List")
 @section("content")
 
     <!-- start content area -->
@@ -52,11 +52,9 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Student Id</th>
                     <th>Class</th>
-                    <th>Att Code</th>
-                    <th>By</th>
-                    <th>Class Date</th>
+                    <th>Student Id</th>
+                    <th>Stage</th>
                     <th>Create At</th>
                     <th>Updated at</th>
                     <th>Action</th>
@@ -64,26 +62,25 @@
             </thead>
 
             <tbody>
-                @foreach($attendances as $idx=>$attendance) 
+                @foreach($enrolls as $idx=>$enroll) 
                 
                 <tr>
 
                     <td>{{++$idx}}</td>
-                    <td>{{$attendance ->student($attendance->user_id)}}</td>
-                    <td>{{$attendance->post->title}}</td>
-                    <td>{{$attendance->attcode}}</td>
-                    <td>{{$attendance["user"]["name"]}}</td>
-                    <td>{{$attendance->classdate}}</td>
+                    <td>{{$enroll ->post->title}}</td>
+                    {{-- <td>{{$enroll ->student($enroll->user_id)}}</td> --}}
+                    <td>{{$enroll ->student($enroll->user_id)}}</td>
+                    <td>{{$enroll->stage->name}}</td>
                      
-                    <td>{{$attendance->created_at->format('d m Y')}}</td>
-                    <td>{{$attendance->updated_at->format('d M Y')}}</td>
+                    <td>{{$enroll->created_at->format('d m Y')}}</td>
+                    <td>{{$enroll->updated_at->format('d M Y')}}</td>
                     <td>
                         <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form" 
                             data-bs-toggle="modal" 
                             data-bs-target="#editmodal" 
-                            data-id="{{$attendance->id}}" 
-                            data-name="{{$attendance->name}}" 
-                            data-status="{{$attendance->status_id}}">
+                            data-id="{{$enroll->id}}" 
+                            data-name="{{$enroll->name}}" 
+                            data-status="{{$enroll->status_id}}">
                             <i class="fas fa-pen"></i>
                         </a>
                     </td>
@@ -199,7 +196,7 @@
                 // $("#form_action").attr('action',`http://127.0.0.1:8000/statuses/${getid}`);
 
                 // method 2
-                $("#form_action").attr('action',`/attendances/${getid}`);
+                $("#form_action").attr('action',`/enrolls/${getid}`);
                 
             })
             // for my table

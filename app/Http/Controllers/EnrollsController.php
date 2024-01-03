@@ -8,14 +8,17 @@ use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class EnrollsController extends Controller
 {
     public function index()
     {
-        $enrolls = Enroll::all();
+        $enrolls = Enroll::orderby("updated_at","desc")->get();
 
-        return view("enrolls.index",compact("enrolls"));
+        $posts = DB::table("posts")->where("attshow",3)->orderby("title","asc")->get(); 
+
+        return view("enrolls.index",compact("enrolls","posts"));
     }
 
 

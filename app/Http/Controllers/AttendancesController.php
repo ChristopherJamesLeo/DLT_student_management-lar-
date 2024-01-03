@@ -15,7 +15,7 @@ class AttendancesController extends Controller
 {
     public function index()
     {
-        $attendances = Attendance::all();
+        $attendances = Attendance::orderby("updated_at","desc")->get();
         // $posts = Post::where("attshow",3)>get(); 
         $posts = DB::table("posts")->where("attshow",3)->orderby("title","asc")->get(); // -> db မှ ခေါ်လျှင် object type ဖြင့်သာခေါ်ပေးရမည် // use လုပ်ပေးရမည် 
         return view("attendances.index",compact("attendances","posts"));

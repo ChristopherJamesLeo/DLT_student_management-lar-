@@ -125,3 +125,14 @@ a{
     border-left-color:steelblue;
 }
 /* End Shortcut Area */
+
+/* start footer */
+.footers {
+    width: 83%;
+    background-color: #fff;
+    
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+/* end footer */

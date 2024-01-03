@@ -1,6 +1,9 @@
    <!--Start Footer Section-->
-   <footer class="mt-5">
-
+   <footer class="footers">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Ninth Programming</h2>
+            <span>copy right 2024</span>
+        </div>
    </footer>
     <!--End Footer Section-->
 
