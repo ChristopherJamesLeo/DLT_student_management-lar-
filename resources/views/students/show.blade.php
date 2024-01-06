@@ -7,6 +7,9 @@
     <div class="container-fluid">
         
         <div class="col-md-12 my-3">
+
+            <a href="javascript:void(0)" id="btn_back" class="btn btn-secondary btn-sm rounded-0">Back</a>
+
             <a href="{{route('students.index')}}" class="btn btn-secondary btn-sm rounded-0">Close</a>
 
             <hr>
@@ -84,6 +87,19 @@
 
                 }
             })
+
+            // start back btn
+            $("#btn_back").click(function(){
+                
+            })
+            
+            // end back btn
+
+        })
+        const getBtnBack = document.querySelector("#btn_back");
+        getBtnBack.addEventListener("click",function(){
+            // window.history.back();
+            window.history.go(-1); // window page history ကို ရြှေနောက် ကြိုက်သလို ပေးလို့ရသည် 
         })
     </script>
 @endsection

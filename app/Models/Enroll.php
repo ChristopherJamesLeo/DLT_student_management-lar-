@@ -30,7 +30,8 @@ class Enroll extends Model
         return $this -> belongsTo(Post::class); 
     } 
 
-    public function student($userid){
+    // public function student($userid){
+    public function student(){
 
         // method 2 
 
@@ -56,15 +57,39 @@ class Enroll extends Model
 
          // method 4
         // model မှ တိုက်ရိုက် userid ကို ယူလိုက်သည် 
-        $students = Student::where("user_id",$this -> user_id)->get()->pluck("regnumber");
+        // $students = Student::where("user_id",$this -> user_id)->get()->pluck("regnumber");
+        // foreach($students as $student){
+        //     // dd($student);
+
+        //     return $student;
+        // }
+
+        // method 5
+                        // secondary Table ,secondary table primary key,compary,primary table foreign key
+        $students = Student::join("users","users.id","=","students.user_id")->where("user_id","=",$this->user_id)->get();
+        // dd($students);
+
         foreach($students as $student){
             // dd($student);
 
-            return $student;
+            // return $student;
+            return $student["regnumber"];
+            // return $students;
         }
+
+        // method 6 
+
+
+        // method 7
+
+
+        // method 8
 
     }
 
+    public function studenturl(){
+        return Student::where("user_id",$this -> user_id)->get(["students.id"])->first();
+    }
 
 }
 
