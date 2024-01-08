@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Enroll extends Model
 {
     use HasFactory;
@@ -66,16 +66,16 @@ class Enroll extends Model
 
         // method 5
                         // secondary Table ,secondary table primary key,compary,primary table foreign key
-        $students = Student::join("users","users.id","=","students.user_id")->where("user_id","=",$this->user_id)->get();
-        // dd($students);
+        // $students = Student::join("users","users.id","=","students.user_id")->where("user_id","=",$this->user_id)->get();
+        // // dd($students);
 
-        foreach($students as $student){
-            // dd($student);
+        // foreach($students as $student){
+        //     // dd($student);
 
-            // return $student;
-            return $student["regnumber"];
-            // return $students;
-        }
+        //     // return $student;
+        //     return $student["regnumber"];
+        //     // return $students;
+        // }
 
         // method 6 
 
@@ -84,6 +84,28 @@ class Enroll extends Model
 
 
         // method 8
+
+
+        // method 10
+        // $students = DB::table("students")
+        //             ->join("users","users.id","=","students.user_id")
+        //             ->where("user_id",$this -> user_id)
+        //             ->get(["users.name","students.regnumber"])->pluck("regnumber")->first();
+
+        //             // dd($students);
+                    
+        //             return $students;
+
+        // method 11
+        $students = DB::table("students")
+        ->select("users.id","users.name","students.regnumber")
+        ->join("users","users.id","=","students.user_id")
+        ->where("user_id",$this -> user_id)
+        ->get()->pluck("regnumber")->first();
+
+        // dd($students);
+        
+        return $students;
 
     }
 
