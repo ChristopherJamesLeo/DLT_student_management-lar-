@@ -230,13 +230,23 @@
                 <div class="mb-4 card border-0 shadow rounded-0">
                     <div class="card-body d-flex flex-wrap gap-3">
 
+                        @foreach($enrolls as $enroll)
                         <div class="border shadow p-3 mb-3 enrollboxes">
-                            <a href="javascript:void(0)">WDF 10</a>
-                            <div class="text-muted">Approved</div>
-                            <div class="text-muted">Date | Time</div>
-                            <div class="text-muted">Date | Time</div>
-                            <div class="mt-1 text-muted">Remark</div>
+                            <a href="javascript:void(0)">{{$enroll->post["title"]}}</a>
+                            <div class="text-muted">{{$enroll->stage->name}}</div>
+                            <div class="text-muted">{{date("d M Y",strtotime($enroll ->created_at))}} | {{date("h:i:s A",strtotime($enroll ->created_at))}}</div>
+                            <div class="text-muted">{{$enroll ->updated_at->format("d M Y | h:i:s A")}}</div>
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::limit($enroll ->remark,20)}}</div> --}}
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::limit($enroll ->remark,10,"***")}}</div> --}}
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::of($enroll ->remark)->limit(10)}}</div> --}}
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::of($enroll ->remark)->words(2)}}</div> --}}
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::of($enroll ->remark)->words(2,">>>")}}</div> --}}
+                            {{-- စကားစုနှစ်စု ဘဲလက်ခံမည်  --}}
+                            {{-- <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::words($enroll ->remark,1)}}</div> --}}
+                            <div class="mt-1 text-muted" title="{{$enroll ->remark}}">{{Str::words($enroll ->remark,1,"--")}}</div>
+                            
                         </div>
+                        @endforeach
                         
 
                     </div>

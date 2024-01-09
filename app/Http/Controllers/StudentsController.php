@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Enroll;
 // use Illuminate\Support\Facades\Validator;
 
 
@@ -70,8 +71,11 @@ class StudentsController extends Controller
     public function show(string $id)
     {
         $student = Student::findOrFail($id);
+        // $enrolls = Enroll::where("user_id",$student->user_id)->get();
+        $enrolls = $student -> enrolls(); // model မှလှမ်းခေါ်လိုက်သည် 
+        // dd($enrolls);   
 
-        return view("students.show",["student" => $student]);
+        return view("students.show",["student" => $student,"enrolls"=>$enrolls]);
     }
 
     /**

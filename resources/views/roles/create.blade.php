@@ -58,8 +58,13 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <select name="status_id" id="" class="form-control form-contrl-sm rounded-0">\
-                                    @foreach ($statuses as $status)
+                                    {{-- @foreach ($statuses as $status)
                                         <option value="{{$status->id}}">{{$status->name}}</option>
+                                    @endforeach --}}
+
+                                    {{-- pluck ဖြင့် ဆွဲထုတ်လာသောကြောင့် တိုက်ရိုက်ထွက်လာသည် --}}
+                                    @foreach ($statuses as $id => $name)
+                                        <option value="{{$id}}">{{$name}}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -15,15 +15,28 @@ class RolesController extends Controller
 
     public function index()
     {
-        $roles = Role::all();
+        // $roles = Role::all();
+        $roles = Role::where(function($query){
+            if($statusid = request("filterstatus_id")){
+                $query -> where("status_id",$statusid);
+            }
+        })->get();
 
-        return view("roles.index",compact("roles"));
+        $filterstatuses = Status::whereIn("id",[3,4])->get()->pluck("name","id")->prepend("Choose Status..." , " "); // dropdown ဖြင့် စစ်မည်
+
+
+        return view("roles.index",compact("roles","filterstatuses"));
     }
 
 
     public function create()
     {
-        $statuses = Status::whereIn("id",[3,4])->get(); // မိမိ ပို့ချင်သော id 3 နှင့် 4 သာပို့ပေးမည် 
+        // $statuses = Status::whereIn("id",[3,4])->get(); // မိမိ ပို့ချင်သော id 3 နှင့် 4 သာပို့ပေးမည် 
+
+        // id နှင့် name သည် ပြောင်းပြန် ပို့ပေးမည်ဖြစ်သည် 
+        // $statuses = Status::whereIn("id",[3,4])->get()->pluck("id","name"); // မိမိ ပို့ချင်သော id 3 နှင့် 4 သာပို့ပေးမည် 
+        
+        $statuses = Status::whereIn("id",[3,4])->get()->pluck("name","id"); // မိမိ ပို့ချင်သော id 3 နှင့် 4 သာပို့ပေးမည် 
         return view("roles.create",compact("statuses"));
     }
 

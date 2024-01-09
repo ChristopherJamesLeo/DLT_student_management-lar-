@@ -14,7 +14,13 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
+        // $cities = City::all();
+
+        $cities = City::where(function($query){
+            if($getfilter = request("filtername")){
+                $query -> where("name","LIKE","%".$getfilter."%");
+            }
+        })->get();
 
         // return $cities;
         return view("cities.index",compact("cities"));

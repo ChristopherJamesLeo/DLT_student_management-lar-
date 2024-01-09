@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
 class Student extends Model
 {
     use HasFactory;
@@ -32,5 +34,10 @@ class Student extends Model
         return $this -> belongsTo(Status::class)->select(["id","name","slug"]); // send choice column from statuses table
     }
 
+    public function enrolls(){
+        $enrolls = Enroll::where("user_id",$this->user_id)->get();
+        return $enrolls;
+    }
 
+    
 }

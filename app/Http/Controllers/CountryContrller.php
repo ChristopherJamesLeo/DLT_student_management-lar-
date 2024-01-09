@@ -14,8 +14,16 @@ class CountryContrller extends Controller
      */
     public function index()
     {
-        $countries = Country::all();
+        // dd(request("filtername")); // url မှ query ကို request() ဖြင့် ဖမ်းမည် 
+        // $countries = Country::all();
+        // filter ချရန် 
+        $countries = Country::where(function($query){ // query သည် Country မှ query ကို ဆိုလိုသည် 
+            if($getname = request("filtername")){
+                $query -> where("name","LIKE","%".$getname."%");
+            }
+        })->get();
 
+        // dd($countries);
         return view("countries.index",compact("countries"));
     }
 

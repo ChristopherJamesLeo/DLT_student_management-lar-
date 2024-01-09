@@ -1,6 +1,6 @@
 @extends("layouts.adminindex")
 @section("css")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
 @endsection
 @section("caption","Country List")
 @section("content")
@@ -34,7 +34,18 @@
             <hr>
         </div>
 
-    
+        <div class="col-md-12">
+            <form action="" method="">
+                <div class="row justify-content-end">
+                    <div class="col-md-2 col-sm-6 mb-2">
+                        <div class="input-group">
+                            <input type="text" name="filtername" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search...">
+                            <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <table id="mytable" class="table table-hover border">
             <thead>
                 <tr>
@@ -135,7 +146,7 @@
 
 @section("scripts")
 {{-- datatable css1 js1 --}}
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script>
 
 
@@ -179,7 +190,7 @@
             
             // end edit form
 
-            $("#mytable").DataTable();
+            // $("#mytable").DataTable();
         })
 
 

@@ -1,6 +1,6 @@
 @extends("layouts.adminindex")
 @section("css")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
 @endsection
 @section("caption","City List")
 @section("content")
@@ -33,7 +33,23 @@
                  </form>
             <hr>
         </div>
+        <div class="col-md-12">
+            <form action="" method="">
+                <div class="row justify-content-end">
+                    <div class="col-md-2 col-sm-6 mb-2">
+                        <div class="input-group">
+                            <input type="text" name="filtername" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search..." value="{{request("filtername")}}">
+                            {{-- ရှာထားပြိးသား vlaue ကို ပြန်ယူတည့်ရန်  --}}
+                            {{-- <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button> --}}
+                            {{-- <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button> --}}
 
+                            {{-- with javascript --}}
+                            <button type="button" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     
         <table id="mytable"  class="table table-hover border">
             <thead>
@@ -135,9 +151,24 @@
 
 @section("scripts")
 {{-- datatable css1 js1 --}}
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script>
 
+        // start filter 
+        let getfilterbtn = document.getElementById("btn-search");
+        getfilterbtn.addEventListener("click",function(e){
+           
+            const getfiltername = document.querySelector("#filtername").value;
+            const getcururl = window.location.href;
+            // console.log(getcururl);
+            // console.log(getcururl.split("?"));
+            // console.log(getcururl.split("?")[0]); လက်ရှိ route ကို ယူရန်
+
+            window.location.href = getcururl.split("?")[0]  + "?filtername=" +getfiltername;
+            e.preventDefault();
+        })
+
+        // end filter 
 
 
         $(document).ready(function(){
@@ -177,7 +208,7 @@
                 
             })
             
-            $("#mytable").DataTable();
+            // $("#mytable").DataTable();
             // end edit form
         })
 
