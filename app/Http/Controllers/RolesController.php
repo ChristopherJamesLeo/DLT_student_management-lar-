@@ -46,7 +46,7 @@ class RolesController extends Controller
         $this -> validate($request,[
             "name" => "required|max:50|unique:roles,name",
             // "image" => "image|mimes:jpg,jpeg,png|max:1024",   // accept လုပ်မည့် file type အများဆုံး 1mb ဘဲလက်ခံမည် 
-            "image" => "image|mimes:jpg,jpeg,png",   // accept လုပ်မည့် file type
+            "image" => "required|image|mimes:jpg,jpeg,png",   // accept လုပ်မည့် file type
             "status_id" => "required|in:3,4"  // 3 နှင့် 4 ဘဲ လက်ခံမည် // fontend နှင့် ချိန်ပြီးထည့်ရမည် 
 
         ]);

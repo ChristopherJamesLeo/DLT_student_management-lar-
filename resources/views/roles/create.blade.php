@@ -51,13 +51,18 @@
                             <div class="col-md-6 col-sm-12 form-group mb-2">
                                 <label for="image">Image</label>
                                 <input type="file" name="image" id="image" class="form-control  rounded-0" value="{{old('image')}}">
+
+                                @error("image")
+                                    <span class="invalid-feadback">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-md-6 col-sm-12 form-group mb-1">
                                 <label for="name">Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control rounded-0" placeholder="Enter Role Name" value="{{old('name')}}">
                             </div>
                             <div class="col-md-6 form-group">
-                                <select name="status_id" id="" class="form-control form-contrl-sm rounded-0">\
+                                <select name="status_id" id="" class="form-control form-contrl-sm rounded-0">
+                                    <option selected disabled>Choose Status</option>
                                     {{-- @foreach ($statuses as $status)
                                         <option value="{{$status->id}}">{{$status->name}}</option>
                                     @endforeach --}}
@@ -67,6 +72,9 @@
                                         <option value="{{$id}}">{{$name}}</option>
                                     @endforeach
                                 </select>
+                                @error("status_id")
+                                    <span class="invalid-feedback">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-end">

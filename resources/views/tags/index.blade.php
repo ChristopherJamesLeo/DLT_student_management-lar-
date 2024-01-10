@@ -1,6 +1,6 @@
 @extends("layouts.adminindex")
 @section("css")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
 @endsection
 @section("caption","Tag List")
 @section("content")
@@ -64,7 +64,12 @@
                 
                 <tr>
 
-                    <td>{{++$idx}}</td>
+                    {{-- <td>{{++$idx}}</td> --}}
+                    {{-- pagination တွင် no အစဥ်လိုက်ပြပေးရန် $tags->firstItem() သုံးပေးရမည်--}}
+                    {{-- $tags->firstItem() သည် pagination ရှိ ပထမဆုံးူ roll no ကို ထုတ်ပေဂမည်  --}}
+                    {{-- $tags->lastItem() သည် pagination ရှိ  နောက်ဆုံး roll no ကို ထုတ်ပေဂမည်  --}}
+                    <td>{{$idx+ $tags->firstItem()}}</td>
+
                     <td>{{$tag->name}}</td>
                     <td>{{$tag->status->slug}}</td>
                     <td>{{$tag["user"]["name"]}}</td>
@@ -88,6 +93,10 @@
             </tbody>
             
         </table>
+
+        {{-- paginatin btn များပေါ်ရန် $tags->links() ကိုသုံးပေးရမည် bootstrap version 4 အထိဘဲ support ပေးထားသည် ထို့ကြောင့် ဖြေရှင်းရန် verison ချိန်း သို့မဟုတ် ၄င်းတစ်နေရာအတွက်ဘဲ version 4 ပြောင်းပေး၇မည် --}}
+
+        {{$tags->links("pagination::bootstrap-4")}}
         
     </div>
     <!--End Content Area-->
@@ -149,7 +158,7 @@
 
 @section("scripts")
 {{-- datatable css1 js1 --}}
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script>
         $(document).ready(function(){
             $(".delete-btns").click(function(){
@@ -184,7 +193,8 @@
                 $("#form_action").attr('action',`/tags/${getid}`);
                 
             })
-            $("#mytable").DataTable();
+            // $("#mytable").DataTable();
         })
     </script>
 @endsection
+

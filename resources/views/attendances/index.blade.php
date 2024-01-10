@@ -22,12 +22,17 @@
                          </div>
                          <div class="col-md-4 col-sm-12 form-group mb-1">
                              <label for="post_id">Class</label>
+                             @error("post_id")
+                                <span class="text-danger">{{$message}}</span>
+                             @enderror
                              <select name="post_id" id="post_id" class="form-control rounded-0">
+                                <option selected disabled>Choose Class ...</option>
                                 @foreach($posts as $post)
                                     <option value="{{$post->id}}">{{$post->title}}</option>
                                 @endforeach
                                 
                              </select>
+
                          </div>
                          <div class="col-md-4 col-sm-12 form-group mb-1">
                              <label for="attcode">Att Code <span class="text-danger">*</span></label>

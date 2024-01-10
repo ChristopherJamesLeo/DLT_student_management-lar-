@@ -15,7 +15,11 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        // $tags = Tag::all();
+
+        // pagination ဖြင့် ထုတ်ရန် 
+        // $tags = Tag::paginate(5); // paginate တွင်ပြမည့်အရေအတွက်
+        $tags = Tag::orderby("id","asc")->paginate(5); // paginate တွင်ပြမည့်အရေအတွက်
 
         $statuses = Status::whereIn("id",["3","4"])->get();
         // $statuses = Status::all();

@@ -18,7 +18,16 @@
                      <div class="row">
                          <div class="col-md-12 col-sm-12 form-group mb-1">
                              <label for="name">Name <span class="text-danger">*</span></label>
-                             <input type="text" name="name" id="name" class="form-control rounded-0" placeholder="Enter Status Name" value="{{old('name')}}">
+                            
+                             
+                             <input type="text" name="name" id="name" class="form-control rounded-0 @error("name") is-invalid @enderror" placeholder="Enter Status Name" value="{{old('name')}}">
+                             {{-- @error("name")
+                             <span class="invalid-feedback">{{$message}}</span>
+                             @enderror --}}
+                             {{-- @error("name")
+                             <span class="text-danger">{{$message}}</span>
+                             @enderror --}}
+                             {{-- class ထဲတွင် error ထုတ်ပ့န်ရန် @errorထဲတါင် (name) သည် error တက်ပါက is-invalid ဖြင့် စစ်ပြီး error တက်ပါ span ကို ပြပေးမည်ဖြစ်သည် ထို့နောက် class ထဲတွင် invalid-feedback ဟူသော class ထဲတွင် message ထုတ်ပြမည်ဖြစ်သည် class ထဲတွင် is-invalid သည် border color အတွက်တစ်ခုတည်းဖြစ်သည် invalid-feedback သည် spantag ကို text-အနီးရောက်ပေးရန် -error message ကို စစ်ရန် controller ထဲတွင် require စစ်ပေးထားရမည် --}}
                          </div>
                          
                          <div class="col-md-12">
@@ -190,3 +199,8 @@
         
     </script>
 @endsection
+
+{{-- Add on ရှိ role 
+    fix အားလုံးကို error ထုတ်ပြခဲ့ရန် --}}
+
+    {{-- custom filter ပေးထားသမျှ pagination ပေးထားမည်  --}}
