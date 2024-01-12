@@ -18,7 +18,10 @@
                      <div class="row">
                          <div class="col-md-12 col-sm-12 form-group mb-1">
                              <label for="name">Name <span class="text-danger">*</span></label>
-                             <input type="text" name="name" id="name" class="form-control rounded-0" placeholder="Enter Status Name" value="{{old('name')}}">
+                             @error("name")
+                                <span class="text-danger">{{$message}}</span>
+                             @enderror
+                             <input type="text" name="name" id="name" class="form-control rounded-0 @error("name") is-invalid @enderror" placeholder="Enter Status Name" value="{{old('name')}}">
                          </div>
                          
                          <div class="col-md-12">
@@ -62,7 +65,8 @@
                     
                 <tr>
 
-                    <td>{{++$idx}}</td>
+                    {{-- <td>{{++$idx}}</td> --}}
+                    <td>{{$idx + $countries -> firstItem()}}</td>
                     
                     <td>{{$country->name}}</td>
                     <td>{{$country->user["name"]}}</td> 
@@ -93,6 +97,8 @@
             
             
         </table>
+
+        {{$countries -> links("pagination::bootstrap-4")}}
         
     </div>
     <!--End Content Area-->

@@ -11,11 +11,11 @@
                             <li class="nav-item nav-categories ">Main</li>
                             <li class="nav-item nav-categories"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks"><i class="fas fa-tachometer-alt fa-lg me-3"></i>Dashboard</a></li>
 
-                            <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks currents" data-bs-target="#pagelayout" data-bs-toggle="collapse"><i class="fas fa-file-alt fa-lg me-3"></i>Page Layout<i class="fas fa-angle-left mores"></i></a>
+                            <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks " data-bs-target="#pagelayout" data-bs-toggle="collapse"><i class="fas fa-cloud-download-alt fa-md me-3"></i>Download<i class="fas fa-angle-left mores"></i></a>
                             
                             <ul id="pagelayout" class="collapse ps-2">
-                                <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Right Boxed</a></li>
-                                <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Left Boxed</a></li>
+                                <li><a href="{{route('edulinks.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Education</a></li>
+                                <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Software</a></li>
                             </ul>
 
                             </li>

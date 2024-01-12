@@ -1,8 +1,7 @@
 @extends("layouts.adminindex")
 @section("css")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 @endsection
-@section("caption","Enrolls List")
+@section("caption","Download List")
 @section("content")
 
     <!-- start content area -->
@@ -10,7 +9,7 @@
         
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('attendances.store')}}" method="POST" enctype="multipart/form-data" class=""> 
+                <form action="{{route('edulinks.store')}}" method="POST" enctype="multipart/form-data" class=""> 
 
                      {{csrf_field()}}
                      @method("POST")
@@ -18,7 +17,10 @@
                      <div class="row">
                          <div class="col-md-4 col-sm-12 form-group mb-1">
                              <label for="classdate">Class Date <span class="text-danger">*</span></label>
-                             <input type="date" name="classdate" id="classdate" class="form-control rounded-0" placeholder="Enter Attendance Name" value="{{old('classdate')}}">
+                             @error("classdate")
+                                <span class="text-danger">{{$message}}</span>
+                             @enderror
+                             <input type="date" name="classdate" id="classdate" class="form-control rounded-0 @error("classdate") is-invalid @enderror" placeholder="Enter Attendance Name" value="{{old('classdate')}}">
                          </div>
                          <div class="col-md-4 col-sm-12 form-group mb-1">
                              <label for="post_id">Class</label>
@@ -27,18 +29,18 @@
                              @enderror
                              <select name="post_id" id="post_id" class="form-control rounded-0 @error("post_id") is-invalid @enderror">
                                 <option selected disabled>Choose Class</option>
-                                @foreach($posts as $post)
-                                    <option value="{{$post->id}}">{{$post->title}}</option>
+                                @foreach($posts as $id => $title)
+                                    <option value="{{$id}}">{{$title}}</option>
                                 @endforeach
                                 
                              </select>
                          </div>
                          <div class="col-md-4 col-sm-12 form-group mb-1">
-                             <label for="attcode">Att Code <span class="text-danger">*</span></label>
-                             @error("attcode")
+                             <label for="url">URL Colde<span class="text-danger">*</span></label>
+                             @error("url")
                                 <span class="text-danger">{{$message}}</span>
                              @enderror
-                             <input type="text" name="attcode" id="attcode" class="form-control rounded-0 @error("attcode") is-invalid @enderror" placeholder="Enter Attendance Name" value="{{old('attcode')}}">
+                             <input type="text" name="url" id="url" class="form-control rounded-0 @error("url") is-invalid @enderror" placeholder="Enter URL" value="{{old('url')}}">
                          </div>
                          
                          <div class="col-md-12">
@@ -54,15 +56,40 @@
         </div>
 
         <hr>
+        
+        <div class="col-md-12">
+            <form action="" method="">
+                <div class="row justify-content-end">
+                    <div class="col-md-4 col-sm-6 mb-2">
+                        <div class="form-group">
+                            <select name="filterstatus_id" id="filterstatus_id" class="form-select form-control-sm rounded-0" value="{{request("filterstatus_id")}}">
+                                {{-- အားလုံးပြရန် value ကို " " ထားပေးရမည် method 1 --}}
+                                {{-- <option value=" " selected >Choose Status...</option> --}}
+                                @foreach ($filterposts as $id => $name)
+                                {{-- database မှ id နှင့် queryမှ id သည် datatype ကွဲနိုင်သောကြာင့် == ဖြင့်သာ စစ်သင့်သည်  --}}
+                                    <option value="{{$id}}" {{$id == request("filterstatus_id") ? "selected" : " " }}>{{$name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-2">
+                        <div class="input-group">
+                            <input type="text" name="filtername" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search...">
+                            <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <table id="mytable" class="table table-hover border">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Student Id</th>
                     <th>Class</th>
-                    
-                    <th>Stage</th>
+                    <th>URL</th>
+                    <th>By</th>
+                    <th>Class Date</th>
                     <th>Create At</th>
                     <th>Updated at</th>
                     <th>Action</th>
@@ -70,26 +97,33 @@
             </thead>
 
             <tbody>
-                @foreach($enrolls as $idx=>$enroll) 
+                @foreach($edulinks as $idx=>$edulink) 
                 
                 <tr>
 
-                    <td>{{++$idx}}</td>
+                    {{-- <td>{{++$idx}}</td> --}}
+                    <td>{{$idx + $edulinks->firstItem()}}</td>
                     {{-- <td>{{$enroll ->student($enroll->user_id)}}</td> --}}
-                    <td><a href="{{route('students.show',$enroll -> studenturl())}}">{{$enroll ->student($enroll->user_id)}}</a></td>
-                    <td>{{$enroll ->post->title}}</td>
-                    
-                    <td>{{$enroll->stage->name}}</td>
-                     
-                    <td>{{$enroll->created_at->format('d m Y')}}</td>
-                    <td>{{$enroll->updated_at->format('d M Y')}}</td>
+                    <td><a href="{{route('posts.show',$edulink->post_id)}}">{{$edulink->post["title"]}}</a></td>
                     <td>
-                        <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editmodal" 
-                            data-id="{{$enroll->id}}" 
-                            data-name="{{$enroll->name}}" 
-                            data-status="{{$enroll->stage->id}}">
+                        <a href="javascript:void(0)" class="link_btns" title="Copy Link"
+                        data-url = "{{$edulink ->url}}"
+                        >
+                            {{Str::limit($edulink ->url,30)}}
+                        </a>
+                    </td>
+                    
+                    <td>{{$edulink['user']['name']}}</td>
+                    <td>{{date("d m y",strtotime($edulink->classdate))}}</td>
+                     
+                    <td>{{$edulink->created_at->format('d M Y | h:m A')}}</td>
+                    <td>{{$edulink->updated_at->format('d M Y')}}</td>
+                    <td>
+                        <a href="{{$edulink ->url}}" class="me-3 btn btn-outline-info btn-sm text-primary ms-2 " target="_blank" download="downloadname">
+                        
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form">
                             <i class="fas fa-pen"></i>
                         </a>
                     </td>
@@ -100,6 +134,10 @@
             </tbody>
             
         </table>
+        <div class="d-flex justify-content-center">
+            {{$edulinks -> links("pagination::bootstrap-4")}}
+        </div>
+       
         
     </div>
     <!--End Content Area-->
@@ -120,14 +158,14 @@
                             {{ method_field("PUT") }}
 
                             <div class="row">
-                                <div class="col-md-4 col-sm-12 form-group mb-1">
+                                {{-- <div class="col-md-4 col-sm-12 form-group mb-1">
                                     <label for="editstage_id">Permission</label>
                                      <select name="stage_id" id="editstage_id" class="form-control rounded-0">
                                         @foreach($stages as $stage)
                                             <option value="{{$stage->id}}">{{$stage->name}}</option>
                                         @endforeach
                                      </select>
-                                 </div>
+                                 </div> --}}
                                 <div class="col-md-8 col-sm-12 form-group mb-1">
                                      <label for="editpost_id">Remark</label>
                                      <textarea name="remark" class="form-control rounded-0" id="" cols="30" rows="3"></textarea>
@@ -157,8 +195,6 @@
 @endsection
 
 @section("scripts")
-{{-- datatable css1 js1 --}}
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function(){
@@ -174,6 +210,14 @@
 
                 }
             })
+
+            // start link btn url copy
+            $(".link_btns").click(function(){
+                var getUrl = $(this).data("url");
+                console.log(getUrl);
+                navigator.clipboard.writeText(getUrl); // insert click board
+            })
+            // end link btn url copy
 
             $(document).on("click",".edit_form",function(e){
                 e.preventDefault();
@@ -191,14 +235,14 @@
                 // $("#form_action").attr('action',`http://127.0.0.1:8000/statuses/${getid}`);
 
                 // method 2
-                $("#form_action").attr('action',`/enrolls/${getid}`);
+                $("#form_action").attr('action',`/edulinks/${getid}`);
                 
             })
             // for my table
-            // let table = new DataTable('#mytable');
-            $("#mytable").DataTable();
         })
     </script>
 @endsection
 
 <!-- edit show -->
+
+{{--  --}}

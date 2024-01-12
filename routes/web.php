@@ -6,6 +6,7 @@ use App\Http\Controllers\CountryContrller;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\DaysController;
+use App\Http\Controllers\EdulinksController;
 use App\Http\Controllers\EnrollsController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AttendancesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::resource("statuses",StatusesController::class);
     Route::resource("days",DaysController::class);
     Route::resource("enrolls",EnrollsController::class);
+    Route::resource("edulinks",EdulinksController::class);
 
     Route::resource("students",StudentsController::class);
     Route::resource("roles",RolesController::class);

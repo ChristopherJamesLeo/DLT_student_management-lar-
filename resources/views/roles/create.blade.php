@@ -50,15 +50,19 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-12 form-group mb-2">
                                 <label for="image">Image</label>
-                                <input type="file" name="image" id="image" class="form-control  rounded-0" value="{{old('image')}}">
-
                                 @error("image")
-                                    <span class="invalid-feadback">{{$message}}</span>
+                                    <span class="text-danger">{{$message}}</span>
                                 @enderror
+                                <input type="file" name="image" id="image" class="form-control  rounded-0 @error("image") is-invalid @enderror" value="{{old('image')}}">
+
+                                
                             </div>
                             <div class="col-md-6 col-sm-12 form-group mb-1">
                                 <label for="name">Name <span class="text-danger">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control rounded-0" placeholder="Enter Role Name" value="{{old('name')}}">
+                                @error("name")
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <input type="text" name="name" id="name" class="form-control rounded-0 @error("name") is-invalid  @enderror" placeholder="Enter Role Name" value="{{old('name')}}" >
                             </div>
                             <div class="col-md-6 form-group">
                                 <select name="status_id" id="" class="form-control form-contrl-sm rounded-0">
@@ -73,7 +77,7 @@
                                     @endforeach
                                 </select>
                                 @error("status_id")
-                                    <span class="invalid-feedback">{{$message}}</span>
+                                    <span class="invalid-feedback text-danger">{{$message}}</span>
                                 @enderror
                             </div>
                             <div class="col-md-6">

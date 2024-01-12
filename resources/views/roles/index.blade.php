@@ -52,7 +52,8 @@
                     
                     <tr>
     
-                        <td>{{++$idx}}</td>
+                        {{-- <td>{{++$idx}}</td> --}}
+                        <td>{{$idx+ $roles->firstItem()}}</td>
                         <td>
                             <a href="{{route('roles.show',$role->id)}}">
                                 <img src="{{asset($role->image)}}" class="rounded-circle" style="width:40px;height:40px" alt="{{$role->image}}">
@@ -88,6 +89,8 @@
                 </tbody>
                 
             </table>
+
+            {{$roles->links("pagination::bootstrap-4")}}
         </div>
         
         

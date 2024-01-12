@@ -17,11 +17,17 @@ class CountryContrller extends Controller
         // dd(request("filtername")); // url မှ query ကို request() ဖြင့် ဖမ်းမည် 
         // $countries = Country::all();
         // filter ချရန် 
+        // $countries = Country::where(function($query){ // query သည် Country မှ query ကို ဆိုလိုသည် 
+        //     if($getname = request("filtername")){
+        //         $query -> where("name","LIKE","%".$getname."%");
+        //     }
+        // })->get();
+
         $countries = Country::where(function($query){ // query သည် Country မှ query ကို ဆိုလိုသည် 
             if($getname = request("filtername")){
                 $query -> where("name","LIKE","%".$getname."%");
             }
-        })->get();
+        })->paginate(2);
 
         // dd($countries);
         return view("countries.index",compact("countries"));

@@ -16,11 +16,16 @@ class CityController extends Controller
     {
         // $cities = City::all();
 
+        // $cities = City::where(function($query){
+        //     if($getfilter = request("filtername")){
+        //         $query -> where("name","LIKE","%".$getfilter."%");
+        //     }
+        // })->get();
         $cities = City::where(function($query){
             if($getfilter = request("filtername")){
                 $query -> where("name","LIKE","%".$getfilter."%");
             }
-        })->get();
+        })->paginate(2);
 
         // return $cities;
         return view("cities.index",compact("cities"));
@@ -39,7 +44,9 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this -> validate($request,[
+            "name" => "required|unique:cities,name"
+        ]);
         $user = Auth::user();
 
         $city = new City();

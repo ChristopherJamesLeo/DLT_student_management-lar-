@@ -25,7 +25,7 @@
                              @error("post_id")
                                 <span class="text-danger">{{$message}}</span>
                              @enderror
-                             <select name="post_id" id="post_id" class="form-control rounded-0">
+                             <select name="post_id" id="post_id" class="form-control rounded-0 @error("post_id") is-invalid @enderror">
                                 <option selected disabled>Choose Class ...</option>
                                 @foreach($posts as $post)
                                     <option value="{{$post->id}}">{{$post->title}}</option>
@@ -36,7 +36,10 @@
                          </div>
                          <div class="col-md-4 col-sm-12 form-group mb-1">
                              <label for="attcode">Att Code <span class="text-danger">*</span></label>
-                             <input type="text" name="attcode" id="attcode" class="form-control rounded-0" placeholder="Enter Attendance Name" value="{{old('attcode')}}">
+                             @error("attcode")
+                                <span class="text-danger">{{$message}}</span>
+                             @enderror
+                             <input type="text" name="attcode" id="attcode" class="form-control rounded-0 @error("attcode") is-invalid @enderror" placeholder="Enter Attendance Name" value="{{old('attcode')}}">
                          </div>
                          
                          <div class="col-md-12">

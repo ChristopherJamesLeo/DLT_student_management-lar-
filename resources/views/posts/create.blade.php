@@ -51,26 +51,26 @@
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="startdate">Start Date <span class="text-danger">*</span></label>
-                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0" placeholder="Enter startdate" value="{{old('startdate')}}">
+                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0 @error("startdate") is-invalid @enderror" placeholder="Enter startdate" value="{{old('startdate')}}">
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="enddate">End Date <span class="text-danger">*</span></label>
-                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0" placeholder="Enter enddate" value="{{old('enddate')}}">
+                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0  @error("enddate") is-invalid @enderror" placeholder="Enter enddate" value="{{old('enddate')}}">
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="starttime">Start Time <span class="text-danger">*</span></label>
-                                <input type="time" name="starttime" id="starttime" class="form-control rounded-0" placeholder="Enter starttime" value="{{old('starttime')}}">
+                                <input type="time" name="starttime" id="starttime" class="form-control rounded-0  @error("starttime") is-invalid @enderror" placeholder="Enter starttime" value="{{old('starttime')}}">
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="endtime">End Time <span class="text-danger">*</span></label>
-                                <input type="time" name="endtime" id="endtime" class="form-control rounded-0" placeholder="Enter endtime" value="{{old('endtime')}}">
+                                <input type="time" name="endtime" id="endtime" class="form-control rounded-0  @error("endtime") is-invalid @enderror" placeholder="Enter endtime" value="{{old('endtime')}}">
                             </div>
                             <div class="col-md-12 form-group mb-3">
                                 <label for="">Days<span class="text-danger">*</span></label>
                                 <div class="d-flex flex-wrap">
                                     @foreach($days as $idx => $day)
                                     <div class="form-check form-switch mx-3">
-                                        <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input" value="{{$day->id}}" checked/><Label for="day_id{{$idx}}">{{$day->name}}</Label>
+                                        <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input  @error("day_id") is-invalid @enderror" value="{{$day->id}}" checked/><Label for="day_id{{$idx}}">{{$day->name}}</Label>
                                     </div>
                                     @endforeach
                                 </div>
@@ -83,12 +83,17 @@
                             <input type="file" name="image" id="image" class="form-control  rounded-0" hidden>
                             <div class="col-md-12 col-sm-12 form-group mb-1">
                                 <label for="name">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" id="name" class="form-control rounded-0" placeholder="Enter Role Name" value="{{old('title')}}">
+                                @error("title") 
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <input type="text" name="title" id="name" class="form-control rounded-0 @error("title") is-invalid @enderror" placeholder="Enter Role Name" value="{{old('title')}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="type">Type <span class="text-danger">*</span></label>
-
-                                <select name="type_id" id="type" class="form-control form-contrl-sm rounded-0">
+                                @error("type") 
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <select name="type_id" id="type" class="form-control form-contrl-sm rounded-0 @error("type") is-invalid @enderror">
                                     @foreach ($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
@@ -96,14 +101,19 @@
                             </div>
                             <div class="col-md-6 col-sm-12 form-group mb-1">
                                 <label for="fee">Fee <span class="text-danger">*</span></label>
-                                <input type="number" name="fee" id="fee" class="form-control rounded-0" placeholder="Class Fee" value="{{old('fee')}}">
+                                @error("fee") 
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <input type="number" name="fee" id="fee" class="form-control rounded-0 @error("fee") is-invalid @enderror" placeholder="Class Fee" value="{{old('fee')}}">
                             </div>
                             <div class="col-md-12 col-sm-12 form-group mb-1">
                                 <label for="content">Content <span class="text-danger">*</span></label>
+                                
                                 <textarea type="text" name="content" id="content" class="form-control rounded-0" rows="5" placeholder="Say Something..." >{{old('fee')}}</textarea>
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="tag_id">Tag <span class="text-danger">*</span></label>
+                               
                                 <select name="tag_id" id="tag_id" class="form-control form-contrl-sm rounded-0">
                                     @foreach ($tags as $tag)
                                         <option value="{{$tag->id}}">{{$tag->name}}</option>
