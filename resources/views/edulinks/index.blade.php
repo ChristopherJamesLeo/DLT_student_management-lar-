@@ -62,20 +62,23 @@
                 <div class="row justify-content-end">
                     <div class="col-md-4 col-sm-6 mb-2">
                         <div class="form-group">
-                            <select name="filterstatus_id" id="filterstatus_id" class="form-select form-control-sm rounded-0" value="{{request("filterstatus_id")}}">
+                            <select name="filter" id="filter" class="form-select form-control-sm rounded-0" value="{{request("filter")}}">
                                 {{-- အားလုံးပြရန် value ကို " " ထားပေးရမည် method 1 --}}
                                 {{-- <option value=" " selected >Choose Status...</option> --}}
-                                @foreach ($filterposts as $id => $name)
+                                @foreach ($filterposts as $id => $title)
                                 {{-- database မှ id နှင့် queryမှ id သည် datatype ကွဲနိုင်သောကြာင့် == ဖြင့်သာ စစ်သင့်သည်  --}}
-                                    <option value="{{$id}}" {{$id == request("filterstatus_id") ? "selected" : " " }}>{{$name}}</option>
+                                    <option value="{{$id}}" {{$id == request("filter") ? "selected" : " " }}>{{$title}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6 mb-2">
                         <div class="input-group">
-                            <input type="text" name="filtername" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search...">
+                            <input type="text" name="search" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search..." value="{{request("search")}}">
                             <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                            <button type="button" id="btn-clear" class="btn btn-secondary"><i class="fas fa-sync"></i></button>
+
+                            
                         </div>
                     </div>
                 </div>
@@ -135,7 +138,8 @@
             
         </table>
         <div class="d-flex justify-content-center">
-            {{$edulinks -> links("pagination::bootstrap-4")}}
+            {{-- appends(request()->only("filter")) သည် filter ချ်ပြီး pagination သွားပါက အားလံဒး ပျောက်သွားသည် error ကို ဖျောက်ပေးသည်  --}}
+            {{$edulinks -> appends(request()->only("filter")) -> links("pagination::bootstrap-4")}}
         </div>
        
         
@@ -197,6 +201,19 @@
 @section("scripts")
 
     <script>
+        // start filter
+        document.getElementById("btn-clear").addEventListener("click",function(){
+           
+            window.location.href = window.location.href.split("?")[0]+"?filter=";
+
+        })
+        document.getElementById("filter").addEventListener("change",function(){
+            let getfilterid = this.value || this.options[this.selectedIndex].value;
+            window.location.href = window.location.href.split("?")[0]+"?filter="+getfilterid;
+
+        })
+        // end filter
+
         $(document).ready(function(){
             $(".delete-btns").click(function(){
                 // console.log("hello");
@@ -214,7 +231,7 @@
             // start link btn url copy
             $(".link_btns").click(function(){
                 var getUrl = $(this).data("url");
-                console.log(getUrl);
+                // window.alert("Copied Link");
                 navigator.clipboard.writeText(getUrl); // insert click board
             })
             // end link btn url copy

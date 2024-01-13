@@ -21,7 +21,31 @@ class EdulinksController extends Controller
     public function index()
     {
         // $data["edulinks"] = Edulink::orderby("updated_at","desc")->get();
-        $data["edulinks"] = Edulink::orderby("updated_at","desc")->paginate(7);
+
+        
+
+        // $data["edulinks"] = Edulink::orderby("updated_at","desc")->paginate(7);
+
+        // $data["edulinks"] = Edulink::where(function($query){
+        //     if($getfilter = request("filter")){
+        //         $query -> where("post_id",$getfilter);
+        //     }
+
+        //     if($getsearch = request("search")){
+        //         $query -> where("classdate","LIKE","%".$getsearch."%");
+        //     }
+        // })->zaclassdate()->paginate(5); // scopezaclassdate -> model ထဲတွင် ပေးထားသော query method အား ပြန်သုံးရာတွင် scope ဖြုတ်ပြီးသုံးပေးရမည် 
+
+
+        // method 2
+        // \DB::enableQueryLog();  // db ထဲရှိ query ကိုပါ စစ်နို်သည် enableQueryLog နှင့်  getQueryLog ကို ကြားညှပ်ပြီးသုံးပေးရမည်
+        $data["edulinks"] = Edulink::filter()->zaclassdate()->paginate(6); // where တစ်ခုလုံး model ထဲတွင် scopefilter ဟူသော method တည်ဆောက်ပြီး controller ထဲတွင် လာသုံးထားသည် 
+        // dd(\DB::getQueryLog());
+
+        // \DB::enableQueryLog();
+        // $data['edulinks'] = Edulink::all();
+
+        // dd(\DB::getQueryLog());
 
         // $data["stages"] = Stage::whereIn("id",["1","2","3"])->get();
         
