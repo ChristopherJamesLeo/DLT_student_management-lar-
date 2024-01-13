@@ -142,6 +142,8 @@ class PostsController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        $attshows = Status::whereIn("id",[3,4])->get(); 
+
         $dayables = $post-> days() -> get();
 
         // dd($post -> checkenroll(1)); check 
@@ -150,7 +152,7 @@ class PostsController extends Controller
         // $comments = Comment::where("commentable_id",$post->id)->where("commentable_type","App\Models\Post")->orderBy("created_at","desc")->get(); // restrict for only post
 
         $comments = $post->comments()->orderBy("updated_at","desc")->get(); // error
-        return view("posts.show",["post"=>$post,"comments"=>$comments,"dayables"=>$dayables]);
+        return view("posts.show",["post"=>$post,"comments"=>$comments,"dayables"=>$dayables,"attshows"=>$attshows]);
     }
 
 

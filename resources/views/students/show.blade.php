@@ -360,8 +360,8 @@
             window.history.go(-1); // window page history ကို ရြှေနောက် ကြိုက်သလို ပေးလို့ရသည် 
         })
 
-// start tabs box
-// Get Ui
+        // start tabs box
+        // Get Ui
         var gettablinks = document.getElementsByClassName("tablinks");
         var gettabpanes = document.getElementsByClassName("tab-pane");
 
