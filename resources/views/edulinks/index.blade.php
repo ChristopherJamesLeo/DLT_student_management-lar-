@@ -1,7 +1,10 @@
 @extends("layouts.adminindex")
+
 @section("css")
 @endsection
+
 @section("caption","Download List")
+
 @section("content")
 
     <!-- start content area -->
@@ -9,6 +12,16 @@
         
         <div class="row">
             <div class="col-md-12">
+                {{-- method 1 --}}
+                {{-- @if($getsuccess = session("success"))
+                    <div class="alert alert-success rounded-0">{{$getsuccess}}</div>
+                @endif --}}
+
+                {{-- method 2 --}}
+                @if(session("success"))
+                    <div class="alert alert-success rounded-0">{{session("success")}}</div>
+                @endif
+
                 <form action="{{route('edulinks.store')}}" method="POST" enctype="multipart/form-data" class=""> 
 
                      {{csrf_field()}}
@@ -60,6 +73,9 @@
         <div class="col-md-12">
             <form action="" method="">
                 <div class="row justify-content-end">
+                    <div class="col-md-4 col-sm-6 mb-2">
+                       
+                    </div>
                     <div class="col-md-4 col-sm-6 mb-2">
                         <div class="form-group">
                             <select name="filter" id="filter" class="form-select form-control-sm rounded-0" value="{{request("filter")}}">
@@ -126,10 +142,24 @@
                         
                             <i class="fas fa-download"></i>
                         </a>
-                        <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form">
+                        <a href="#editmodal" data-bs-toggle="modal" class="me-3 btn btn-outline-info btn-sm edit_form"
+                        data-id="{{$edulink ->id}}"
+                        data-classdate="{{$edulink ->classdate}}"
+                        data-url="{{$edulink ->url}}"
+                        data-post="{{$edulink->post_id}}">
                             <i class="fas fa-pen"></i>
                         </a>
+
+                        <a href="#" class="text-danger me-3 delete-btns" 
+                        data-idx = "{{$idx + $edulinks->firstItem()}}" >
+                            <i class="fas fa-trash"></i>
+                        </a>
                     </td>
+
+                    <form id="formdelete{{$idx + $edulinks->firstItem()}}" action="{{route('edulinks.destroy',$edulink->id)}}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                    </form>
 
                     
                 </tr>
@@ -162,18 +192,23 @@
                             {{ method_field("PUT") }}
 
                             <div class="row">
-                                {{-- <div class="col-md-4 col-sm-12 form-group mb-1">
-                                    <label for="editstage_id">Permission</label>
-                                     <select name="stage_id" id="editstage_id" class="form-control rounded-0">
-                                        @foreach($stages as $stage)
-                                            <option value="{{$stage->id}}">{{$stage->name}}</option>
+                                <div class="col-md-12 form-group mb-2">
+                                    <label for="">Class Date</label>
+                                    <input type="date" name="editclassdate" id="editclassdate" class="form-control  rounded-0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Post</label>
+                                    <select name="editpost" id="editpost_id" class="form-select form-control-sm rounded-0" >
+                                        @foreach ($filterposts as $id => $title)
+                                            <option value="{{$id}}" {{$id == request("filter") ? "selected" : " " }}>{{$title}}</option>
                                         @endforeach
-                                     </select>
-                                 </div> --}}
-                                <div class="col-md-8 col-sm-12 form-group mb-1">
-                                     <label for="editpost_id">Remark</label>
-                                     <textarea name="remark" class="form-control rounded-0" id="" cols="30" rows="3"></textarea>
-                                 </div>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 form-group mb-2">
+                                    <label for="editurl">URL</label>
+                                    <input type="text" name="editurl" id="editurl" class="form-control  rounded-0">
+                                </div>
+                                
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Update</button>
@@ -201,12 +236,16 @@
 @section("scripts")
 
     <script>
-        // start filter
-        document.getElementById("btn-clear").addEventListener("click",function(){
-           
-            window.location.href = window.location.href.split("?")[0]+"?filter=";
+        
+        // start alert box
+        setTimeout(() => {
+            document.querySelector(".alert").style.display = "none";
+        }, 5000);
+        // end alert box
 
-        })
+        
+
+        // start filter
         document.getElementById("filter").addEventListener("change",function(){
             let getfilterid = this.value || this.options[this.selectedIndex].value;
             window.location.href = window.location.href.split("?")[0]+"?filter="+getfilterid;
@@ -214,19 +253,36 @@
         })
         // end filter
 
+        // start clear filter 
+        document.getElementById("btn-clear").addEventListener("click",function(){
+            // window.location.href = window.location.href.split("?")[0]+"?filter=&search=";
+            const getfilter = document.getElementById("filter");
+            const getsearch = document.getElementById("search");
+            getfilter.selectedIndex = 0; // select box မှ index ကို 0 ပြန်ထားမည်
+            getsearch.value = "";
+
+            
+            window.location.href = window.location.href.split("?")[0];
+        })
+        // end clear filter
+
+        // start auto show clear btn
+        const autoshowbtn = function(){
+            let getBtnClear = document.getElementById("btn-clear");
+            let getUrlQuery = window.location.search; // url ထဲရှိ query ကို ဆွဲထုတ်မည်
+            let pattern = /[?&]search=/; // url ထဲရှိ search ဟူသော ကောင်ပါသလား ? နှင့် & ပါသလား  (true/false)
+            if(pattern.test(getUrlQuery)){
+                // pattern ထဲရှိ စာသားသည် test ထဲရှိစာသားနှင့် တူညီသလား စစ်သည် js default function
+                getBtnClear.style.display = 'block';
+            }else{
+                getBtnClear.style.display = 'none';
+
+            }
+        }
+        autoshowbtn();
+        // end auto show clear btn
+
         $(document).ready(function(){
-            $(".delete-btns").click(function(){
-                // console.log("hello");
-                var getidx = $(this).data("idx");
-
-                // console.log(getidx);
-
-                if(confirm(`Are Your Sure!! You want to delete ${getidx}`)){
-                    $("#formdelete"+getidx).submit();
-                }else{
-
-                }
-            })
 
             // start link btn url copy
             $(".link_btns").click(function(){
@@ -241,8 +297,9 @@
                 // console.log("hello");
                 // console.log($(this).attr("data-name"));
                 // console.log($(this).data("id"));
-                $("#editname").val($(this).data("name"));
-                $("#editstage_id").val($(this).data("status"));
+                $("#editclassdate").val($(this).data("classdate"));
+                $("#editpost_id").val($(this).data("post"));
+                $("#editurl").val($(this).data("url"));
 
                 const getid = $(this).data("id");
 
@@ -256,7 +313,37 @@
                 
             })
             // for my table
+
+            // start delete
+            // $(".delete-btns").click(function(){
+            //     // console.log("hello");
+            //     var getidx = $(this).data("idx");
+
+            //     // console.log(getidx);
+
+            //     if(confirm(`Are Your Sure!! You want to delete`)){
+            //         $("#formdelete"+getidx).submit();
+            //     }else{
+
+            //     }
+            // })
+             // start delete
         })
+
+        // start delete btn
+        let getDeleteBtns = document.querySelectorAll(".delete-btns");
+        getDeleteBtns.forEach(function(getDeleteBtn){
+            getDeleteBtn.addEventListener("click",function(){
+                let getIdx = this.getAttribute("data-idx");
+                if(confirm(`Are Your Sure!! You want to delete`)){
+                    document.querySelector("#formdelete"+getIdx).submit();
+                }
+            })
+        })
+        // end delete btn
+
+
+
     </script>
 @endsection
 

@@ -67,16 +67,34 @@ class Edulink extends Model
 
 
                 // orwhereHas(relation,callbackfunction); // foreign key ပေးထားသော related tagble အား belongTo ဖြစ်ခေါ်ထားသော method  ကို string ဖြင့် ရေးပေးရမည် 
-                $query -> where("classdate","LIKE","%".$getsearch."%") 
-                ->orwhere("created_at","LIKE","%".$getsearch."%")
-                ->orwhere("updated_at","LIKE","%".$getsearch."%")
-                ->orwhereHas("post",function($query) use($getsearch){ // global ဖြစ်သောကြောင့် functin ထဲယူသုံးနိုင်ရန် use လုပ်ပေးခြင်းဖြစ်သည် "post" သည် belong To ခေါ်ထားသော method name ဖြစ်သည် 
-                    $query -> where("title","LIKE","%".$getsearch."%"); // post table ထဲရှိ title များအား စစ်မည် 
-                });
+                // $query -> where("classdate","LIKE","%".$getsearch."%") 
+                // ->orwhere("created_at","LIKE","%".$getsearch."%")
+                // ->orwhere("updated_at","LIKE","%".$getsearch."%")
+                // ->orwhereHas("post",function($query) use($getsearch){ // global ဖြစ်သောကြောင့် functin ထဲယူသုံးနိုင်ရန် use လုပ်ပေးခြင်းဖြစ်သည် "post" သည် belong To ခေါ်ထားသော method name ဖြစ်သည် 
+                //     $query -> where("title","LIKE","%".$getsearch."%"); // post table ထဲရှိ title များအား စစ်မည် 
+                // });
 
-                
+
             }
         });
+
+
+    }
+
+    // filter ချထားသော data များကိုသာ searc လုပ်နိုင်ရန် if ဖြင် funciton ထပ်လုပ်လိုက်ခြင်းဖြစ်သည် 
+    public function scopesearchonly($query){
+        if($getsearch = request("search")){
+
+            //orwhereHas(relation,callbackfunction); // foreign key ပေးထားသော related tagble အား belongTo ဖြစ်ခေါ်ထားသော method  ကို string ဖြင့် ရေးပေးရမည် 
+            $query -> where("classdate","LIKE","%".$getsearch."%") 
+            ->orwhere("created_at","LIKE","%".$getsearch."%")
+            ->orwhere("updated_at","LIKE","%".$getsearch."%")
+            ->orwhereHas("post",function($query) use($getsearch){ // global ဖြစ်သောကြောင့် functin ထဲယူသုံးနိုင်ရန် use လုပ်ပေးခြင်းဖြစ်သည် "post" သည် belong To ခေါ်ထားသော method name ဖြစ်သည် 
+                $query -> where("title","LIKE","%".$getsearch."%"); // post table ထဲရှိ title များအား စစ်မည် 
+            });
+
+
+        }
     }
     
 }

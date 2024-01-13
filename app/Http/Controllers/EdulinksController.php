@@ -39,13 +39,16 @@ class EdulinksController extends Controller
 
         // method 2
         // \DB::enableQueryLog();  // db ထဲရှိ query ကိုပါ စစ်နို်သည် enableQueryLog နှင့်  getQueryLog ကို ကြားညှပ်ပြီးသုံးပေးရမည်
-        $data["edulinks"] = Edulink::filter()->zaclassdate()->paginate(6); // where တစ်ခုလုံး model ထဲတွင် scopefilter ဟူသော method တည်ဆောက်ပြီး controller ထဲတွင် လာသုံးထားသည် 
+        // $data["edulinks"] = Edulink::filter()->zaclassdate()->paginate(6); // where တစ်ခုလုံး model ထဲတွင် scopefilter ဟူသော method တည်ဆောက်ပြီး controller ထဲတွင် လာသုံးထားသည် 
         // dd(\DB::getQueryLog());
 
         // \DB::enableQueryLog();
         // $data['edulinks'] = Edulink::all();
 
         // dd(\DB::getQueryLog());
+
+        // filter ချထားသော ကောင်ထဲမှ search လုပ်နိုင်ရန် searchonlyဟူသော method အခွဲဖြသ့် ထပ်စစ်ထားခြင်းဖစ်သည်
+        $data["edulinks"] = Edulink::filter()->searchonly()->zaclassdate()->paginate(6);
 
         // $data["stages"] = Stage::whereIn("id",["1","2","3"])->get();
         
@@ -85,8 +88,14 @@ class EdulinksController extends Controller
 
         $edulink -> save();
 
+
+
         // return redirect() -> back();
-        return redirect()->route("edulinks.index");
+        // return redirect()->route("edulinks.index");
+
+        // အောင်မြင်ကြောင်း alert ထုတ်ပြရန် 
+        return redirect()->route("edulinks.index")->with('success',"Your Post Is Successful");
+        // success သည် session ထဲရောက်နေမည်ဖြစ်ပြီး session ဖြင့် ပြန်ခေါ်‌ပေးရမဘ်
     }
 
 
@@ -109,14 +118,31 @@ class EdulinksController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $edulink = Edulink::findOrFail($id);
-        $edulink -> stage_id = $request["stage_id"];
-        $edulink -> remark = $request["remark"];
+        $this -> validate($request,[   
+            "editclassdate" => "required|date", // date ဘဲယူမည်
+            "editpost" => "required",
+            "editurl" => "required"
+        ]);
 
+        $user = Auth::user(); // log in ဝင်ထား‌သောကောင်၏ data ရယူရန်
+
+        $user_id = $user->id;
+
+        $edulink = Edulink::findOrFail($id);
+        $edulink -> classdate = $request["editclassdate"];
+        $edulink -> post_id = $request["editpost"]; 
+        $edulink -> url = $request["editurl"]; 
+        $edulink -> user_id = $user_id;  
 
 
         $edulink -> save();
 
+        // return redirect(route("edulinks.index"));
+        // return success message
+        // method(1)
+        // return redirect(route("edulinks.index"))->with("success","Update Successfully");
+
+        session()->flash("success","Update Successful"); // session ဖြင့် ပြပေးခြင်းဖြစ်သ်ည
         return redirect(route("edulinks.index"));
     }
 
@@ -127,7 +153,7 @@ class EdulinksController extends Controller
 
 
         $edulink -> delete();
-
+        session()->flash("success","Delete Successfully");
         return redirect()->back();
     }
 }
