@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2024 at 10:44 AM
+-- Generation Time: Jan 14, 2024 at 02:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -120,6 +120,32 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`id`, `description`, `user_id`, `commentable_id`, `commentable_type`, `created_at`, `updated_at`) VALUES
 (1, 'Hello Nice Class 1', 1, 2, 'App\\Models\\Post', '2023-12-09 11:01:54', '2023-12-09 11:01:54'),
 (2, 'Hello Nice Class 2', 1, 2, 'App\\Models\\Post', '2023-12-09 11:02:06', '2023-12-09 11:02:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `relative_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `firstname`, `lastname`, `birthday`, `relative_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'Aung', 'Kyaw', '2024-01-01', 4, 1, '2024-01-14 13:02:59', '2024-01-14 13:02:59'),
+(2, 'Zaw', 'Myo', NULL, 0, 1, '2024-01-14 13:05:58', '2024-01-14 13:05:58'),
+(3, 'Aung', 'Myint', '2024-01-09', 4, 1, '2024-01-14 13:22:16', '2024-01-14 13:22:16');
 
 -- --------------------------------------------------------
 
@@ -256,9 +282,11 @@ INSERT INTO `edulinks` (`id`, `classdate`, `post_id`, `url`, `user_id`, `created
 (23, '2024-01-04', 4, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:54:59', '2024-01-12 12:54:59'),
 (24, '2024-01-09', 1, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:55:06', '2024-01-12 12:55:06'),
 (25, '2024-01-09', 3, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:55:18', '2024-01-12 12:55:18'),
-(26, '2024-01-10', 2, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:55:48', '2024-01-12 12:55:48'),
+(26, '2024-01-10', 4, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:55:48', '2024-01-13 14:16:27'),
 (27, '2024-01-06', 3, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:55:57', '2024-01-12 12:55:57'),
-(28, '2024-01-08', 1, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:56:03', '2024-01-12 12:56:03');
+(28, '2024-01-08', 4, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-12 12:56:03', '2024-01-13 14:16:16'),
+(29, '2024-01-20', 4, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-13 14:17:09', '2024-01-13 14:17:09'),
+(30, '2024-01-20', 4, 'https://www.mediafire.com/file/y30la0qm6n43zq7/12Nov2022MYSQL2.mp4', 1, '2024-01-13 14:21:47', '2024-01-13 14:21:47');
 
 -- --------------------------------------------------------
 
@@ -371,7 +399,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2023_12_02_183557_create_dayables_table', 1),
 (19, '2023_12_09_191436_create_stages_table', 2),
 (20, '2023_12_09_193447_create_enrolls_table', 3),
-(21, '2024_01_12_180942_create_edulinks_table', 4);
+(21, '2024_01_12_180942_create_edulinks_table', 4),
+(22, '2024_01_14_183655_create_relatives_table', 5),
+(23, '2024_01_14_183844_create_contacts_table', 5);
 
 -- --------------------------------------------------------
 
@@ -439,6 +469,43 @@ INSERT INTO `posts` (`id`, `image`, `title`, `slug`, `content`, `fee`, `startdat
 (2, 'assets/img/posts/16574490c1e34dScreenshot (1).png', 'CSS Immediate', 'css-immediate', 'Hello Sir', 50000.00, '2023-12-07', '2023-12-13', '20:31:00', '22:31:00', 2, 2, 3, 7, 1, '2023-12-09 11:01:32', '2023-12-09 11:01:32'),
 (3, 'assets/img/posts/1657d857e4dfb2656c04d5757ef1701577941logobo.jpg', 'Js Small App(batch-2)', 'js-small-appbatch-2', 'Hello Sir', 50000.00, '2023-12-16', '2023-12-19', '20:39:00', '20:39:00', 2, 3, 3, 7, 1, '2023-12-16 11:09:50', '2023-12-16 11:09:50'),
 (4, 'assets/img/posts/16592105b6b911viber_image_2022-08-11_06-46-44-901.jpg', 'Ubuntu Linux Batch 2', 'ubuntu-linux-batch-2', '<p><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">The fastest way to get </span><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 0);\">Summernot</span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">e is to download the <a href=\"https:www.google.com\" target=\"_blank\">precompiled</a> and minified versions of our CSS and JavaScript. No<b> documentation </b>or origina<u>l source code files </u>are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get </span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); background-color: rgb(0, 0, 255);\">Summernote</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\"> is to download the</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; text-align: var(--bs-body-text-align);\"><b> precompiled </b></span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><br></p>', 2500.00, '2024-01-01', '2024-01-01', '07:35:00', '07:36:00', 2, 6, 3, 7, 1, '2024-01-01 01:07:39', '2024-01-01 01:07:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `relatives`
+--
+
+CREATE TABLE `relatives` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `status_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `relatives`
+--
+
+INSERT INTO `relatives` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'Mother', 'mother', 3, 1, '2023-11-21 15:45:34', '2024-01-23 12:33:24'),
+(2, 'Father', 'father', 3, 1, '2024-01-15 12:33:24', '2024-01-14 12:33:24'),
+(3, 'Parents', 'parents', 3, 1, '2023-11-24 11:33:52', '2023-11-24 13:21:53'),
+(4, 'Brother', 'brother', 3, 1, '2023-11-24 13:21:53', '2023-11-24 11:33:52'),
+(5, 'Sister', 'sister', 3, 1, '2023-12-03 04:08:37', '2023-11-24 08:01:00'),
+(6, 'Son', 'son', 3, 1, '2023-11-24 08:01:00', '2023-11-24 08:01:00'),
+(7, 'Daughter', 'daughter', 3, 1, '2024-01-02 12:34:03', '2024-01-08 12:34:03'),
+(8, 'Child', 'child', 3, 1, '2024-01-09 12:35:38', '2024-01-08 12:35:38'),
+(9, 'Friend', 'friend', 3, 1, '2024-01-08 12:35:38', '2024-01-08 12:35:38'),
+(10, 'Spouse', 'spouse', 3, 1, '2024-01-15 12:35:38', '2024-01-09 12:35:38'),
+(11, 'Partner', 'partner', 3, 1, '2024-01-15 12:35:38', '2024-01-16 12:35:38'),
+(12, 'Assistant', 'assistant', 3, 1, '2024-01-08 12:35:38', '2024-01-09 12:35:38'),
+(13, 'Manager', 'manager', 3, 1, '2024-01-08 12:35:38', '2024-01-10 12:35:38'),
+(14, 'Other', 'other', 3, 1, '2024-01-08 12:35:38', '2024-01-08 12:35:38'),
+(15, 'Sweet Heart', 'sweet-heart', 3, 1, '2024-01-08 12:35:38', '2024-01-08 12:35:38');
 
 -- --------------------------------------------------------
 
@@ -687,6 +754,13 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contacts_users_id` (`user_id`);
+
+--
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
@@ -749,6 +823,13 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `relatives`
+--
+ALTER TABLE `relatives`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `relatives_name_unique` (`name`);
 
 --
 -- Indexes for table `roles`
@@ -824,6 +905,12 @@ ALTER TABLE `comments`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
@@ -839,7 +926,7 @@ ALTER TABLE `days`
 -- AUTO_INCREMENT for table `edulinks`
 --
 ALTER TABLE `edulinks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `enrolls`
@@ -863,7 +950,7 @@ ALTER TABLE `genders`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -876,6 +963,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `posts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `relatives`
+--
+ALTER TABLE `relatives`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -918,6 +1011,16 @@ ALTER TABLE `types`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD CONSTRAINT `contacts_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
