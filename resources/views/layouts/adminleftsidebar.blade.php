@@ -63,14 +63,12 @@
 
                             <li class="nav-item nav-categories">Popus</li>
 
-                            <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-target="#iconselement" data-bs-toggle="collapse"><i class="fas fa-file-alt fa-lg me-3"></i>Icons<i class="fas fa-angle-left mores"></i></a>
+                            <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-target="#iconselement" data-bs-toggle="collapse"><i class="fas fa-share-alt-square fa-lg me-3"></i>Apps<i class="fas fa-angle-left mores"></i></a>
                             
                                 <ul id="iconselement" class="collapse ps-2">
-                                    <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Material</a></li>
-                                    <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Flat Icons</a></li>
-                                    <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Font Awesome</a></li>
-                                    <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Simple Line Icons</a></li>
-                                    
+                                    <li><a href="{{route('contacts.index')}}" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Contacts</a></li>
+                                    <li><a href="javascript:void(0);" class="nav-link text-white sidebarlinks"><i class="fas fa-long-arrow-alt-right me-4"></i>Todo</a></li>
+                                             
                                 </ul>
     
                             </li>
@@ -85,13 +83,17 @@
                             <!-- end home work -->
                             <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-target="#addon" data-bs-toggle="collapse"><i class="fas fa-file-alt fa-lg me-3"></i>Add On <i class="fas fa-angle-left mores"></i></a>
                                 <ul id="addon" class="collapse ps-2">
-                                    <li class="nav-item nav-categories"><a href="{{route('roles.index')}}" class="nav-link text-white sidebarlinks">Roles</a></li>
-
-                                    <li class="nav-item nav-categories"><a href="{{route('genders.index')}}" class="nav-link text-white sidebarlinks">Genders</a></li>
 
                                     <li class="nav-item nav-categories"><a href="{{route('cities.index')}}" class="nav-link text-white sidebarlinks">Cities</a></li>
 
                                     <li class="nav-item nav-categories"><a href="{{route('countries.index')}}" class="nav-link text-white sidebarlinks">Countries</a></li>
+
+                                    <li class="nav-item nav-categories"><a href="{{route('genders.index')}}" class="nav-link text-white sidebarlinks">Genders</a></li>
+
+                                    <li class="nav-item nav-categories"><a href="{{route('relatives.index')}}" class="nav-link text-white sidebarlinks">Relative</a></li>
+
+                                    <li class="nav-item nav-categories"><a href="{{route('roles.index')}}" class="nav-link text-white sidebarlinks">Roles</a></li>
+                                    
                                 </ul>
 
                             <li class="nav-item"><a href="javascript:void(0);" class="nav-link text-white p-3 mb-2 sidebarlinks" data-bs-target="#fixedrole" data-bs-toggle="collapse"><i class="fas fa-file-alt fa-lg me-3"></i>Fixed Analysis<i class="fas fa-angle-left mores"></i></a>

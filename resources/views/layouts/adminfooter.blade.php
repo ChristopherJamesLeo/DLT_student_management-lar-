@@ -19,7 +19,23 @@
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+        {{-- toastr notification css1 js1 --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            @if(session()->has("success")) // sessin ထဲတွင် success ရှိနေမှ အလုပ်လုပ်မည် 
+                toastr.success('{{session()->get('success')}}', 'Successful')
+            @endif
 
+            @if(session()->has("info")) // sessin ထဲတွင် success ရှိနေမှ အလုပ်လုပ်မည် 
+                toastr.info('{{session()->get('info')}}', 'Information')
+            @endif
+
+            @if($errors) // form ထဲမှ ဖမ်းထားတဲ့ error အားလံဒးကို စုပေါင်းထာသည့်နေရာ array ဖြင့် ထုတ်ပေးသောကြောင့် loop ပတ်ပေးရမည်
+                @foreach($errors->all() as $error) // input ရှိ error အားလုံးကို ဖမ်းပေးမည်ဖြ်ပြီး array ြဖင့် ထုတ်ပေးသော်ကြာင့် all() ဖြင့်ယူပြီး looping ပတ်ပေးရမည် 
+                    toastr.error('{{$error}}',"Warning") 
+                @endforeach
+            @endif
+        </script>
         <!--custom js-->
         <script src="{{asset('assets/dist/js/app.js')}}" type="text/javascript"></script>
 

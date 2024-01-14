@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryContrller;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\DaysController;
 use App\Http\Controllers\EdulinksController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\StatusesController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\StagesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AttendancesController;
@@ -60,18 +62,21 @@ Route::middleware('auth')->group(function () {
     Route::resource("statuses",StatusesController::class);
     Route::resource("days",DaysController::class);
     Route::resource("enrolls",EnrollsController::class);
+
     Route::resource("edulinks",EdulinksController::class);
 
     Route::resource("students",StudentsController::class);
     Route::resource("roles",RolesController::class);
     Route::resource("cities",CityController::class);
     Route::resource("countries",CountryContrller::class);
+    Route::resource("contacts",ContactsController::class);
     Route::resource("comments",CommentsController::class);
     Route::resource("genders",GenderController::class);
     Route::resource("tags",TagsController::class);
     Route::resource("categories",CategoriesController::class);
 
     Route::resource("types",TypesController::class);
+    Route::resource("relatives",RelativesController::class);
     
     Route::resource("posts",PostsController::class);
 
