@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2024 at 02:35 PM
+-- Generation Time: Jan 17, 2024 at 02:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -144,8 +144,21 @@ CREATE TABLE `contacts` (
 
 INSERT INTO `contacts` (`id`, `firstname`, `lastname`, `birthday`, `relative_id`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, 'Aung', 'Kyaw', '2024-01-01', 4, 1, '2024-01-14 13:02:59', '2024-01-14 13:02:59'),
-(2, 'Zaw', 'Myo', NULL, 0, 1, '2024-01-14 13:05:58', '2024-01-14 13:05:58'),
-(3, 'Aung', 'Myint', '2024-01-09', 4, 1, '2024-01-14 13:22:16', '2024-01-14 13:22:16');
+(2, 'Zaw', 'Myo', '2024-01-16', 0, 1, '2024-01-14 13:05:58', '2024-01-17 01:08:16'),
+(5, 'Hla', 'Hla', '2024-01-16', 8, 1, '2024-01-17 01:09:59', '2024-01-17 01:09:59'),
+(6, 'Myo', 'Myo', '2024-01-16', 6, 1, '2024-01-17 01:10:36', '2024-01-17 01:10:36'),
+(7, 'Hla', 'Maung', NULL, 12, 1, '2024-01-17 01:13:59', '2024-01-17 01:13:59'),
+(8, 'Myo', 'Ko', NULL, 13, 1, '2024-01-17 01:14:08', '2024-01-17 01:14:08'),
+(9, 'Myint', 'Myint', NULL, 0, 1, '2024-01-17 01:14:17', '2024-01-17 01:14:17'),
+(10, 'Zaw', 'Myo', '2024-01-17', 12, 1, '2024-01-17 01:14:41', '2024-01-17 01:14:41'),
+(11, 'Kyaw', 'Myint', '2024-01-10', 0, 1, '2024-01-17 01:15:06', '2024-01-17 01:15:06'),
+(12, 'Hla Maung', 'Ko', '2024-01-15', 10, 1, '2024-01-17 01:15:20', '2024-01-17 01:15:20'),
+(13, 'Hla Myo', 'Hlaing', NULL, 9, 1, '2024-01-17 01:40:29', '2024-01-17 01:40:29'),
+(14, 'Myo', 'Hlaing Kyaw', '2024-01-09', 9, 1, '2024-01-17 01:40:59', '2024-01-17 01:40:59'),
+(15, 'Tun', 'Kyaw', '2024-01-09', 9, 1, '2024-01-17 01:41:13', '2024-01-17 01:41:13'),
+(16, 'Thu', 'Zar', '2024-01-16', 9, 1, '2024-01-17 01:41:27', '2024-01-17 01:41:27'),
+(17, 'Hnin Hnin', 'Khaing', '2024-01-15', 9, 1, '2024-01-17 01:41:45', '2024-01-17 01:41:45'),
+(18, 'Hla Myint', 'Maung', '2024-01-10', 9, 1, '2024-01-17 01:41:58', '2024-01-17 01:41:58');
 
 -- --------------------------------------------------------
 
@@ -908,7 +921,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -968,7 +981,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `relatives`
 --
 ALTER TABLE `relatives`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `roles`
