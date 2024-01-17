@@ -21,7 +21,7 @@
 
         {{-- toastr notification css1 js1 --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script>
+        {{-- <script>
             @if(session()->has("success")) // sessin ထဲတွင် success ရှိနေမှ အလုပ်လုပ်မည် 
                 toastr.success('{{session()->get('success')}}', 'Successful')
             @endif
@@ -35,7 +35,28 @@
                     toastr.error('{{$error}}',"Warning") 
                 @endforeach
             @endif
+        </script> --}}
+
+        <script>
+            toastr.options= {
+                "progressBar" : true,
+                "closeButton" : true
+            }
         </script>
+            @if(session()->has("success"))  {{--// sessin ထဲတွင် success ရှိနေမှ အလုပ်လုပ်မည်  --}}
+               <script> toastr.success('{{session()->get('success')}}', 'Successful')</script>
+            @endif
+
+            @if(Session::has("info")){{--  // sessin ထဲတွင် success ရှိနေမှ အလုပ်လုပ်မည်  --}}
+                <script> toastr.info('{{session()->get('info')}}', 'Information')</script>
+            @endif
+
+             @if($errors){{-- // form ထဲမှ ဖမ်းထားတဲ့ error အားလံဒးကို စုပေါင်းထာသည့်နေရာ array ဖြင့် ထုတ်ပေးသောကြောင့် loop ပတ်ပေးရမည် --}}
+                @foreach($errors->all() as $error){{--  // input ရှိ error အားလုံးကို ဖမ်းပေးမည်ဖြ်ပြီး array ြဖင့် ထုတ်ပေးသော်ကြာင့် all() ဖြင့်ယူပြီး looping ပတ်ပေးရမည်  --}}
+                <script>toastr.error('{{$error}}',"Warning",{timeOut:5000}) </script> 
+                {{-- warning တစ်ခုတည်းကိုဘဲ option ပေးခြင်းဖြစသ်ည  --}}
+                @endforeach
+            @endif
         <!--custom js-->
         <script src="{{asset('assets/dist/js/app.js')}}" type="text/javascript"></script>
 

@@ -1,6 +1,6 @@
 @extends("layouts.adminindex")
 @section("css")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
 @endsection
 @section("caption","Contact List")
 @section("content")
@@ -11,6 +11,44 @@
         <a href="#createmodel" class="btn btn-primary btn-sm rounded-0" data-bs-toggle="modal">Create</a>
 
         <hr>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="">
+                    <div class="row justify-content-end">
+                        <div class="col-md-4 col-sm-6 mb-2">
+                           
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-2">
+                            <div class="form-group">
+                                <select name="filter" id="filter" class="form-select form-control-sm rounded-0" value="{{request("filter")}}">
+                                    {{-- အားလုံးပြရန် value ကို " " ထားပေးရမည် method 1 --}}
+                                    {{-- <option value=" " selected >Choose Status...</option> --}}
+                                    {{-- @foreach ($filterposts as $id => $title) --}}
+                                    {{-- database မှ id နှင့် queryမှ id သည် datatype ကွဲနိုင်သောကြာင့် == ဖြင့်သာ စစ်သင့်သည်  --}}
+                                        {{-- <option value="{{$id}}" {{$id == request("filter") ? "selected" : " " }}>{{$title}}</option>
+                                    @endforeach --}}
+
+                                    @foreach($relatives as $id => $name)
+                                        <option value="{{$id}}" {{$id == request("filter") ? "selected" : " "}}>{{$name}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-2">
+                            <div class="input-group">
+                                <input type="text" name="search" id="filtername" class="form-control form-control-sm rounded-0" placeholder="Search..." value="{{request("search")}}">
+                                <button type="submit" id="btn-search" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                <button type="button" id="btn-clear" class="btn btn-secondary"><i class="fas fa-sync"></i></button>
+    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     
         <table id="mytable" class="table table-hover border">
             <thead>
@@ -32,7 +70,8 @@
                 
                 <tr>
 
-                    <td>{{++$idx}}</td>
+                    {{-- <td>{{++$idx}}</td> --}}
+                    <td>{{$idx + $contacts->firstitem()}}</td>
                     <td>{{$contact->firstname}}</td>
                     <td>{{$contact->lastname}}</td>
                     {{-- data ရှိမရှီကို tinary operator ဖြင့် စစ်ပြိး ရှိပြီဆိုမှ ဖော်ပြပေးမည်  --}}
@@ -44,7 +83,7 @@
                     <td>{{$contact->created_at->format('d m Y')}}</td>
                     <td>{{$contact->updated_at->format('d M Y')}}</td>
                     <td>
-                        <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form" data-bs-toggle="modal" data-bs-target="#editmodal" data-id="{{$contact->id}}" data-name="{{$contact->name}}" data-status="{{$contact->relative_id}}"><i class="fas fa-pen"></i></a>
+                        <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form" data-bs-toggle="modal" data-bs-target="#editmodal" data-id="{{$contact->id}}" data-firstname="{{$contact->firstname}}" data-lastname="{{$contact->lastname}}" data-birthday="{{$contact->birthday}}" data-relative="{{$contact->relative_id}}" data-status="{{$contact->relative_id}}"><i class="fas fa-pen"></i></a>
                         
                         <a href="#" class="text-danger me-3 delete-btns" data-idx = "{{$contact->id}}" ><i class="fas fa-trash"></i></a>
 
@@ -60,6 +99,15 @@
             </tbody>
             
         </table>
+
+        {{-- appends အား only တွင် filter နှင့် search နှစ်ခလုံးအတွက်ထားမည် --}}
+        {{-- {{$contacts->appends(request()->only("filter","search"))->links()}} --}}
+
+        {{-- withQueryString သံုးထားသောကြောင့် appends လု်ပစရာမလိုပေ --}}
+        {{$contacts->links()}}
+        {{-- {{$contacts->links("pagination::bootstrap-4")}} --}}
+       {{-- {{$contacts->links("pagination::bootstrap-5")}} composer ကို update လုပ်ပေးရမည် --}}
+        
         
     </div>
     <!--End Content Area-->
@@ -69,7 +117,7 @@
 
         <!-- start edit modal -->
         <div id="createmodel" class="modal fade">
-            <div class="modal-dialog modal-sm modal-dialog-center">
+            <div class="modal-dialog modal-md modal-dialog-center">
                 <div class="modal-content rounded-0">
                     <div class="modal-header">
                         <h6 class="modal-title">Create Form</h6>
@@ -125,7 +173,7 @@
 
         <!-- start edit modal -->
         <div id="editmodal" class="modal fade">
-            <div class="modal-dialog modal-sm modal-dialog-center">
+            <div class="modal-dialog modal-md modal-dialog-center">
                 <div class="modal-content rounded-0">
                     <div class="modal-header">
                         <h6 class="modal-title">Edit Form</h6>
@@ -138,13 +186,21 @@
                             @method("PUT")
 
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 form-group mb-1">
-                                    <label for="name">Name <span class="text-danger">*</span></label>
-                                    <input type="text" name="name" id="editname" class="form-control rounded-0" placeholder="Enter Stage Name" value="{{old('name')}}">
+                                <div class="col-md-6 col-sm-12 form-group mb-1">
+                                    <label for="editfirstname">First Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="firstname" id="editfirstname" class="form-control rounded-0" placeholder="Enter First Name" value="{{old('firstname')}}">
+                                </div>
+                                <div class="col-md-6 col-sm-12 form-group mb-1">
+                                    <label for="editlastname">Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="lastname" id="editlastname" class="form-control rounded-0" placeholder="Enter Last Name" value="{{old('editlastname')}}">
                                 </div>
                                 <div class="col-md-12 col-sm-12 form-group mb-1">
-                                     <label for="editstatus_id">Relative</label>
-                                     <select name="status_id" id="editrelative_id" class="form-control rounded-0">
+                                    <label for="editbirthday">Birthday <span class="text-danger">*</span></label>
+                                    <input type="date" name="birthday" id="editbirthday" class="form-control rounded-0" placeholder="Enter Birthday" value="{{old('birthday')}}">
+                                </div>
+                                <div class="col-md-12 col-sm-12 form-group mb-1">
+                                     <label for="editrelative_id">Relative</label>
+                                     <select name="relative_id" id="editrelative_id" class="form-control rounded-0">
                                         @foreach($relatives as $id => $name)
                                             <option value="{{$id}}">{{$name}}</option>
                                         @endforeach
@@ -181,8 +237,46 @@
 
 @section("scripts")
 {{-- datatable css1 js1 --}}
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script>
+
+        // start filter
+        document.getElementById("filter").addEventListener("change",function(){
+            let getfilterid = this.value || this.options[this.selectedIndex].value;
+            window.location.href = window.location.href.split("?")[0]+"?filter="+getfilterid;
+
+        })
+        // end filter
+
+        // start clear filter 
+        document.getElementById("btn-clear").addEventListener("click",function(){
+            // window.location.href = window.location.href.split("?")[0]+"?filter=&search=";
+            const getfilter = document.getElementById("filter");
+            const getsearch = document.getElementById("search");
+            getfilter.selectedIndex = 0; // select box မှ index ကို 0 ပြန်ထားမည်
+            getsearch.value = "";
+
+            
+            window.location.href = window.location.href.split("?")[0];
+        })
+        // end clear filter
+
+                // start auto show clear btn
+                const autoshowbtn = function(){
+            let getBtnClear = document.getElementById("btn-clear");
+            let getUrlQuery = window.location.search; // url ထဲရှိ query ကို ဆွဲထုတ်မည်
+            let pattern = /[?&]search=/; // url ထဲရှိ search ဟူသော ကောင်ပါသလား ? နှင့် & ပါသလား  (true/false)
+            if(pattern.test(getUrlQuery)){
+                // pattern ထဲရှိ စာသားသည် test ထဲရှိစာသားနှင့် တူညီသလား စစ်သည် js default function
+                getBtnClear.style.display = 'block';
+            }else{
+                getBtnClear.style.display = 'none';
+
+            }
+        }
+        autoshowbtn();
+        // end auto show clear btn
+
         $(document).ready(function(){
             $(".delete-btns").click(function(){
                 // console.log("hello");
@@ -199,17 +293,17 @@
 
             $(document).on("click",".edit_form",function(e){
                 e.preventDefault();
-                $("#editname").val($(this).data("name"));
-                $("#editstatus_id").val($(this).data("status"));
+                $("#editfirstname").val($(this).data("firstname"));
+                $("#editlastname").val($(this).data("lastname"));
+                $("#editbirthday").val($(this).data("birthday"));
+                $("#editrelative_id").val($(this).data("relative"));
 
                 const getid = $(this).data("id");
-
-                console.log($("#form_action"));
 
                 $("#editform_action").attr('action',`/contacts/${getid}`);
                 
             }) 
-            $("#mytable").DataTable();
+            // $("#mytable").DataTable();
         })
     </script>
 @endsection

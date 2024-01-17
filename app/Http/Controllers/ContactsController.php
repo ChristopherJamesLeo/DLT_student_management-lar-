@@ -18,7 +18,13 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $data["contacts"] = Contact::all();
+        // $data["contacts"] = Contact::all();
+        // $data["contacts"] = Contact::paginate(5);
+
+        // $data["contacts"] = Contact::filter()->searchonly()->zafirstname()->paginate(3);
+
+        // paginartion ကို filter နှင့် search မပျက်သွားအောင် queryString ကပ်ပေးထားခြင်းဖြစ်သည်
+        $data["contacts"] = Contact::filter()->searchonly()->zafirstname()->paginate(3)->withQueryString();
 
         // $statuses = Status::all();
         $relatives = Relative::all()->pluck("name","id")->prepend("Choose Relative"); // pluck ထဲထည့်ပေးပါက A to Z စဥ်စားပြီးသားဖြစ်သည် 
@@ -65,7 +71,10 @@ class ContactsController extends Controller
     public function update(Request $request, string $id)
     {
         $this -> validate($request,[
-            "name" => "required|unique:contacts,name,".$id,
+            "firstname" => "required|min:3|max:50",
+            "lastname" => "max:50",
+            "birthday" => "nullable" , // မထည့်လဲ အဆင်ပြေသည် 
+            "relative_id" => "nullable" , // မထည့်လဲ ရသည် 
         ]);
 
         $user = Auth::user();
@@ -73,13 +82,14 @@ class ContactsController extends Controller
 
         $contact = Contact::findOrFail($id);
 
-        $contact -> name = $request["name"];
-        $contact -> slug = Str::slug($request["name"]);
+         $contact -> firstname = $request["firstname"];
+        $contact -> lastname = $request["lastname"];
+        $contact -> birthday = $request["birthday"];
+        $contact -> relative_id = $request["relative_id"];
         $contact -> user_id = $user_id;
-        $contact -> status_id = $request["status_id"];
 
         $contact -> save();
-
+        session()->flash("success","Update Successful");
         return redirect(route("contacts.index"));
     }
 
@@ -88,6 +98,7 @@ class ContactsController extends Controller
      */
     public function destroy(string $id)
     {
+        
         $contact = Contact::findOrFail($id);
 
         $contact -> delete();
