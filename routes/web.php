@@ -21,6 +21,7 @@ use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AttendancesController;
+use App\Http\Controllers\LeavesController;
 
 
 /*
@@ -82,6 +83,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource("attendances",AttendancesController::class);
     Route::resource("stages",StagesController::class);
+    Route::resource("leaves",LeavesController::class);
 
     
 });
