@@ -27,14 +27,14 @@
     </style>
 @endsection
 
-@section("caption","Edit Post")
+@section("caption","Edit Leave")
 @section("content")
 
     <!-- start content area -->
     <div class="container-fluid">
         
         <div class="col-md-12 my-3">
-            <form action="{{route('posts.update',$post->id)}}" method="POST" enctype="multipart/form-data" class=""> 
+            <form action="{{route('leaves.update',$leave->id)}}" method="POST" enctype="multipart/form-data" class=""> 
                 
                 @csrf
                 @method("PUT")
@@ -45,7 +45,7 @@
                             <div class="col-md-12 form-group mb-3">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <img src="{{asset($post->image)}}" width="200px" alt="{{$post->title}}">
+                                        <img src="{{asset($leave->image)}}" width="200px" alt="{{$leave->title}}">
                                     </div>
                                     <div class="col-md-6">
                                         <div class="gallery" style="h-100 ">
@@ -60,37 +60,11 @@
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="startdate">Start Date <span class="text-danger">*</span></label>
-                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0" placeholder="Enter startdate" value="{{$post->startdate}}">
+                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0" placeholder="Enter startdate" value="{{$leave->startdate}}">
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="enddate">End Date <span class="text-danger">*</span></label>
-                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0" placeholder="Enter enddate" value="{{$post->enddate}}">
-                            </div>
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="starttime">Start Time <span class="text-danger">*</span></label>
-                                <input type="time" name="starttime" id="starttime" class="form-control rounded-0" placeholder="Enter starttime" value="{{$post->starttime}}">
-                            </div>
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="endtime">End Time <span class="text-danger">*</span></label>
-                                <input type="time" name="endtime" id="endtime" class="form-control rounded-0" placeholder="Enter endtime" value="{{$post->endtime}}">
-                            </div>
-                            <div class="col-md-12 form-group mb-3">
-                                <label for="">Days<span class="text-danger">*</span></label>
-                                <div class="d-flex flex-wrap">
-                                    @foreach($days as $idx => $day)
-                                    <div class="form-check form-switch mx-3">
-                                        <input type="checkbox" name="day_id[]" id="day_id{{$idx}}" class="form-check-input" value="{{$day->id}}"  
-
-                                        @foreach($dayables as $dayable)
-                                            @if($dayable["id"] === $day["id"])
-                                                checked 
-                                            @endif
-                                        @endforeach
-                                        
-                                        /><Label for="day_id{{$idx}}">{{$day->name}}</Label>
-                                    </div>
-                                    @endforeach
-                                </div>
+                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0" placeholder="Enter enddate" value="{{$leave->enddate}}">
                             </div>
                         </div>
                         
@@ -102,73 +76,45 @@
                             <input type="file" name="image" id="image" class="form-control  rounded-0" hidden>
                             <div class="col-md-12 col-sm-12 form-group mb-1">
                                 <label for="name">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" id="name" class="form-control rounded-0" placeholder="Enter Post Name" value="{{$post->title}}">
+                                <input type="text" name="title" id="name" class="form-control rounded-0" placeholder="Enter Leave" value="{{$leave->title}}">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="type">Type <span class="text-danger">*</span></label>
+                                <label for="post_id">Class <span class="text-danger">*</span></label>
 
-                                <select name="type_id" id="type" class="form-control form-contrl-sm rounded-0">
-                                    @foreach ($types as $type)
-                                        <option value="{{$type->id}}"
-                                            @if($type["id"]===$post["type_id"])
-
-                                            selected
-
-                                            @endif
-                                        >{{$type->name}}</option>
+                                <select name="post_id" id="post_id" class="form-control form-contrl-sm rounded-0">
+                                    @foreach ($posts as $idx => $title)
+                                        <option value="{{$idx}}" {{$idx == $leave->post_id ? "selected" : ""}}>{{$title}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6 col-sm-12 form-group mb-1">
-                                <label for="fee">Fee <span class="text-danger">*</span></label>
-                                <input type="number" name="fee" id="fee" class="form-control rounded-0" placeholder="Class Fee" value="{{$post->fee}}">
+                                <label for="tag">Tag <span class="text-danger">*</span></label>
+
+                                <select name="tag" id="tag" class="form-control form-contrl-sm rounded-0">
+                                    <option value="" selected disabled>Choose Authorized Person...</option>
+                                    @foreach ($users as $idx => $name)
+                                        <option value="{{$idx}}" {{$idx == $leave->post_id ? "selected" : ""}}>{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-sm-12 form-group mb-1">
+                                <label for="stage_id">Stage <span class="text-danger">*</span></label>
+
+                                <select name="stage_id" id="stage_id" class="form-control form-contrl-sm rounded-0">
+                                    <option value="" selected disabled>Choose Stage...</option>
+                                    @foreach ($stages as $idx => $name)
+                                        <option value="{{$idx}}" {{$idx == $leave->stage_id ? "selected" : ""}}>{{$name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-12 col-sm-12 form-group mb-1">
                                 <label for="content">Content <span class="text-danger">*</span></label>
-                                <textarea type="text" name="content" id="content" class="form-control rounded-0" rows="5" placeholder="Say Something..." >{{$post->content}}</textarea>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="tag_id">Tag <span class="text-danger">*</span></label>
-                                <select name="tag_id" id="tag_id" class="form-control form-contrl-sm rounded-0">
-                                    @foreach ($tags as $tag)
-                                        <option value="{{$tag->id}}"
-                                        @if($tag["id"]===$post["tag_id"])
-
-                                            selected
-
-                                        @endif
-                                        >{{$tag->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="attshow">Show On Att Form <span class="text-danger">*</span></label>
-                                <select name="attshow" id="attshow" class="form-control form-contrl-sm rounded-0">
-                                    @foreach ($attshows as $attshow)
-                                        <option value="{{$attshow->id}}"
-                                        @if($attshow["id"]===$post["attshow"])
-
-                                            selected
-
-                                        @endif
-                                        >{{$attshow->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="status">Status <span class="text-danger">*</span></label>
-                                <select name="status_id" id="status" class="form-control form-contrl-sm rounded-0">
-                                    @foreach ($statuses as $status)
-                                        <option value="{{$status->id}}"
-                                        {{ ($status -> id === $post['status_id'] ) ? 'selected' : '' }}
-                                        >{{$status->name}}</option>
-                                    @endforeach
-                                </select>
+                                <textarea type="text" name="content" id="content" class="form-control rounded-0" rows="5" placeholder="Say Something..." >{{$leave->content}}</textarea>
                             </div>
                             
                             <div class="mt-4 col-md-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{route('posts.index')}}" class="btn btn-secondary btn-sm rounded-0">Cancel</a>
+                                    <a href="{{route('leaves.index')}}" class="btn btn-secondary btn-sm rounded-0">Cancel</a>
                                     <button type="submit" class="btn btn-primary btn-sm rounded-0 ms-3">Submit</button>
                                 </div>
                             </div>

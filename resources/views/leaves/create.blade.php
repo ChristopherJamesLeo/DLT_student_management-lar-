@@ -65,22 +65,24 @@
                             <input type="file" name="image" id="image" class="form-control  rounded-0" hidden>
                             <div class="col-md-12 col-sm-12 form-group mb-1">
                                 <label for="name">Title <span class="text-danger">*</span></label>
-                                <input type="text" name="title" id="name" class="form-control rounded-0 @error("title") is-invalid @enderror" placeholder="Enter Role Name" value="{{old('title')}}">
+                                <input type="text" name="title" id="name" class="form-control rounded-0 " placeholder="Enter Role Name" value="{{old('title')}}">
                             </div>
                             <div class="col-md-6 form-group ">
-                                <label for="type">Class <span class="text-danger">*</span></label>
-                                <select name="type_id" id="type" class="form-control form-contrl-sm rounded-0 @error("type") is-invalid @enderror">
-                                    @foreach ($types as $type)
-                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                <label for="post_id">Class <span class="text-danger">*</span></label>
+                                <select name="post_id" id="post_id" class="form-control form-contrl-sm rounded-0 ">
+                                    <option value="" selected disabled>Choose Class...</option>
+                                    @foreach ($posts as $id => $title)
+                                        <option value="{{$id}}">{{$title}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="tag_id">Tag <span class="text-danger">*</span></label>
+                                <label for="tag">Tag <span class="text-danger">*</span></label>
                                
-                                <select name="tag_id" id="tag_id" class="form-control form-contrl-sm rounded-0">
-                                    @foreach ($tags as $tag)
-                                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                <select name="tag" id="tag" class="form-control form-contrl-sm rounded-0">
+                                    <option value="" selected disabled>Choose Authorized Person ...</option>
+                                    @foreach ($tags as $id => $name)
+                                        <option value="{{$id}}">{{$name}}</option>
                                     @endforeach
                                 </select>
                             </div>

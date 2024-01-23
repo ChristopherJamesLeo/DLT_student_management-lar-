@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 02:55 AM
+-- Generation Time: Jan 20, 2024 at 04:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -378,6 +378,28 @@ INSERT INTO `genders` (`id`, `name`, `slug`, `user_id`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `leaves`
+--
+
+CREATE TABLE `leaves` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` bigint(20) UNSIGNED NOT NULL,
+  `startdate` date NOT NULL,
+  `enddate` date NOT NULL,
+  `tag` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` longtext NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `stage_id` enum('1','2','3') NOT NULL DEFAULT '2' COMMENT '1 = Approved, 2 = Pending , 3 = Reject',
+  `authorize_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -414,7 +436,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2023_12_09_193447_create_enrolls_table', 3),
 (21, '2024_01_12_180942_create_edulinks_table', 4),
 (22, '2024_01_14_183655_create_relatives_table', 5),
-(23, '2024_01_14_183844_create_contacts_table', 5);
+(23, '2024_01_14_183844_create_contacts_table', 5),
+(25, '2024_01_20_181547_create_leaves_table', 6);
 
 -- --------------------------------------------------------
 
@@ -812,6 +835,12 @@ ALTER TABLE `genders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `leaves`
+--
+ALTER TABLE `leaves`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -960,10 +989,16 @@ ALTER TABLE `genders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `leaves`
+--
+ALTER TABLE `leaves`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

@@ -7,60 +7,57 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
+use App\Http\Requests\LeaveRequest;
+
 use App\Models\Day;
 use App\Models\Dayable;
 use App\Models\Leave;
 use App\Models\Post;
 use App\Models\Status;
+use App\Models\Stage;
 use App\Models\Type;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Comment;
 
 class LeavesController extends Controller
 {
     public function index()
     {
-        $leaves = Leave::all();
+        // $leaves = Leave::all();
+        $leaves = Leave::filter()->searchonly()->paginate(3);
 
-        return view("leaves.index",compact("leaves"));
+        $posts = Post::all()->pluck("title","id");
+
+        return view("leaves.index",compact("leaves"))->with("posts",$posts);
     }
 
 
     public function create()
     {
-        $attshows = Status::whereIn("id",[3,4])->get(); 
-
-        $days = Day::where("status_id",3)->get();
+        // $attshows = Post::whereIn("id",[3,4])->get(); 
+        $data["posts"] = \DB::table("posts")->where("attshow",3)->orderBy("title","asc")->get()->pluck("title","id"); 
         
-        $statuses = Status::whereIn("id",[7,10,11])->get(); // မိမိ ပို့ချင်သော id 3 နှင့် 4 သာပို့ပေးမည် 
-        
-        $tags = Tag::where("status_id",3)->get(); 
+        $data["tags"] = User::orderBy("name","asc")->get()->pluck("name","id"); 
 
-        $types = Type::whereIn("id",[1,2])->get(); 
-
-        return view("leaves.create",compact("attshows","days","statuses","tags","types"));
+        return view("leaves.create",$data);
 
     }
 
 
-    public function store(Request $request)
+    public function store(LeaveRequest $request)
     {
         // return $request;
-        $this -> validate($request,[
 
-            "image" => "image|mimes:jpg,jpeg,png|max:2048",
-            "title" => "required|max:300|unique:leaves,title",
-            "content" => "required",
-            "fee" => "required",
-            "startdate"  => "required",
-            "enddate"  => "required",
-            "starttime"  => "required",
-            "endtime"  => "required",
-            "type_id"  => "required|in:1,2",
-            "tag_id" => "required",
-            "attshow" => "required|in:3,4",
-            "status_id" => "required|in:7,10,11"
-        ]);
+        // $this -> validate($request,[
+        //     "post_id" => "required",
+        //     "startdate"  => "required|date",
+        //     "enddate"  => "required|date",
+        //     "tag" => "required",
+        //     "title" => "required|max:50",
+        //     "content" => "required",
+        //     "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
+        // ]);
 
 
         $user = Auth::user(); // log in ဝင်ထား‌သောကောင်၏ data ရယူရန်
@@ -68,18 +65,13 @@ class LeavesController extends Controller
         $user_id = $user->id;
 
         $leave = new Leave();
-        $leave -> title = $request["title"];
-        $leave -> slug = Str::slug($request["title"]); 
-        $leave -> content = $request["content"];  
-        $leave -> fee = $request["fee"];  
+        $leave -> post_id = $request["post_id"];
         $leave -> startdate = $request["startdate"];  
         $leave -> enddate = $request["enddate"];  
-        $leave -> starttime = $request["starttime"];  
-        $leave -> endtime = $request["endtime"];  
-        $leave -> type_id = $request["type_id"];  
-        $leave -> tag_id = $request["tag_id"];  
-        $leave -> attshow = $request["attshow"];  
-        $leave -> status_id = $request["status_id"];  
+        $leave -> content = $request["content"];   
+        $leave -> tag = $request["tag"];
+        $leave -> title = $request["title"];
+        $leave -> content = $request["content"];
         $leave -> user_id = $user_id;  
 
         // single img upload
@@ -101,24 +93,6 @@ class LeavesController extends Controller
 
         $leave -> save();
 
-
-        // method 2 
-        if($leave->id){ // leave ထဲသို့ data ထည့်တာ အောင်မြင်မှသာ
-            // create dayable 
-            if(count($request["day_id"] ) > 0){
-                foreach($request["day_id"] as $key => $value){
-                    $day = [
-                        // "day_id" => $request["day_id"]["key"], // method 1
-                        "day_id" => $value, // method 2
-                        "dayable_id" => $leave->id,
-                        "dayable_type" => $request["dayable_type"] // leave အတွက်ဘဲ လာမည်ဖြစ်သောကြောင့် တန်းရေးလို့ရသည် 
-                    ];
-
-                    Dayable::insert($day);
-                }
-            }
-        }
-
         return redirect(route("leaves.index"));
     }
 
@@ -127,59 +101,44 @@ class LeavesController extends Controller
     {
         $leave = Leave::findOrFail($id);
 
-        $attshows = Status::whereIn("id",[3,4])->get(); 
-
-        $dayables = $leave-> days() -> get();
-
         // dd($Leave -> checkenroll(1)); check 
 
 
         // $comments = Comment::where("commentable_id",$leave->id)->where("commentable_type","App\Models\leave")->orderBy("created_at","desc")->get(); // restrict for only Leave
 
         $comments = $leave->comments()->orderBy("updated_at","desc")->get(); // error
-        return view("leaves.show",["leave"=>$leave,"comments"=>$comments,"dayables"=>$dayables,"attshows"=>$attshows]);
+        return view("leaves.show",["leave"=>$leave]);
     }
 
 
     public function edit(string $id)
     {
-        $leave = Leave::findOrFail($id);
+        $data["leave"] = Leave::findOrFail($id);
 
-        $attshows = Status::whereIn("id",[3,4])->get(); 
+        $data['posts']= Post::all()->pluck("title","id");
 
-        $days = Day::where("status_id",3)->get();
+        $data["stages"] = Stage::whereIn("id",["1","2","3"])->get()->pluck("name","id");
 
-        $dayables = $leave-> days() -> get();
+        $users = User::all()->pluck("name","id");
 
-        // dd($dayables);
-
-        $statuses = Status::whereIn("id",[7,10,11])->get();
-
-        $tags = Tag::where("status_id",3)->get(); 
-
-        $types = Type::whereIn("id",[1,2])->get(); 
-
-        return view("leaves.edit")->with("leave",$leave)->with("attshows",$attshows)->with("days",$days)->with("dayables",$dayables)->with("statuses",$statuses)->with("tags",$tags)->with("types",$types);
+        return view("leaves.edit",$data,compact("users"));
 
     }
 
 
     public function update(Request $request, string $id)
     {
+
         $this -> validate($request,[
 
-            "image" => "image|mimes:jpg,jpeg,png",
-            "title" => "required|max:300|unique:leaves,title,".$id,
+            "post_id" => "required",
+            "startdate"  => "required|date",
+            "enddate"  => "required|date",
+            "tag" => "required",
+            "title" => "required|max:50",
             "content" => "required",
-            "fee" => "required",
-            "startdate"  => "required",
-            "enddate"  => "required",
-            "starttime"  => "required",
-            "endtime"  => "required",
-            "type_id"  => "required|in:1,2",
-            "tag_id" => "required",
-            "attshow" => "required|in:3,4",
-            "status_id" => "required|in:7,10,11"
+            "stage_id" => "required",
+            "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
 
         ]);
 
@@ -190,19 +149,16 @@ class LeavesController extends Controller
         $user_id = $user->id;
 
         $leave = Leave::findOrFail($id);
-        $leave -> title = $request["title"];
-        $leave -> slug = Str::slug($request["title"]); 
-        $leave -> content = $request["content"];  
-        $leave -> fee = $request["fee"];  
+
+        $leave -> post_id = $request["post_id"];
         $leave -> startdate = $request["startdate"];  
         $leave -> enddate = $request["enddate"];  
-        $leave -> starttime = $request["starttime"];  
-        $leave -> endtime = $request["endtime"];  
-        $leave -> type_id = $request["type_id"];  
-        $leave -> tag_id = $request["tag_id"];  
-        $leave -> attshow = $request["attshow"];  
-        $leave -> status_id = $request["status_id"];  
-        $leave -> user_id = $user_id;  
+        $leave -> content = $request["content"];   
+        $leave -> tag = $request["tag"];
+        $leave -> stage_id = $request["stage_id"];
+        $leave -> title = $request["title"];
+        $leave -> content = $request["content"];
+        $leave -> user_id = $user_id; 
 
         // Remove Old Img 
         if($request->hasfile("image")){
@@ -251,5 +207,6 @@ class LeavesController extends Controller
         $leave -> delete();
 
         return redirect()->back();
+
     }
 }
