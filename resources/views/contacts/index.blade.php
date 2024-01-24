@@ -248,6 +248,7 @@
         })
         // end filter
 
+        
         // start clear filter 
         document.getElementById("btn-clear").addEventListener("click",function(){
             // window.location.href = window.location.href.split("?")[0]+"?filter=&search=";
