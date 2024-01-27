@@ -37,6 +37,10 @@ class Attendance extends Model
     //     // attend ထဲမှ user_id ကို ယူပြီး Student table တွင်ချိတ်မည် ဟု ဆိုလိုခြင်းဖြစ်သည် 
     // }
 
+    public function studentUrl(){
+        return Student::where("user_id",$this->user_id)->gt(["students_id"])->first();
+    }
+
     public function student($userid){
 
         // method 1 

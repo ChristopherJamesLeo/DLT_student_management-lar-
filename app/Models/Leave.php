@@ -38,7 +38,7 @@ class Leave extends Model
         return $this -> belongsTo(Post::class); 
     } 
 
-    public function tags(){
+    public function tagperson(){
         return $this -> belongsTo(User::class,"tag");
     }
 
@@ -48,6 +48,40 @@ class Leave extends Model
                 $query -> where("post_id",$getfilter);
             }
         }) ;
+    }
+
+    public function studentUrl(){
+        return Student::where("user_id",$this->user_id)->get(["students.id"])->first();
+    }
+
+    public function student($userid){
+
+        // method 1 
+        // $students = Student::where("user_id",$userid)->get();
+
+        // // dd($students);
+        
+        // foreach($students as $student){
+        //     // dd($student);
+
+        //     // return $student;
+        //     return $student["regnumber"];
+        // }
+
+        // -----------------
+
+        // method 2 
+
+        // reg number ကို pluck ဖြင့် သီးသန့်ဆွဲထုတ်ပြိး ပို့မည့်
+        $students = Student::where("user_id",$userid)->get()->pluck("regnumber");
+
+        // dd($students);
+        
+        foreach($students as $student){
+            // dd($student);
+
+            return $student;
+        }
     }
 
     public function scopesearchonly($query){

@@ -106,4 +106,18 @@ class TypesController extends Controller
 
         return redirect()->back();
     }
+
+    // crud method မှ လွဲ၍ ထပ်တိုး method များအာဂ destory အောက်တွင်ရေးမည်
+
+    // type တစ်ခု ထဲရှီ status Id တစ်ခုတည်းကိုဘဲ ပြင်ချင်သောကေြာင့် custom function သတ်မှတ်လိုက်သည် 
+    public function typestatus(Request $request){
+        $type = Type::findOrFail($request["id"]); // id သည် update ကဲ့သို့ route ကနေမရနေသောကြောင့် request မှ id ကို သံုးပေးရမည် 
+
+        $type -> status_id = $request["status_id"];
+
+        $type -> save();
+
+        // success ဖြစ်ပါက response ပြန်ရန်
+        return response()->json(["success" => "Status Change Successful"]);
+    }
 }

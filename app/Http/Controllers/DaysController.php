@@ -21,16 +21,18 @@ class DaysController extends Controller
         return view("days.index",compact("days"))->with("statuses",$statuses);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
+        // $this -> validate($request,[
+        //     "name" => "required|unique:days,name"
+        // ]);
+
         $this -> validate($request,[
-            "name" => "required|unique:days,name"
+            "name" => "required|unique:days,name",
+            "status_id" => "required|in:3,4"
+        ],[ // error message ထုတ်ပြချင်သည့် စာသားအားပြောင်းလဲရန် seconde para ဖြင့် ရေးပေးရမည် 
+            'name.required' => "Day Name Is Required"  // name အား error message ထုတ်ပြသည့် နေရာ ကို ေပြာင်းသည် 
         ]);
 
         $user = Auth::user();
@@ -51,14 +53,13 @@ class DaysController extends Controller
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $this -> validate($request,[
             "name" => "required|unique:days,name,".$id,
             "status_id" => "required|in:3,4"
+        ],[
+            'name.required' => "Day Name Is Required"
         ]);
 
         $user = Auth::user();
@@ -76,9 +77,6 @@ class DaysController extends Controller
         return redirect(route("days.index"));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $day = Day::findOrFail($id);
@@ -88,3 +86,6 @@ class DaysController extends Controller
         return redirect(route("days.index"));
     }
 }
+
+
+// change every require name

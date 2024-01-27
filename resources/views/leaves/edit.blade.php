@@ -89,11 +89,12 @@
                             </div>
                             <div class="col-md-6 col-sm-12 form-group mb-1">
                                 <label for="tag">Tag <span class="text-danger">*</span></label>
-
+                                
                                 <select name="tag" id="tag" class="form-control form-contrl-sm rounded-0">
                                     <option value="" selected disabled>Choose Authorized Person...</option>
+
                                     @foreach ($users as $idx => $name)
-                                        <option value="{{$idx}}" {{$idx == $leave->post_id ? "selected" : ""}}>{{$name}}</option>
+                                        <option value="{{$idx}}" {{$idx == $leave->tag ? "selected" : ""}}>{{$name}}</option>
                                     @endforeach
                                 </select>
                             </div>

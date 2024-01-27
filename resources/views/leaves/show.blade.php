@@ -68,7 +68,7 @@
         
         <div class="col-md-12 my-3">
             <a href="javascript:void(0)" id="back_btn" class="btn btn-secondary btn-sm rounded-0">Back</a>
-            <a href="{{route('posts.index')}}" class="btn btn-secondary btn-sm rounded-0">Close</a>
+            <a href="{{route('leaves.index')}}" class="btn btn-secondary btn-sm rounded-0">Close</a>
 
             
             <hr>
@@ -77,15 +77,15 @@
             <div class="col-md-4">
                 <div class="card rounded-0">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{{$post -> title}} </h5>
-                        <span>{{$post->type->name}} Class : {{$post->fee}}</span>
+                        <h5 class="card-title">{{$leaves -> title}} </h5>
+                        <span>{{$leave->type->name}} Class : {{$leave->fee}}</span>
                     </div>
                     <ul class="list-group">
                         <li class="d-flex justify-content-center list-group-item fw-bold">
-                            <img src="{{asset($post->image)}}" class="" style="width:200px;height:100px" alt="{{$post->title}}">
+                            <img src="{{asset($leave->image)}}" class="" style="width:200px;height:100px" alt="{{$post->title}}">
                         </li>
                         <div class="w-100 d-flex">
-                            @if(!$post -> checkenroll($userdata->id))
+                            @if(!$leave -> checkenroll($userdata->id))
             
                                 {{-- <a href="#createmodel" data-bs-toggle="modal" class="w-100 btn btn-primary btn-sm rounded-0">Enroll</a> --}}
                                 <button type="button" id="#createmodel" data-bs-toggle="modal" class="w-100 btn btn-primary btn-sm rounded-0">Enroll</button>
@@ -108,7 +108,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="">
-                                                    {{$post->status["name"]}}
+                                                    {{$leave->status["name"]}}
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="">
-                                                    {{$post->attstatus["name"]}}
+                                                    {{$leave->attstatus["name"]}}
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="">
-                                                    {{$post["user"]["name"]}}
+                                                    {{$leave["user"]["name"]}}
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +159,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="">
-                                                    {{date("d M Y ",strtotime($post->created_at))}} | {{date("h:m:s a ",strtotime($post->created_at))}}
+                                                    {{date("d M Y ",strtotime($leave->created_at))}} | {{date("h:m:s a ",strtotime($leave->created_at))}}
                                                 </div>
                                             </div>
                                         </div>
@@ -176,7 +176,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <div class="">
-                                                    {{date("d M Y h:m:s A",strtotime($post->updated_at))}}
+                                                    {{date("d M Y h:m:s A",strtotime($leave->updated_at))}}
                                                 </div>
                                             </div>
                                         </div>
@@ -299,7 +299,7 @@
                                     
 
                                     <!-- start Hidden fields -->
-                                    <input type="hidden" name="commentable_id" id="commentable_id" value="{{$post->id}}">
+                                    <input type="hidden" name="commentable_id" id="commentable_id" value="{{$leave->id}}">
 
                                     <input type="hidden" name="commentable_type" id="commentable_type" value="App\Models\Post">
                                     <!-- end Hidden fields -->
@@ -344,7 +344,7 @@
                         </div>
                         <div id="remark" class="tab-pane">
                             <p>
-                                {!! $post->content !!}
+                                {!! $leave->content !!}
                             </p>
                         </div>
                     </div>
@@ -397,7 +397,7 @@
 
                                 {{-- start hidden fields --}}
                                 <input type="file" name="image" id="image" class="form-control  rounded-0" hidden >
-                                <input type="hidden" name="post_id" value="{{$post->id}}">
+                                <input type="hidden" name="post_id" value="{{$leave->id}}">
                             </div>
                         </form>
                     </div>

@@ -77,14 +77,26 @@ Route::middleware('auth')->group(function () {
     Route::resource("categories",CategoriesController::class);
 
     Route::resource("types",TypesController::class);
+    // type ထဲရှိ method ေခါ်ရန်
+    Route::get("/typesstatus",[TypesController::class,"typestatus"]);
+
+
     Route::resource("relatives",RelativesController::class);
     
     Route::resource("posts",PostsController::class);
 
     Route::resource("attendances",AttendancesController::class);
+
     Route::resource("stages",StagesController::class);
+    Route::get("/stagestatus",[StagesController::class,"stagestatus"]);
+
+
     Route::resource("leaves",LeavesController::class);
 
+
+
+    
+   
     
 });
 

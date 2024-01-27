@@ -104,9 +104,10 @@ class LeavesController extends Controller
         // dd($Leave -> checkenroll(1)); check 
 
 
-        // $comments = Comment::where("commentable_id",$leave->id)->where("commentable_type","App\Models\leave")->orderBy("created_at","desc")->get(); // restrict for only Leave
+        $comments = Comment::where("commentable_id",$leave->id)->where("commentable_type","App\Models\leave")->orderBy("created_at","desc")->get(); // restrict for only Leave
 
-        $comments = $leave->comments()->orderBy("updated_at","desc")->get(); // error
+        // $comments = $leave->comments()->orderBy("updated_at","desc")->get(); // error
+
         return view("leaves.show",["leave"=>$leave]);
     }
 
@@ -126,21 +127,21 @@ class LeavesController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(LeaveRequest $request, string $id)
     {
 
-        $this -> validate($request,[
+        // $this -> validate($request,[
 
-            "post_id" => "required",
-            "startdate"  => "required|date",
-            "enddate"  => "required|date",
-            "tag" => "required",
-            "title" => "required|max:50",
-            "content" => "required",
-            "stage_id" => "required",
-            "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
+        //     "post_id" => "required",
+        //     "startdate"  => "required|date",
+        //     "enddate"  => "required|date",
+        //     "tag" => "required",
+        //     "title" => "required|max:50",
+        //     "content" => "required",
+        //     "stage_id" => "required",
+        //     "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
 
-        ]);
+        // ]);
 
  
 
@@ -158,7 +159,7 @@ class LeavesController extends Controller
         $leave -> stage_id = $request["stage_id"];
         $leave -> title = $request["title"];
         $leave -> content = $request["content"];
-        $leave -> user_id = $user_id; 
+        // $leave -> user_id = $user_id;  edit လုပ်ပါက yser မဟုတ်ဘဲ admin ဖြစ်သွားမှဆိုးသောေကြာင့် ဖျက်ထားခဲ့သည်
 
         // Remove Old Img 
         if($request->hasfile("image")){

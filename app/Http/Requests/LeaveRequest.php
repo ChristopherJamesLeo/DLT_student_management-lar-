@@ -11,6 +11,7 @@ class LeaveRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // dd($this -> method()); // form  မှပို့လိုက်သော method အား ထုတ်ကြည့်နိုင်သည် POST / PUT
         return true;
     }
 
@@ -21,15 +22,31 @@ class LeaveRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "post_id" => "required",
-            "startdate"  => "required|date",
-            "enddate"  => "required|date",
-            "tag" => "required",
-            "title" => "required|max:50",
-            "content" => "required",
-            "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
-        ];
+
+        // store နှင့် update သည် validate တူညီနေပါက စစ်စရာမလိုဘဲ မတူညီမှသာ POST PUT စစ်ပြီး ေပြာင်းလဲနုိင်သည် 
+        if($this -> method() == "POST"){
+            return [
+                "post_id" => "required",
+                "startdate"  => "required|date",
+                "enddate"  => "required|date",
+                "tag" => "required",
+                "title" => "required|max:50",
+                "content" => "required",
+                "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
+            ];
+        }elseif($this -> method() == "PUT"){
+            return [
+                    "post_id" => "required",
+                    "startdate"  => "required|date",
+                    "enddate"  => "required|date",
+                    "tag" => "required",
+                    "title" => "required|max:50",
+                    "content" => "required",
+                    "stage_id" => "required",
+                    "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048"
+            ];
+        }
+        
     }
 
 

@@ -88,4 +88,16 @@ class StagesController extends Controller
 
         return redirect(route("stages.index"));
     }
+
+    // ---------------------
+    public function stagestatus(Request $request){
+        $stage = Stage::findOrFail($request["id"]); // id သည် update ကဲ့သို့ route ကနေမရနေသောကြောင့် request မှ id ကို သံုးပေးရမည် 
+
+        $stage -> status_id = $request["status_id"];
+
+        $stage -> save();
+
+        // success ဖြစ်ပါက response ပြန်ရန်
+        return response()->json(["success" => "Status Change Successful"]);
+    }
 }
