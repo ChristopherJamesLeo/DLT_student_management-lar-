@@ -94,4 +94,16 @@ class RelativesController extends Controller
         
         return redirect(route("relatives.index"));
     }
+
+    // ajax change statu
+
+    public function relativestatus(Request $request) {
+        $relative = Relative::findOrFail($request["id"]);
+
+        $relative->status_id = $request["status_id"];
+
+        $relative -> save();
+
+        return response()->json(["success" => "status change successfu;"]);
+    }
 }

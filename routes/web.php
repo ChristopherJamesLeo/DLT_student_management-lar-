@@ -61,20 +61,32 @@ Route::middleware('auth')->group(function () {
 
     // log in ဝင်ပြီးမှ အသုံးပြုလို့ရစေချင်သောကြောင့် middleware  ထဲမှာ‌ရေးခြင်းဖြစ်သည် 
     Route::resource("statuses",StatusesController::class);
+
     Route::resource("days",DaysController::class);
+    Route::get("daystatus",[DaysController::class,"daystatus"]);
+
+
     Route::resource("enrolls",EnrollsController::class);
 
     Route::resource("edulinks",EdulinksController::class);
 
     Route::resource("students",StudentsController::class);
+
     Route::resource("roles",RolesController::class);
+    Route::get("rolestatus",[RolesController::class,"rolestatus"]);
+
+
     Route::resource("cities",CityController::class);
     Route::resource("countries",CountryContrller::class);
     Route::resource("contacts",ContactsController::class);
     Route::resource("comments",CommentsController::class);
     Route::resource("genders",GenderController::class);
+
     Route::resource("tags",TagsController::class);
+    Route::get("tagstatus",[TagsController::class,"tagstatus"]);
+
     Route::resource("categories",CategoriesController::class);
+    Route::get("categoriesstatus",[CategoriesController::class,"categoriesstatus"]);
 
     Route::resource("types",TypesController::class);
     // type ထဲရှိ method ေခါ်ရန်
@@ -82,6 +94,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource("relatives",RelativesController::class);
+    Route::get("relativestatus",[RelativesController::class,"relativestatus"]);
     
     Route::resource("posts",PostsController::class);
 

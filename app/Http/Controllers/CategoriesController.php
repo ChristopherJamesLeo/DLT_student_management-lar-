@@ -88,4 +88,14 @@ class CategoriesController extends Controller
 
         return redirect(route("categories.index"));
     }
+
+
+    // ajax 
+    public function categoriesstatus(Request $request){
+        $category = Category::findOrFail($request["id"]);
+        $category->status_id = $request["status_id"];
+        $category->save();
+
+        return response()->json(["success"=>"Status Update Successful"]);
+    }
 }

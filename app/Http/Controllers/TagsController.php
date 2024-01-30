@@ -83,4 +83,16 @@ class TagsController extends Controller
 
         
     }
+
+    // change status
+    public function tagstatus(Request $request){
+
+        $tag = Tag::findOrFail($request["id"]);
+
+        $tag-> status_id = $request["status_id"];
+        
+        $tag -> save();
+
+        return response()->json(["success" => "Status Change Successful"]);
+    }
 }

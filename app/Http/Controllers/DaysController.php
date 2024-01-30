@@ -85,6 +85,19 @@ class DaysController extends Controller
 
         return redirect(route("days.index"));
     }
+
+
+    // ajax
+    public function daystatus(Request $request){
+
+        $day = Day::findOrFail($request["id"]);
+
+        $day -> status_id = $request["status_id"];
+
+        $day->save();
+
+        return response()->json(["success"=>"status change successful"]);
+    }
 }
 
 

@@ -180,4 +180,15 @@ class RolesController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function rolestatus(Request $request){
+        $role = Role::findOrFail($request["id"]);
+
+        $role -> status_id = $request["status_id"];
+
+        $role -> save();
+
+        return response()->json(["success" => "status change successfu;"]);
+    }
 }

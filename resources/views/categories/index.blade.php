@@ -34,8 +34,11 @@
                     <td>{{$categorie->name}}</td>
                     <!-- <td>{{--$categorie->status->slug--}}</td> -->
                     <td>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" {{ $categorie -> status_id === 3 ? 'checked' : ' '}}/>
+                        <div class="form-checkbox form-switch">
+                            <input type="checkbox" name="" id="" class="form-check-input change-btn" {{$categorie->status_id == "3" ? "checked" : ""}}
+                            {{-- type ကိုပြင်ရန် id သတ်မှတ်ရမည် --}}
+                            data-id = {{$categorie->id}}
+                            >
                         </div>
                     </td>
                     <td>{{ $categorie["user"]["name"] }}</td>
@@ -209,6 +212,25 @@
                 
             })
             $("#mytable").DataTable();
+
+            $(".change-btn").click(function(){
+                let getId = $(this).data("id");
+
+                var setStatus_id =  $(this).prop("checked") === true ? 3 : 4;
+
+                $.ajax({
+                    method : "GET",
+                    url : "categoriesstatus",
+                    dataType : "json",
+                    data : {
+                        "id" : getId,
+                        "status_id" : setStatus_id
+                    },
+                    success : function(response){
+                        console.log(response.success);
+                    }
+                })
+            })
         })
     </script>
 @endsection

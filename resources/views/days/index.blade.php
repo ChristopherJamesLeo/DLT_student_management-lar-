@@ -33,8 +33,11 @@
                     <td>{{++$idx}}</td>
                     <td>{{$day->name}}</td>
                     <td>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" {{ $day -> status_id === 3 ? 'checked' : ' '}}/>
+                        <div class="form-checkbox form-switch">
+                            <input type="checkbox" name="" id="" class="form-check-input change-btn" {{$day->status_id == "3" ? "checked" : ""}}
+                            {{-- type ကိုပြင်ရန် id သတ်မှတ်ရမည် --}}
+                            data-id = {{$day->id}}
+                            >
                         </div>
                     </td>
                     <td>{{ $day["user"]["name"] }}</td>
@@ -208,6 +211,27 @@
                 
             })
             $("#mytable").DataTable();
+
+
+            // change status ajax
+            $(".change-btn").click(function(){
+                let getId = $(this).data("id");
+
+                var setStatus_id =  $(this).prop("checked") === true ? 3 : 4;
+
+                $.ajax({
+                    method : "GET",
+                    url : "daystatus",
+                    dataType : "json",
+                    data : {
+                        "id" : getId,
+                        "status_id" : setStatus_id
+                    },
+                    success : function(response){
+                        console.log(response.success);
+                    }
+                })
+            })
         })
     </script>
 @endsection

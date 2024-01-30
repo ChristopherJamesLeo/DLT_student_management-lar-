@@ -71,7 +71,14 @@
                     <td>{{$idx+ $tags->firstItem()}}</td>
 
                     <td>{{$tag->name}}</td>
-                    <td>{{$tag->status->slug}}</td>
+                    <td>
+                        <div class="form-checkbox form-switch">
+                            <input type="checkbox" name="" id="" class="form-check-input change-btn" {{$tag->status_id == "3" ? "checked" : ""}}
+                            {{-- type ကိုပြင်ရန် id သတ်မှတ်ရမည် --}}
+                            data-id = {{$tag->id}}
+                            >
+                        </div>
+                    </td>
                     <td>{{$tag["user"]["name"]}}</td>
                      
                     <td>{{$tag->created_at->format('d m Y')}}</td>
@@ -194,6 +201,34 @@
                 
             })
             // $("#mytable").DataTable();
+
+            // start change status btn
+            $(".change-btn").click(function(){
+                // console.log($(this).data("id"));
+
+                var getid = $(this).data("id");
+
+                // prop ဖြင့် checkbox သည် prop ဖြင့် check ဖြစ်သလား ဖြစ်လှျင်3 မဖြစ်လှျင် 4
+                var setstatus = $(this).prop("checked") === true ? 3 : 4;
+                
+                // change API 
+                $.ajax({
+                    url : "tagstatus", //route list ထဲရှီ route name ကို ပို့ပေးရမည်
+                    type : "GET", // route ကို ဖမ်းတီးရာတွင် GET ဖြစ်သော ကြောင့် GET ဖြင့် သ့ဒဂပေးရမည်
+                    
+                    dataType : "json",
+                    data : {
+                        // columnName : value
+                        "id" : getid,
+                        "status_id" : setstatus
+                    },
+                    success : function(response){
+                        console.log(response.success); // return ပြန်လာသော data အား ယူမည် 
+                    }
+                    
+                });
+            })
+            // end change status btn
         })
     </script>
 @endsection
