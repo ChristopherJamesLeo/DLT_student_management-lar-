@@ -51,11 +51,12 @@
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="startdate">Start Date <span class="text-danger">*</span></label>
-                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0 @error("startdate") is-invalid @enderror" placeholder="Enter startdate" value="{{old('startdate')}}">
+                                <input type="date" name="startdate" id="startdate" class="form-control rounded-0 @error("startdate") is-invalid @enderror" placeholder="Enter startdate" value="{{$gettoday}}">
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label for="enddate">End Date <span class="text-danger">*</span></label>
-                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0  @error("enddate") is-invalid @enderror" placeholder="Enter enddate" value="{{old('enddate')}}">
+                                <input type="date" name="enddate" id="enddate" class="form-control rounded-0  @error("enddate") is-invalid @enderror" placeholder="Enter enddate" value="{{old("enddate",$gettoday)}}">
+                                {{-- old("enddate",$gettoday) ေရွှးထားပြီးသားကို error တက်ပါက ပြန်ရေွးပေးမည်ဖြစ်သည် --}}
                             </div>
                         </div>
                     </div>

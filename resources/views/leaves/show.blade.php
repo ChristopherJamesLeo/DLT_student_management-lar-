@@ -60,7 +60,7 @@
         }
     </style>
 @endsection
-@section("caption","Post List")
+@section("caption","Leave List")
 @section("content")
 
     <!-- start content area -->
@@ -77,60 +77,20 @@
             <div class="col-md-4">
                 <div class="card rounded-0">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{{$leaves -> title}} </h5>
-                        <span>{{$leave->type->name}} Class : {{$leave->fee}}</span>
+                        <h5 class="card-title">{{$leave -> title}} </h5>
+                        <span>{{$leave->stage->name}} Class : {{$leave->fee}}</span>
                     </div>
                     <ul class="list-group">
                         <li class="d-flex justify-content-center list-group-item fw-bold">
-                            <img src="{{asset($leave->image)}}" class="" style="width:200px;height:100px" alt="{{$post->title}}">
+                            <img src="{{asset($leave->image)}}" class="" style="width:200px;height:100px" alt="{{$leave->title}}">
                         </li>
-                        <div class="w-100 d-flex">
-                            @if(!$leave -> checkenroll($userdata->id))
-            
-                                {{-- <a href="#createmodel" data-bs-toggle="modal" class="w-100 btn btn-primary btn-sm rounded-0">Enroll</a> --}}
-                                <button type="button" id="#createmodel" data-bs-toggle="modal" class="w-100 btn btn-primary btn-sm rounded-0">Enroll</button>
-            
-                            @endif
-                            <button type="button" class="w-100 btn btn-outline-primary btn-sm rounded-0">Follow</button>
-                        </div>
+                        
                     </ul>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 mb-3">
-                                <div class="row gap-0 mb-2">
-                                    <div class="col-auto">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="">Status</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="">
-                                                    {{$leave->status["name"]}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row gap-0 mb-2">
-                                    <div class="col-auto">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="">Status</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="">
-                                                    {{$leave->attstatus["name"]}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               
+                               
                                 <div class="row gap-0 mb-2">
                                     <div class="col-auto">
                                         <i class="fas fa-user"></i>
@@ -183,108 +143,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <p class="text-small text-muted text-uppercase mb-2">Class Day</p>
-
-                                @foreach($dayables as $dayable)
-                                    <div class="row gap-0 mb-2">
-                                        <div class="col-auto">
-                                            <i class="fas fa-info"></i>
-                                        </div>
-                                        <div class="col">
-                                            {{$dayable ->name}}
-                                        </div>
-                                        
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="mb-3">
-                                <p class="text-small text-muted text-uppercase mb-2">Class Day</p>
-
-                                @foreach($dayables as $dayable)
-                                    <div class="row gap-0 mb-2">
-                                        <div class="col-auto">
-                                            <i class="fas fa-info"></i>
-                                        </div>
-                                        <div class="col">
-                                            {{$dayable ->name}}
-                                        </div>
-                                        
-                                    </div>
-                                @endforeach
-                            </div>
-                            {{-- <div class="col-md-6">
-                                <i class="fas fa-user fa-sm me-2"></i><span>{{$post["tag"]["name"]}}</span>
-                                <br/>
-                                <i class="fas fa-user fa-sm me-2"></i><span>{{$post["type"]["name"]}} : {{$post["fee"]}} </span>
-                                <br/>
-                                <i class="fas fa-user fa-sm me-2"></i><span>{{$post["user"]["name"]}}</span>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fas fa-file fa-sm me-2"></i><span>{{$post["attstatus"]["name"]}}</span>
-                                <br>
-                                <i class="fas fa-calendar fa-sm me-2"></i><span>{{date("d M Y ",strtotime($post->created_at))}} | {{date("h:m:s a ",strtotime($post->created_at))}}</span>
-                                <br>
-                                <!-- date(fomat type , databaseမှvalue အား string ပြောင်းရန် strtotime() သုံးပေးရမည်) -->
-                                <i class="fas fa-edit fa-sm me-2"></i><span>{{date("d M Y h:m:s A",strtotime($post->updated_at))}}</span>
-                            </div>
-                            <div class="col-md-12 form-group mb-3">
-                                <i class="fas fa-calendar fa-sm"></i>
-                                <span>
-                                @foreach($dayables as $dayable)
-                                    {{$dayable -> name}} , 
-                                @endforeach
-                                </span>
-
-                            </div> --}}
+                            
+                           
                         </div>
                     </div>
                     
                 </div>
             </div>
             <div class="col-md-8">
-                {{-- <div class="rounded-0">
-                    <ul class="list-group rounded-0 text-center">
-                        <li class="active list-group-item">Information</li>
-                    </ul>
-
-                    <!-- start remark  -->
-                    <table class="table table-hover table-sm table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Info...</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr> --}}
-                                {{-- <!-- html code များ အား ဖတ်စေချင်လျှင်အသုံးပြုသည် {!! !!} သည် မည်သည့် editor မှမဆို အသုံးပြုနိုင်သငည်   --> --}}
-                                {{-- <td>{!! $post->content !!}</td>
-                            </tr>
-                        </tbody>
-                        
-                    </table>
-                    <!-- end remark -->
-                </div> --}}
+               
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card rounded-0 border-0">
-                            <div class="card-body">
-                                <ul class="list-group chat_box">
-                                    @foreach($comments as $comment)
-                                        <li class="mt-2 list-group-item border-0 rounded-0">
-                                            <div>
-                                                <p>
-                                                    {{$comment->description}}
-                                                </p>
-                                            </div>
-                                            <div >
-                                                <span class="small fw-bold float-end">{{$comment->user->name}} | {{$comment->created_at->diffForHumans()}}</span>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                            
                             <div class="card-body border-top">
                                 <form action="{{route('comments.store')}}" method="POST" >
 
@@ -301,7 +173,7 @@
                                     <!-- start Hidden fields -->
                                     <input type="hidden" name="commentable_id" id="commentable_id" value="{{$leave->id}}">
 
-                                    <input type="hidden" name="commentable_type" id="commentable_type" value="App\Models\Post">
+                                    <input type="hidden" name="commentable_type" id="commentable_type" value="App\Models\Leave">
                                     <!-- end Hidden fields -->
 
                                 </form>
@@ -312,37 +184,13 @@
 
                 <div class="mb-4 card border-0 shadow rounded-0">
                     <ul class="nav">
-                        <li class="nav-item "><button type="button" id="autoclick" class="tablinks active" onclick="gettab(event,'follower')">Follower</button></li>
-                        <!-- event ကို html မှ parameter  ပေးရန် event ဟု အပြည့်အပြည့်စုံရေးပေးရမည် -->
-                        <li class="nav-item"><button type="button" id="" class="tablinks" onclick="gettab(event,'following')">Following</button></li>
-                        <li class="nav-item"><button type="button" id="" class="tablinks" onclick="gettab(event,'liked')">Liked</button></li>
-                        <li class="nav-item"><button type="button" id="" class="tablinks" onclick="gettab(event,'remark')">Remark</button></li>
+                        <li class="nav-item "><button type="button" id="autoclick" class="tablinks active" onclick="gettab(event,'content')">Content</button></li>
                     </ul>
 
 
                     <div class="tab-content">
-                        <div id="follower" class="tab-pane">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim id consequuntur explicabo ea eveniet qui ipsum quae commodi similique fuga ipsam reiciendis officia, tempora sapiente porro modi distinctio autem! Repellendus!
-                                Quaerat optio mollitia beatae? Similique est, molestias eius quos voluptas porro necessitatibus sit facere repellat unde beatae accusamus id distinctio dolore tempora dolorem modi earum numquam laborum provident debitis architecto.
-                                Provident minima est laudantium fugit dicta atque esse excepturi repudiandae quo iusto ipsam, animi id nulla, consectetur commodi quisquam facilis at accusamus dolorum iste et pariatur odit. Temporibus, dignissimos alias!
-                            </p>
-                        </div>
-                        <div id="following" class="tab-pane">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim id consequuntur explicabo ea eveniet qui ipsum quae commodi similique fuga ipsam reiciendis officia, tempora sapiente porro modi distinctio autem! Repellendus!
-                                Quaerat optio mollitia beatae? Similique est, molestias eius quos voluptas porro necessitatibus sit facere repellat unde beatae accusamus id distinctio dolore tempora dolorem modi earum numquam laborum provident debitis architecto.
-                                Provident minima est laudantium fugit dicta atque esse excepturi repudiandae quo iusto ipsam, animi id nulla, consectetur commodi quisquam facilis at accusamus dolorum iste et pariatur odit. Temporibus, dignissimos alias!
-                            </p>
-                        </div>
-                        <div id="liked" class="tab-pane">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim id consequuntur explicabo ea eveniet qui ipsum quae commodi similique fuga ipsam reiciendis officia, tempora sapiente porro modi distinctio autem! Repellendus!
-                                Quaerat optio mollitia beatae? Similique est, molestias eius quos voluptas porro necessitatibus sit facere repellat unde beatae accusamus id distinctio dolore tempora dolorem modi earum numquam laborum provident debitis architecto.
-                                Provident minima est laudantium fugit dicta atque esse excepturi repudiandae quo iusto ipsam, animi id nulla, consectetur commodi quisquam facilis at accusamus dolorum iste et pariatur odit. Temporibus, dignissimos alias!
-                            </p>
-                        </div>
-                        <div id="remark" class="tab-pane">
+                        
+                        <div id="content" class="tab-pane">
                             <p>
                                 {!! $leave->content !!}
                             </p>
@@ -397,7 +245,7 @@
 
                                 {{-- start hidden fields --}}
                                 <input type="file" name="image" id="image" class="form-control  rounded-0" hidden >
-                                <input type="hidden" name="post_id" value="{{$leave->id}}">
+                                <input type="hidden" name="leave_id" value="{{$leave->id}}">
                             </div>
                         </form>
                     </div>

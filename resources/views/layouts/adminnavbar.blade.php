@@ -15,97 +15,45 @@
             <!--notify & userlogout-->
             <ul class="navbar-nav me-5 pe-5">
                 <!-- notify -->
-                <li class="nav-item dropdowns">
+                <li class="nav-item dropdowns me-3">
                     <a href="javascript:void(0);" class="nav-line dropbtn" onclick="dropbtn(event)">
                         <i class="fas fa-bell"></i>
-                        <span class="badge bg-danger">5+</span>
+                        <span class="badge bg-danger">{{auth()->user()->unreadNotifications->count()}}</span>
                     </a>
 
                     <div class="dropdown-contents mydropdowns">
+                    
+                        <a href="javascript:void(0);" class="small text-center text-muted">Mark all as read</a>
 
-                        <h6>Alert Center</h6>
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div class="me-3">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div>
-                                <p class="small text-muted">3 May 2023</p>
-                                <i>A new members created.</i>
-                            </div>
-                        </a>
+                        {{-- @foreach ($userdata->notifications as $notification) --}}
+                        @foreach (Auth::user()->notifications as $notification)
+                        {{-- noti ကို show ပြရန် --}}
+                            <a href="{{route('leaves.show',$notification->data["id"])}}" class="d-flex">
+                                <div class="me-3">
+                                    <i class="fas fa-bell fa-xs text-primary"></i>
+                                </div>
+                                <div>
+                                    <ul class="list-unstyled">
+                                        <li>{{$notification->data["studentId"]}}</li>
+                                        <li>
+                                            {{Str::limit($notification->data["title"],20)}}
+                                        </li>
+                                        <li>
+                                            {{$notification ->created_at->format("d M Y h:i:s A")}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        @endforeach
+                        
 
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div class="me-3">
-                                <i class="fas fa-database text-warning"></i>
-                            </div>
-                            <div>
-                                <p class="small text-muted">3 May 2023</p>
-                                <i>Some of your data are missing</i>
-                            </div>
-                        </a>
-
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div class="me-3">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div>
-                                <p class="small text-muted">3 May 2023</p>
-                                <i>New user are invited you.</i>
-                            </div>
-                        </a>
+                     
                         <a href="javascript:void(0);" class="small text-center text-muted">Show All Notification</a>
 
                     </div>
                 </li>
                 <!-- notify -->
 
-                 <!-- message -->
-                 <li class="nav-item dropdowns mx-3">
-                    <a href="javascript:void(0);" class="nav-line dropbtn" onclick="dropbtn(event)">
-                        <i class="fas fa-envelope"></i>
-                        <span class="badge bg-danger">7+</span>
-                    </a>
-
-                    <div class="dropdown-contents mydropdowns">
-
-                        <h6>Message Center</h6>
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div>
-                                <img src="./assets/img/users/user1.jpg" class="rounded-circle" width="20" alt="user1" />
-                            </div>
-                            <div>
-                                <p class="small text-muted">Lorem ipsum, dolor sit amet consectetur adipisicing.
-                                </p>
-                                <i>Ms.July 25m ago.</i>
-                            </div>
-                        </a>
-
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div>
-                                <img src="./assets/img/users/user2.jpg" class="rounded-circle" width="20" alt="user2" />
-                            </div>
-                            <div>
-                                <p class="small text-muted">Lorem ipsum, dolor sit amet consectetur adipisicing.
-                                </p>
-                                <i>Mr.Anto 40m ago.</i>
-                            </div>
-                        </a>
-
-                        <a href="javascript-void(0);" class="d-flex">
-                            <div>
-                                <img src="./assets/img/users/user3.jpg" class="rounded-circle" width="20" alt="user3" />
-                            </div>
-                            <div>
-                                <p class="small text-muted">Lorem ipsum, dolor sit amet consectetur adipisicing.
-                                </p>
-                                <i>Ms.PaPa 55m ago.</i>
-                            </div>
-                        </a>
-                        <a href="javascript:void(0);" class="small text-center text-muted">Read More Message</a>
-
-                    </div>
-                </li>
-                <!-- message -->
 
                 <!--user logout-->
                 <li class="nav-item dropdown">

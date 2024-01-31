@@ -1,0 +1,13 @@
+notification
+
+
+LIbs ချိတ်
+
+php artisan notifications:table
+
+php artisan migrate
+
+Request ေတာင်းသကဲ့သို့ Noti အတွက် မိမိပေးချင်သော noti ကို သတ်မှတ်ပေးရမည် 
+
+php artisan make:notification LeaveNotify   -> leave အတွက် သတ်မှတ်ေပးမည်
+

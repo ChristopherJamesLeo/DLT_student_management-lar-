@@ -86,6 +86,9 @@
                     <td>{{$leave->created_at->format('d m Y')}}</td>
                     <td>{{$leave->updated_at->format('d M Y')}}</td>
                     <td>
+
+                        <a href="{{route('leaves.show',$leave->id)}}" class="me-3 btn btn-outline-info btn-sm"><i class="fas fa-download"></i></a>
+
                         <a href="{{route('leaves.edit',$leave->id)}}" class="me-3 btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                         
                         <a href="#" class="text-danger me-3 delete-btns" data-idx = "{{$leave->$idx}}" ><i class="fas fa-trash"></i></a>

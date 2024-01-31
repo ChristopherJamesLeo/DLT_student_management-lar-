@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 use App\Http\Requests\LeaveRequest;
@@ -19,6 +21,8 @@ use App\Models\Type;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Comment;
+
+use App\Notifications\LeaveNotify;
 
 class LeavesController extends Controller
 {
@@ -40,6 +44,9 @@ class LeavesController extends Controller
         
         $data["tags"] = User::orderBy("name","asc")->get()->pluck("name","id"); 
 
+        $data["gettoday"] = Carbon::today()->format("Y-m-d"); // today ကိုရရန် format ထည့်ပေးမှသာ input မှ သိမည်ဖြစ်သည် 
+
+        // dd($data["gettoday"]);
         return view("leaves.create",$data);
 
     }
@@ -93,6 +100,19 @@ class LeavesController extends Controller
 
         $leave -> save();
 
+        // $users = User::all(); // user အကုန် လံုးကို ပို့မည် 
+
+        // $user = User::findOrFail($request["tag"]);
+        // $user = User::findOrFail($leave -> tag);
+        $tagperson = $leave->tagperson()->get(); // model မှ လှမ်းယူသည် 
+
+        $studentId = $leave->student($user_id);
+        // dd($studentId);
+                        // ပို့ေစချင်တဲ့သူ              မိမိ ပြစေချင်သော data
+        // Notification::send($users, new LeaveNotify($leave->id,$leave->title));
+        // Notification::send($user, new LeaveNotify($leave->id,$leave->title));
+        Notification::send($tagperson, new LeaveNotify($leave->id,$leave->title,$studentId));
+
         return redirect(route("leaves.index"));
     }
 
@@ -100,13 +120,6 @@ class LeavesController extends Controller
     public function show(string $id)
     {
         $leave = Leave::findOrFail($id);
-
-        // dd($Leave -> checkenroll(1)); check 
-
-
-        $comments = Comment::where("commentable_id",$leave->id)->where("commentable_type","App\Models\leave")->orderBy("created_at","desc")->get(); // restrict for only Leave
-
-        // $comments = $leave->comments()->orderBy("updated_at","desc")->get(); // error
 
         return view("leaves.show",["leave"=>$leave]);
     }
