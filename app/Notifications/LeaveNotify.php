@@ -61,7 +61,7 @@ class LeaveNotify extends Notification
         return [ // id နှင့် title ကို ပို့ပေးမည် 
             "id" => $this -> tbid,
             "title" => $this -> title,
-            "studentid" => $this -> studentid,
+            "studentId" => $this -> studentid,
         ];
     }
 }

@@ -22,34 +22,37 @@
                     </a>
 
                     <div class="dropdown-contents mydropdowns">
-                    
-                        <a href="javascript:void(0);" class="small text-center text-muted">Mark all as read</a>
+                        {{-- noti ရှိနေမှ --}}
+                        @if ($userdata ->unreadNotifications->count() > 0) 
+                            <a href="{{route('leaves.markasread')}}" class="small text-center text-muted ">Mark all as read</a>
 
-                        {{-- @foreach ($userdata->notifications as $notification) --}}
-                        @foreach (Auth::user()->notifications as $notification)
-                        {{-- noti ကို show ပြရန် --}}
-                            <a href="{{route('leaves.show',$notification->data["id"])}}" class="d-flex">
-                                <div class="me-3">
-                                    <i class="fas fa-bell fa-xs text-primary"></i>
-                                </div>
-                                <div>
-                                    <ul class="list-unstyled">
-                                        <li>{{$notification->data["studentId"]}}</li>
-                                        <li>
-                                            {{Str::limit($notification->data["title"],20)}}
-                                        </li>
-                                        <li>
-                                            {{$notification ->created_at->format("d M Y h:i:s A")}}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        @endforeach
-                        
+                            {{-- @foreach ($userdata->notifications as $notification) --}}
+                            @foreach (Auth::user()->notifications as $notification)
+                            {{-- noti ကို show ပြရန် --}}
+                                <a href="{{route('leaves.show',$notification->data["id"])}}" class="d-flex">
+                                    <div class="me-3">
+                                        <i class="fas fa-bell fa-xs text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <ul class="list-unstyled">
+                                            <li>{{$notification->data["studentId"]}}</li>
+                                            <li>
+                                                {{Str::limit($notification->data["title"],20)}}
+                                            </li>
+                                            <li>
+                                                {{$notification ->created_at->format("d M Y h:i:s A")}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            @endforeach
+                            
+                            <a href="javascript:void(0);" class="small text-center text-muted">Show All Notification</a>
 
-                     
-                        <a href="javascript:void(0);" class="small text-center text-muted">Show All Notification</a>
-
+                        @else
+                            <a href="javascript:void(0);" class="small text-center text-muted">No New Notification</a>
+                        @endif
+                
                     </div>
                 </li>
                 <!-- notify -->

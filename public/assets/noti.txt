@@ -11,3 +11,10 @@ Request ေတာင်းသကဲ့သို့ Noti အတွက် မိ�
 
 php artisan make:notification LeaveNotify   -> leave အတွက် သတ်မှတ်ေပးမည်
 
+
+
+// email notification support platform 
+https://mailpit.axllent.org/ (support free)
+https://www.mailgun.com/  (paid)
+https://mailtrap.io/pricing/  (free)
+

@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource("leaves",LeavesController::class);
+    Route::get("notify/makrasread",[LeavesController::class,"makrasread"])->name("leaves.markasread");
+    // route name ပေးပါက default နှင့် မှားနိုင်သည့်အတွက် name အား parameter သံုးခုသံုးသင့်သည် route name ထဲမရှိတဲ့ကောင်အား ကွဲကွဲပြာပြားပေးသင့်သည်
 
 
 

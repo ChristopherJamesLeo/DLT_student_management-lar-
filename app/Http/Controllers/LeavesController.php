@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
+
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -29,7 +31,7 @@ class LeavesController extends Controller
     public function index()
     {
         // $leaves = Leave::all();
-        $leaves = Leave::filter()->searchonly()->paginate(3);
+        $leaves = Leave::filter()->searchonly()->paginate(10);
 
         $posts = Post::all()->pluck("title","id");
 
@@ -113,6 +115,8 @@ class LeavesController extends Controller
         // Notification::send($user, new LeaveNotify($leave->id,$leave->title));
         Notification::send($tagperson, new LeaveNotify($leave->id,$leave->title,$studentId));
 
+        session()->flash("success","Data Insert Successful");
+
         return redirect(route("leaves.index"));
     }
 
@@ -120,6 +124,17 @@ class LeavesController extends Controller
     public function show(string $id)
     {
         $leave = Leave::findOrFail($id);
+
+        // notification ကို show ဖြစ်ပါက ဤလုပ်ဆောင်ချက်ကို လုပ်မည်
+        // $getnoti = Notification::where("notifiable_id")->pluck("id"); // error 
+
+        // data သွားဆွဲထုတ်ခြင်း ပြုပြင်ခြင်းအတွက် :: ဖြင့် သံုလို့မရပေ model ထဲတွင် မရှိသောကြောင့်ဖြစ်သည် DB::raw ဖြင့်သာ ဆွဲထုတ်ပေးရမည် 
+        $getnoti = \DB::table("notifications")->where("data->id",$id)->pluck("id");
+
+
+        \DB::table("notifications")->where("id",$getnoti)->update(["read_at"=>now()]); // read_at တွင် data ဖြည့်ပြီးသည်နှင့် notification သည် ေပျာက်သွားမည်ဖြစ်သည် 
+
+        // dd($getnoti);
 
         return view("leaves.show",["leave"=>$leave]);
     }
@@ -222,5 +237,26 @@ class LeavesController extends Controller
 
         return redirect()->back();
 
+    }
+
+
+    public function makrasread(){
+        $user = Auth::user();
+
+        $user_id = $user -> id;
+
+        // method 1
+        // $user -> unreadNotifications -> markAsRead();
+        // $user -> notifications() -> delete(); // notifaction ကို ဖျက်ပစ်မည် // ၄င်း use ရှိနေသော data အားလံုး noti အားလံုးဖျက်မည် 
+
+        // method 2
+        $users = User::findOrFail($user_id);
+        foreach($user->unreadNotifications as $unreadNotification){
+            // $unreadNotification->makrAsRead();
+            $unreadNotification->delete();
+        }
+        
+
+        return redirect()->back();
     }
 }

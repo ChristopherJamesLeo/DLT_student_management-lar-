@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable; // Notification ပေးပါရမည် ထိုမှသာ ပြည့်စံုမည်
 
 class Leave extends Model
 {
     use HasFactory;
+    use Notifiable; // notification သံုးပါက notifiable ကို use လုပ်ပေးရမည်
 
     protected $table = "leaves";
 
