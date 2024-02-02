@@ -11,6 +11,10 @@ use App\Models\Relative
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ContactEmailNotify;
+
+
 class ContactsController extends Controller
 {
      /**
@@ -24,7 +28,7 @@ class ContactsController extends Controller
         // $data["contacts"] = Contact::filter()->searchonly()->zafirstname()->paginate(3);
 
         // paginartion ကို filter နှင့် search မပျက်သွားအောင် queryString ကပ်ပေးထားခြင်းဖြစ်သည်
-        $data["contacts"] = Contact::filter()->searchonly()->zafirstname()->paginate(3)->withQueryString();
+        $data["contacts"] = Contact::filter()->searchonly()->zafirstname()->paginate(10)->withQueryString();
 
         // $statuses = Status::all();
         $relatives = Relative::all()->pluck("name","id")->prepend("Choose Relative"); // pluck ထဲထည့်ပေးပါက A to Z စဥ်စားပြီးသားဖြစ်သည် 
@@ -58,6 +62,20 @@ class ContactsController extends Controller
         $contact -> user_id = $user_id;
 
         $contact -> save();
+
+
+        // $users = User::all(); // အားလံုးပို့ရန် 
+
+        $contactdata = [
+            "firstname" => $contact -> firstname,
+            "lastname" => $contact -> lastname,
+            "birthday" => $contact -> birthday,
+            "relative" => $contact -> relative["name"],
+            "url" => url("/") # email ထဲတွင် link ေလးနှိပ်ပါက  domain linke ကို ရယူမည် လက်ရှီ project site ထဲသို့ ေရာက်လာမည် 
+        ];
+
+        Notification::send($user,new ContactEmailNotify($contactdata));
+
         session()->flash("success","create successful");
         return redirect(route("contacts.index"));
 

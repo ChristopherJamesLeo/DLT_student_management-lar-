@@ -15,7 +15,7 @@ class CommentsController extends Controller
         $user = Auth::user();
 
         $user_id = $user -> id;
-
+        // dd($request["commentable_type"]);
         Comment::create([
             "description" => $request["description"],
             "user_id"  => $user_id,

@@ -29,7 +29,51 @@
     padding: 6px 12px;
     display: none;
 }
+.accordion {
+    width: 100%;
+}
+.acctitle {
+    font-size: 13px;
+    padding: 5px;
+    margin: 0px;
 
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s ease 0s;
+
+    position: relative;
+}
+.acctitle i{
+    margin-right: 10px;
+}
+.acctitle::after{
+    content: "\f0e0";
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.5s ease-in 0s;
+}
+.acctitle:hover , .shown{
+    /* background-color: #4682b4; */
+}
+.accordion.shown .acctitle {
+    /* background-color: #4682b4; */
+}
+.accortent{
+    height: 0;
+    background-color: #f4f4f4;
+    text-align: justify;
+    font-size: 13px;
+    padding: 0px 10px;
+    line-height: 1.5;
+    overflow: hidden;
+    transition: all 0.5s ease 0s;
+}
+.shown::after{
+    content: '\f2b6';
+}
     </style>
 @endsection
 @section("caption","Student List")
@@ -226,6 +270,41 @@
                 </div>
             </div>
             <div class="col-md-8 col-lg-9">
+                {{-- start accordian --}}
+                <h6>Compose</h6>
+
+                <div class="card border-0 rounded-0 shadow mb-4">
+                    <div class="card-body d-flex flex-wrap gap-3">
+                        <div class="accordion ">
+                            <h1 class="acctitle "><i class="fas fa-hand-point-right"></i>Email </h1>
+                            <div class="accortent ">
+                                <div class="py-3 col-md-12">
+                                    <form action="" method="">
+                                        @csrf 
+                                        <div class="row">
+                                            <div class="col-md-6 form-group mb-3">
+                                                <input type="email" name="cmpemail" id="cmpemail" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="To" value="{{$student->user["email"]}}" readonly> 
+                                            </div>
+                                            <div class="col-md-6 form-group mb-3">
+                                                <input type="text" name="cmpsubject" id="cmpsubject" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="Subject"> 
+                                            </div>
+                                            <div class="col-md-12 form-group mb-3">
+                                                <textarea style="resize: none" rows="3" name="cmpcontent" id="cmpcontent" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="Your message here..."></textarea>
+                                            </div>
+                                            <div class="col d-flex justify-content-end align-items-end">
+                                                <button type="submit" class="btn btn-sm btn-secondary rounded-0">Send</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                {{-- end accordian --}}
+
+
                 <h6>Enrolls</h6>
                 <div class="mb-4 card border-0 shadow rounded-0">
                     <div class="card-body d-flex flex-wrap gap-3">
@@ -385,5 +464,39 @@
         document.getElementById("autoclick").click(); // page စ run သည် နှင့် click ခေါက်ထားမည်ဟုဆိုလိုသည်
 
         // end tabs box
+
+        // start accordian
+
+            let getacctitle = document.querySelectorAll(".acctitle");
+            let getactiveacctitle = document.querySelectorAll(".accortent");
+            // console.log(getactiveacctitle);
+
+            for( var i = 0 ; i < getacctitle.length ; i++){
+                // console.log(list[i]);
+                getacctitle[i].addEventListener("click", function(e){
+                    // console.log(e)
+                    // console.log(e.target) // event နှိပ်လိုက်သော tag ၏ target ကို သိရှိစေရန်
+                    // console.log(this) // this key word သည် နှိပ်လိုက်သော tag အား  သူ့ကိုသူ ပြန်လည်ပြောခြင်းဖြစ်သည် example . event.target နှင့်ညီသည် 
+                    this.classList.toggle("shown");
+                    // console.warn(e.target.children[0]);
+                    // nextElementSibling သည် this တွင်ဝင်နေသော tag နှင့် တစ်တန်းထဲ ရှီနေသော ဖြစ်သူ tag အား ခေါ်ပေးမည်ဖစ်သည် 
+                    var getcontent = this.nextElementSibling;
+                    // console.log(getcontent);
+                    // console.log(getcontent.scrollHeight) // scrollHeight သည် element ၏ height ကို number data type ဖြင့် ဖော်ပြပေးမည်ဖြစ်သည် ထို့ကြောင့် အောက်ပါ အတိုင်း ၄င်း property အား အသုံးချနိုင်သည် 
+                    // getcontent.style.height = getcontent.scrollHeight+"px"; 
+
+                    if(getcontent.style.height){
+                        // getcontent.style.height = "0px"; // ၄င်းသည် 0 px ပေးထားသောကြောင့်  HTML ထဲတွင် သွားထည့်ပေးမည်ဖြစ်သည်။ သို့သော် ပထမတစ်ကြိမ်ကတည်းက ဝင်နေမည်ဖြစ်သောကြောင့် ဒုတိယတစ်ကြိမ် ပြန်လည် run သည့်အခါ ၄င်း height သည် ရှိနေပြီးဖြ့စ်ပြီး tag height porperty သည် 0px သာဖြစ်နေမည် ထို့ကြောင့် ၄င်း height အား ရှိနေပါက အပြီးသတ် css property ပါဖျောက်ရန် NULL တန်ဖိုး‌ပေးရမည်ဖြစ်သည် သို့မှသာ heigt property သည် tag အတွင်းမှ မပြီးပျောက်သွားမည်ဖြစ်သည် ။
+                        getcontent.style.height = null;
+                    }else {
+                        getcontent.style.height = getcontent.scrollHeight+"px"; 
+                    }
+                })     
+                if(getacctitle[i].classList.contains("shown")) {
+                    // contains() သည် classList အတွင်း () အထဲရှိ class ပါသလားကို စစ်ပေးသော method ဖြစ်သည် 
+                    getactiveacctitle[i].style.height = getactiveacctitle[i].scrollHeight+ "px";
+                }
+            }
+        // end accordian
     </script>
 @endsection

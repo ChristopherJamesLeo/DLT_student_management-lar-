@@ -173,10 +173,23 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        
+
                         <div class="card rounded-0 border-0">
                             <div class="card-body">
                                 <ul class="list-group chat_box">
-                                   
+                                    @foreach($comments as $comment)
+                                        <li class="mt-2 list-group-item border-0 rounded-0">
+                                            <div>
+                                                <p>
+                                                    {{$comment->description}}
+                                                </p>
+                                            </div>
+                                            <div >
+                                                <span class="small fw-bold float-end">{{$comment->user->name}} | {{$comment->created_at->diffForHumans()}}</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="card-body border-top">
@@ -192,10 +205,15 @@
                                     </div>
                                     
 
+                                    <!-- start Hidden fields -->
+                                    <input type="hidden" name="commentable_id" id="commentable_id" value="{{$announcement->id}}">
+
+                                    <input type="hidden" name="commentable_type" id="commentable_type" value="App\Models\Announcement">
+                                    <!-- end Hidden fields -->
+
                                 </form>
                             </div>
                         </div>
-
                         <h6>Additional Info</h6>
 
                 <div class="mb-4 card border-0 shadow rounded-0">

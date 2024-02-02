@@ -128,8 +128,16 @@ class LeavesController extends Controller
         // notification ကို show ဖြစ်ပါက ဤလုပ်ဆောင်ချက်ကို လုပ်မည်
         // $getnoti = Notification::where("notifiable_id")->pluck("id"); // error 
 
+        $user_id = Auth::user()->id;
+        $type = "App\Notifications\LeaveNotify";
+
+        
+        $getnoti = \DB::table("notifications")->where("type",$type)->where("notifiable_id",$user_id,$id)->where("data->id",$id)->pluck("id");
+        // dd($getnoti);
+
+        \DB::table("notifications")->where("id",$getnoti)->update(["read_at"=>now()]);
         // data သွားဆွဲထုတ်ခြင်း ပြုပြင်ခြင်းအတွက် :: ဖြင့် သံုလို့မရပေ model ထဲတွင် မရှိသောကြောင့်ဖြစ်သည် DB::raw ဖြင့်သာ ဆွဲထုတ်ပေးရမည် 
-        $getnoti = \DB::table("notifications")->where("data->id",$id)->pluck("id");
+        
 
 
         \DB::table("notifications")->where("id",$getnoti)->update(["read_at"=>now()]); // read_at တွင် data ဖြည့်ပြီးသည်နှင့် notification သည် ေပျာက်သွားမည်ဖြစ်သည် 

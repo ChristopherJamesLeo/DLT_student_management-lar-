@@ -98,13 +98,23 @@ class AnnouncementsController extends Controller
 
         // dd($post -> checkenroll(1)); check 
 
+        $user_id = Auth::user()->id;
 
-        // $comments = Comment::where("commentable_id",$post->id)->where("commentable_type","App\Models\Post")->orderBy("created_at","desc")->get(); // restrict for only post
+
+        $comments = $announcement->comments()->orderby("updated_at","desc")->get(); // restrict for only post
         
 
         $posts = \DB::table("posts")->where("attshow",3)->orderby("title","asc")->get()->pluck("title","id");
 
-        return view("announcements.show",["announcement"=>$announcement]);
+        $type = "App\Notifications\AnnouncementNotify";
+
+        $getnoti = \DB::table("notifications")->where("type",$type)->where("notifiable_id",$user_id,$id)->where("data->id",$id)->pluck("id");
+
+        // dd($getnoti);
+
+        \DB::table("notifications")->where("id",$getnoti)->update(["read_at"=>now()]);
+
+        return view("announcements.show",["announcement"=>$announcement,"comments"=>$comments]);
     }
 
 
