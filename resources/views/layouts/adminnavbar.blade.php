@@ -29,19 +29,31 @@
                             {{-- @foreach ($userdata->notifications as $notification) --}}
                             @foreach (Auth::user()->notifications as $notification)
                             {{-- noti ကို show ပြရန် --}}
-                                <a href="{{route('leaves.show',$notification->data["id"])}}" class="d-flex">
+                                <a href="{{route( $notification->type === 'App\Notifications\AnnouncementNotify' ? 'announcements.show' : 'leaves.show' ,$notification->data['id'])}}" class="d-flex">
+                              
                                     <div class="me-3">
-                                        <i class="fas fa-bell fa-xs text-primary"></i>
+                                        @if ($notification->type == "App\Notifications\AnnouncementNotify")
+                                            <img src="{{$notification->data["image"]}}" class="rounded-circle" width="30px" height="30px" alt="{{$notification->data['id']}}">
+                                        @else
+                                            <i class="fas fa-bell fa-xs text-primary"></i>
+                                        @endif
                                     </div>
                                     <div>
                                         <ul class="list-unstyled">
-                                            <li>{{$notification->data["studentId"]}}</li>
-                                            <li>
-                                                {{Str::limit($notification->data["title"],20)}}
-                                            </li>
-                                            <li>
-                                                {{$notification ->created_at->format("d M Y h:i:s A")}}
-                                            </li>
+                                            @if ($notification->type == "App\Notifications\AnnouncementNotify")
+                                                <li>{{$notification->data["title"]}}</li>
+                                                
+                                            @else
+                                                <li>{{$notification->data["studentId"]}}</li>
+                                                <li>
+                                                    {{Str::limit($notification->data["title"],20)}}
+                                                </li>
+                                                <li>
+                                                    {{$notification ->created_at->format("d M Y h:i:s A")}}
+                                                </li>
+                                            @endif
+                                            
+                                            
                                         </ul>
                                     </div>
                                 </a>

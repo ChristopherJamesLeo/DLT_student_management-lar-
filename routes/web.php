@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryContrller;
@@ -61,6 +61,8 @@ Route::middleware('auth')->group(function () {
 
     // log in ဝင်ပြီးမှ အသုံးပြုလို့ရစေချင်သောကြောင့် middleware  ထဲမှာ‌ရေးခြင်းဖြစ်သည် 
     Route::resource("statuses",StatusesController::class);
+
+    Route::resource("announcements",AnnouncementsController::class);
 
     Route::resource("days",DaysController::class);
     Route::get("daystatus",[DaysController::class,"daystatus"]);
