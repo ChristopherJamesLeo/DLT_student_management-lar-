@@ -11,6 +11,9 @@ Request ေတာင်းသကဲ့သို့ Noti အတွက် မိ�
 
 php artisan make:notification LeaveNotify   -> leave အတွက် သတ်မှတ်ေပးမည်
 
+model -> Notifiable 
+
+controller -> Notification 
 
 
 // email notification support platform 
@@ -64,3 +67,20 @@ php artisan make:notification ContactEmailNotify
 
 mail with gmail 
 setting တစ်ချို့ On ေပးရမည် 
+
+
+real email ပို့ပါက 
+app folder ထဲတွင်
+php artisan make:mail EmailNmae ကို သုံးပေးရမည် 
+php artisan make:mail MailBox
+
+
+email template တစ်ခုဖမ်တီးပေးရမည် 
+
+
+
+
+=> queue သည် လုပ်ငန်းစဥ် ကို ခဏ စီစဥ်သည် 
+ထို့ကြောင့် အစီအစဥ်လိုက် လုပ်ငန်းစဥ်ကို လုပ်နိုင်သည် 
+
+

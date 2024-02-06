@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 use App\Models\Enroll;
 // use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailBox;
+
+use App\Mail\StudentMailBox;
+
 
 class StudentsController extends Controller
 {
@@ -130,4 +135,45 @@ class StudentsController extends Controller
 
         return redirect()->back();
     }
+
+
+
+    // mail box rounte
+    public function mailbox(Request $request){
+
+        // dd($request);
+
+        // => method 1 to mail box
+        // $to = $request["cmpemail"];
+        // $subject = $request["comsubject"];
+        // $content = $request["cmpcontent"];
+        // // Mail::to($to)->send(new MailBox($subject,$content));
+
+        // // data base ထဲတွင်သိမ်းနိုင်သော်လည်း load ကြာသောကြောင့်  အဆင်မပြေနိုင်ပေ 
+        // // email record အား cc ထဲတွင်သွားစစ်နိုင်သည် 
+        // Mail::to($to)->cc("admin@dlt.com")->bcc("info@dlt.com")->send(new MailBox($subject,$content));
+
+        // // multi email ပို့ပါကလဲ $to ထဲသို့သာ looping ပတ်ပြီး ပို့ပေးရမည် 
+
+        // ------------------
+        // method 2 to student maybox
+        // form 1
+        // $data["to"] = $request["cmpemail"];
+
+        // $data["subject"] = $request["comsubject"];
+
+        // $data["content"] = $request["cmpcontent"];
+        // form 2
+        $data  = [
+            "to" => $request["cmpemail"],
+            "subject" => $request["comsubject"],
+            "content" =>$request["cmpcontent"] 
+        ];
+
+        Mail::to($data["to"])->send(new StudentMailBox($data));
+
+        return redirect()->back();
+    }
 }
+
+

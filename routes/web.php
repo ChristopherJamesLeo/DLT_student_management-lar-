@@ -73,6 +73,8 @@ Route::middleware('auth')->group(function () {
     Route::resource("edulinks",EdulinksController::class);
 
     Route::resource("students",StudentsController::class);
+    // mail ပို့ရန် route သတ်မှတ်သည် 
+    Route::post("compose/mailbox",[StudentsController::class,"mailbox"])->name("students.mailbox");
 
     Route::resource("roles",RolesController::class);
     Route::get("rolestatus",[RolesController::class,"rolestatus"]);

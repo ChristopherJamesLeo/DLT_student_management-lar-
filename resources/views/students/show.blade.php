@@ -279,14 +279,15 @@
                             <h1 class="acctitle "><i class="fas fa-hand-point-right"></i>Email </h1>
                             <div class="accortent ">
                                 <div class="py-3 col-md-12">
-                                    <form action="" method="">
+                                    <form action="{{route('students.mailbox')}}" method="POST">
                                         @csrf 
+                                        @method("POST")
                                         <div class="row">
                                             <div class="col-md-6 form-group mb-3">
                                                 <input type="email" name="cmpemail" id="cmpemail" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="To" value="{{$student->user["email"]}}" readonly> 
                                             </div>
                                             <div class="col-md-6 form-group mb-3">
-                                                <input type="text" name="cmpsubject" id="cmpsubject" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="Subject"> 
+                                                <input type="text" name="comsubject" id="cmpsubject" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="Subject"> 
                                             </div>
                                             <div class="col-md-12 form-group mb-3">
                                                 <textarea style="resize: none" rows="3" name="cmpcontent" id="cmpcontent" class="form-control form-control-sm border-0 rounded-0 shadow-none" placeholder="Your message here..."></textarea>
