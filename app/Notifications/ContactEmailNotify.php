@@ -7,7 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ContactEmailNotify extends Notification
+// class ContactEmailNotify extends Notification 
+class ContactEmailNotify extends Notification implements ShouldQueue // Queue သံုးပါက implement ထဲမှ ShouldQueue ကိုသံုးပေးရမည်
 {
     use Queueable;
 

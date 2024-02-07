@@ -83,4 +83,24 @@ email template တစ်ခုဖမ်တီးပေးရမည်
 => queue သည် လုပ်ငန်းစဥ် ကို ခဏ စီစဥ်သည် 
 ထို့ကြောင့် အစီအစဥ်လိုက် လုပ်ငန်းစဥ်ကို လုပ်နိုင်သည် 
 
+QUEUE_CONNECTION=database    # sync သည် database ုေရာ email ေရာ သံုးနုိသ်သည် 
+queue အား သံုးပါက database ဟုေပြာင်းပေးရမည် Queue table တည်ဆောက်ပေးရန်လိုသည် 
 
+php artisan queue:table
+php artisan migrate
+
+queue ထဲရှိ job များ fail ဖြစ်ပါက fail job table ထဲသို့ရောက်သွားမည်ဖြစ်သည် 
+Email ကို တန်းမပို့တော့ဘဲ database ထဲသို့ အရင်ပို့ ပြီးမှသာ database ထဲမှ Email ပို့ပေးမည်ဖြစ်သည် 
+
+Queue အလုပ်လုပ်ရန် 
+php artisan queue:work
+or
+php aritsan queue:listen
+
+
+Queue ကို SMS ပို့သည့် နေရာတွင်လဲသုံးနုိင်သည် 
+
+Queue method 2  -> method 2 ဖြင့်သာရနေသည် 
+Jobs တစ်ခုဖန်တီးပေးရမည် 
+job တစ်ခု ဖန်တီးတိုင်း ပြုလုပ်ပေးရမည်
+php artisan make:job MailBoxJob

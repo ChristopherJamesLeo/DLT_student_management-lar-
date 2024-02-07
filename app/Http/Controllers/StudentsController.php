@@ -12,8 +12,11 @@ use App\Models\Enroll;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailBox;
 
+
 use App\Mail\StudentMailBox;
 
+use App\Jobs\MailBoxJob;
+use App\Jobs\StudentMailBoxJob;
 
 class StudentsController extends Controller
 {
@@ -155,6 +158,18 @@ class StudentsController extends Controller
 
         // // multi email ပို့ပါကလဲ $to ထဲသို့သာ looping ပတ်ပြီး ပို့ပေးရမည် 
 
+        // ---------------------
+        // -> job method 1
+        // => Using Job  mail box ကို မသံုးဘဲ  job ကို သံုးမည်
+        // $to = $request["cmpemail"];
+        // $subject = $request["comsubject"];
+        // $content = $request["cmpcontent"];
+
+        // // 
+        // dispatch(new MailBoxJob($to,$subject,$content)); // Mail နှင့်မဟုတ်ဘဲ job ကို သံုးမည် job များအား dispatch ဖြင့်သုံးရမည်  
+
+
+
         // ------------------
         // method 2 to student maybox
         // form 1
@@ -170,7 +185,11 @@ class StudentsController extends Controller
             "content" =>$request["cmpcontent"] 
         ];
 
-        Mail::to($data["to"])->send(new StudentMailBox($data));
+        // Mail::to($data["to"])->send(new StudentMailBox($data));
+
+        // job method 2
+        dispatch(new StudentMailBoxJob($data));
+
 
         return redirect()->back();
     }

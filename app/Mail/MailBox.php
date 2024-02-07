@@ -9,13 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MailBox extends Mailable
+class MailBox extends Mailable  // 
 {
     use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     */
 
     public $subject ;
 
