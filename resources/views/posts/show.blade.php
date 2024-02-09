@@ -91,7 +91,24 @@
                                 <button type="button" id="#createmodel" data-bs-toggle="modal" class="w-100 btn btn-primary btn-sm rounded-0">Enroll</button>
             
                             @endif
-                            <button type="button" class="w-100 btn btn-outline-primary btn-sm rounded-0">Follow</button>
+
+                            @if ($userdata->checkpostlike($post->id))
+                                {{-- like btn --}}
+                                <form action="{{route('posts.unlike',$post->id)}}" method="POST" class="w-100">
+                                    @csrf
+                                    @method("POST")
+                                    <button type="submit" class="w-100 btn btn-outline-primary btn-sm rounded-0">Unlike</button>
+                                </form>
+                            @else
+                                {{-- unlike btn --}}
+                                <form action="{{route('posts.like',$post->id)}}" method="POST" class="w-100">
+                                    @csrf
+                                    @method("POST")
+                                    <button type="submit" class="w-100 btn btn-outline-primary btn-sm rounded-0">Like</button>
+                                </form>
+                            @endif
+                            
+                            
                         </div>
                     </ul>
                     <div class="card-body">
@@ -199,19 +216,17 @@
                                 @endforeach
                             </div>
                             <div class="mb-3">
-                                <p class="text-small text-muted text-uppercase mb-2">Class Day</p>
-
-                                @foreach($dayables as $dayable)
-                                    <div class="row gap-0 mb-2">
-                                        <div class="col-auto">
-                                            <i class="fas fa-info"></i>
-                                        </div>
-                                        <div class="col">
-                                            {{$dayable ->name}}
-                                        </div>
-                                        
+                                <p class="text-small text-muted text-uppercase mb-2">Other
+                               
+                                <div class="row gap-0 mb-2">
+                                    <div class="col-auto">
+                                        <i class="fas fa-info"></i>
                                     </div>
-                                @endforeach
+                                    <div class="col">
+                                        {{$post->likes()->count()}}
+                                    </div>
+                                    
+                                </div>
                             </div>
                             {{-- <div class="col-md-6">
                                 <i class="fas fa-user fa-sm me-2"></i><span>{{$post["tag"]["name"]}}</span>
@@ -269,9 +284,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card rounded-0 border-0">
+
                             <div class="card-body">
                                 <ul class="list-group chat_box">
-                                    @foreach($comments as $comment)
+                                    {{-- comment မရှီပါက empty  ထဲရှိ code ကို run နိင်ရန် forelse ဖြင့် သံုးရမည်  --}}
+                                    @forelse($comments as $comment)
                                         <li class="mt-2 list-group-item border-0 rounded-0">
                                             <div>
                                                 <p>
@@ -282,7 +299,11 @@
                                                 <span class="small fw-bold float-end">{{$comment->user->name}} | {{$comment->created_at->diffForHumans()}}</span>
                                             </div>
                                         </li>
-                                    @endforeach
+
+                                        {{-- comment မရှိေကြာင်းေပြာရန်  --}}
+                                        @empty
+                                        <li class="mt-2 list-group-item border-0 rounded-0">No Comment Fount</li>
+                                    @endforelse
                                 </ul>
                             </div>
                             <div class="card-body border-top">

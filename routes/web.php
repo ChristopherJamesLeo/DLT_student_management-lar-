@@ -20,6 +20,8 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostsLikeController;
+
 use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\LeavesController;
 
@@ -101,6 +103,11 @@ Route::middleware('auth')->group(function () {
     Route::get("relativestatus",[RelativesController::class,"relativestatus"]);
     
     Route::resource("posts",PostsController::class);
+
+    // form မှ submt လုပ်ပေးသောကြောင့် post ကို သံုးသည် 
+    // post ထဲမှ မည်သည့် post ကို like လုပ်တာလဲ id တောင်းထားမည် 
+    Route::post("posts/{post}/like",[PostsLikeController::class,"like"])->name("posts.like");
+    Route::post("posts/{post}/unlike",[PostsLikeController::class,"unlike"])->name("posts.unlike");
 
     Route::resource("attendances",AttendancesController::class);
 

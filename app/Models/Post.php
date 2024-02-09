@@ -65,4 +65,11 @@ class Post extends Model
         // enrolls ထဲတွင် post_id နှင့် user_id ရှိနေသလားသည် exists() ဖြင့် စစ်မည် return သည် true / false ထုတ်ပေးမည် 
         // $this -> သည် လက်ရှိရနေသော post  ထဲတွင်ရေးထားသောကြောင့် လက်ရှိ Post id ကို ဘဲ ထုတ်ပေးနေမည်ဖြစ်သည် 
     }
+
+
+       
+    public function likes(){ // post အား like လုပ်ထားသူ user အားလံုး ကို ယူမည် 
+        // return $this -> belongsToMany(Post::class,"post_like");
+        return $this -> belongsToMany(User::class,"post_like"); // timestamp ပါ ထည့်ပေးရန် ေပြာသည် 
+    }
 }
