@@ -105,8 +105,33 @@
                             </div>
                         </div>
                         <div class="w-100 d-flex flex-row justify-content-between mb-3">
-                            <button type="button" class="w-100 me-2 btn btn-primary btn-sm rounded-0">Like</button>
-                            <button type="button" class="w-100 btn btn-outline-primary btn-sm rounded-0">Follow</button>
+                            @if ($userdata->id != $student->user_id) 
+                                <button type="button" class="w-100 me-2 btn btn-primary btn-sm rounded-0">Like</button>
+                                {{-- မိမိအကောင့်အား follow မပေါ်ရန် မိမိ id နှင့် student_id မညီမှ follow btn အား ပြမည် --}}
+                            
+                                    {{-- login ဝင်ထားသော ကောင်ကို လှမ်းခေါ်ပေးရမည် --}}
+                                @if ($userdata->checkuserfollowing($student->user_id))
+                                    {{-- unfollow  --}}
+                                    <form action="{{route('users.unfollow',$student->user_id)}}" method="POST" class="w-100">
+                                        @csrf
+                                        @method("POST")
+                                        <button type="submit" class="w-100 btn btn-outline-primary btn-sm rounded-0">Unfollow</button>
+                                    </form>
+                                @else
+                                    {{-- follow  --}}
+                                    <form action="{{route('users.follow',$student->user_id)}}" method="POST" class="w-100">
+                                        @csrf
+                                        @method("POST")
+                                        <button type="submit" class="w-100 btn btn-outline-primary btn-sm rounded-0">Follow</button>
+                                    </form>
+                                @endif
+                            @endif
+                            
+                           
+
+                            
+                            
+
                         </div>
                     </div>
                     <div class="card-body">

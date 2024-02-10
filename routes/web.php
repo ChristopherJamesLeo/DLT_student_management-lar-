@@ -20,10 +20,13 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\PostsController;
+
 use App\Http\Controllers\PostsLikeController;
+use App\Http\Controllers\UsersFollwerController;
 
 use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\LeavesController;
+
 
 
 /*
@@ -108,6 +111,10 @@ Route::middleware('auth')->group(function () {
     // post ထဲမှ မည်သည့် post ကို like လုပ်တာလဲ id တောင်းထားမည် 
     Route::post("posts/{post}/like",[PostsLikeController::class,"like"])->name("posts.like");
     Route::post("posts/{post}/unlike",[PostsLikeController::class,"unlike"])->name("posts.unlike");
+
+    // follow လုပ်မည်
+    Route::post("users/{user}/follow",[UsersFollwerController::class,"follow"])->name("users.follow");
+    Route::post("users/{user}/unfollow",[UsersFollwerController::class,"unfollow"])->name("users.unfollow");
 
     Route::resource("attendances",AttendancesController::class);
 
