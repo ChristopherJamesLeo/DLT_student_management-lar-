@@ -98,14 +98,30 @@ class TypesController extends Controller
     }
 
 
-    public function destroy(string $id)
+    // public function destroy(string $id)
+    // {
+    //     $type = Type::findOrFail($id);
+
+    //     $type -> delete();
+
+    //     return redirect()->back();
+    // }
+
+    public function destroy(Request $request)
     {
-        $type = Type::findOrFail($id);
+        $type = Type::findOrFail($request["id"]);
 
         $type -> delete();
 
-        return redirect()->back();
+        session()->flash("Info","Delete Successfully");
+
+        return response()->json(["success"=>"Delete Successfully"]);
     }
+
+
+
+
+
 
     // crud method မှ လွဲ၍ ထပ်တိုး method များအာဂ destory အောက်တွင်ရေးမည်
 

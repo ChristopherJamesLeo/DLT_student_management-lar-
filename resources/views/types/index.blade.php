@@ -82,13 +82,20 @@
                     <td>
                         <a href="javascript:void(0)" class="me-3 btn btn-outline-info btn-sm edit_form" data-bs-toggle="modal" data-bs-target="#editmodal" data-id="{{$type->id}}" data-name="{{$type->name}}" data-status="{{$type->status_id}}"><i class="fas fa-pen"></i></a>
                         
-                        <a href="#" class="text-danger me-3 delete-btns" data-idx = "{{$type->$idx}}" ><i class="fas fa-trash"></i></a>
+                        {{-- <a href="javascript:void(0)" class="text-danger me-3 delete-btns" 
+
+                        data-idx = "{{$type->$idx}}" ><i class="fas fa-trash"></i></a> --}}
+
+                        <a href="javascript:void(0)" class="text-danger me-3 delete-btns" 
+
+                        data-id = "{{$type->id}}" ><i class="fas fa-trash"></i></a>
 
                     </td>
-                    <form id="formdelete{{$type->$idx}}" action="{{route('types.destroy',$type->id)}}" method="POST">
+
+                    {{-- <form id="formdelete{{$type->$idx}}" action="{{route('types.destroy',$type->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                    </form>
+                    </form> --}}
 
                     
                 </tr>
@@ -160,18 +167,49 @@
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
+            // $(".delete-btns").click(function(){
+            //     // console.log("hello");
+            //     var getidx = $(this).data("idx");
+
+            //     // console.log(getidx);
+
+            //     if(confirm(`Are Your Sure!! You want to delete ${getidx}`)){
+            //         $("#formdelete"+getidx).submit();
+            //     }else{
+
+            //     }
+            // })
+
+            // start delete
             $(".delete-btns").click(function(){
-                // console.log("hello");
-                var getidx = $(this).data("idx");
+                let getid = $(this).data("id");
+                // console.log(getid);
 
-                // console.log(getidx);
+                if(confirm("Are You Sure!! You Want to delete")){
 
-                if(confirm(`Are Your Sure!! You want to delete ${getidx}`)){
-                    $("#formdelete"+getidx).submit();
+                    // just ui remove
+                    // ui ပါ တစ်ခါတည်းဖျက်မည် 
+                    $(this).parent().parent().remove();
+
+                    // data remove
+                    $.ajax({
+                        url : "typesdelete",
+                        type : "GET",
+                        dataType : "JSON",
+                        data : {
+                            "id" : `${getid}`
+                        },
+                        success : function(response){
+                            window.alert(response.success);
+                        }
+                    })
                 }else{
-
+                    return false;
                 }
-            })
+
+                
+            });
+            // end delete
 
             $(document).on("click",".edit_form",function(e){
                 e.preventDefault();
@@ -222,6 +260,10 @@
                 });
             })
             // end change status btn
+
+
+            // type delete 
+
         })
     </script>
 @endsection

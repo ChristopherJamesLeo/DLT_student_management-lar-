@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 20, 2024 at 04:28 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Feb 10, 2024 at 05:29 PM
+-- Server version: 8.0.36-0ubuntu0.22.04.1
+-- PHP Version: 8.1.2-1ubuntu2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,15 +24,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`id`, `image`, `title`, `content`, `post_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(18, 'assets/img/announcements/165bccdb44c4c2selectboxbutton.png', 'One', '<p>Hello</p>', 2, 1, '2024-02-02 11:10:44', '2024-02-02 11:10:44'),
+(19, 'assets/img/announcements/165bcce2b9ce9cselectboxbutton.png', 'Two', '<p>Hello</p>', 3, 1, '2024-02-02 11:12:43', '2024-02-02 11:12:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `attendances`
 --
 
 CREATE TABLE `attendances` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `classdate` date NOT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL,
-  `attcode` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
+  `attcode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -55,11 +80,11 @@ INSERT INTO `attendances` (`id`, `classdate`, `post_id`, `attcode`, `user_id`, `
 --
 
 CREATE TABLE `categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -69,8 +94,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 'test 1', 'test-1', 1, 3, '2024-01-12 09:17:36', '2024-01-12 09:17:36'),
-(2, 'test 2', 'test-2', 1, 3, '2024-01-12 09:18:01', '2024-01-12 09:18:01'),
+(1, 'test 1', 'test-1', 1, 3, '2024-01-12 09:17:36', '2024-01-30 11:34:26'),
+(2, 'test 2', 'test-2', 1, 3, '2024-01-12 09:18:01', '2024-01-30 11:34:26'),
 (3, 'test 3', 'test-3', 1, 3, '2024-01-12 09:18:09', '2024-01-12 09:18:09');
 
 -- --------------------------------------------------------
@@ -80,10 +105,10 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `user_id`, `status_id`, `created
 --
 
 CREATE TABLE `cities` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -104,11 +129,11 @@ INSERT INTO `cities` (`id`, `name`, `slug`, `user_id`, `created_at`, `updated_at
 --
 
 CREATE TABLE `comments` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `description` text NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `commentable_id` bigint(20) UNSIGNED NOT NULL,
-  `commentable_type` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `commentable_id` bigint UNSIGNED NOT NULL,
+  `commentable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -119,7 +144,9 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `description`, `user_id`, `commentable_id`, `commentable_type`, `created_at`, `updated_at`) VALUES
 (1, 'Hello Nice Class 1', 1, 2, 'App\\Models\\Post', '2023-12-09 11:01:54', '2023-12-09 11:01:54'),
-(2, 'Hello Nice Class 2', 1, 2, 'App\\Models\\Post', '2023-12-09 11:02:06', '2023-12-09 11:02:06');
+(2, 'Hello Nice Class 2', 1, 2, 'App\\Models\\Post', '2023-12-09 11:02:06', '2023-12-09 11:02:06'),
+(3, 'Hello', 1, 15, 'App\\Models\\Announcement', '2024-02-02 11:00:18', '2024-02-02 11:00:18'),
+(4, 'How Are You', 1, 15, 'App\\Models\\Announcement', '2024-02-02 11:00:25', '2024-02-02 11:00:25');
 
 -- --------------------------------------------------------
 
@@ -128,12 +155,12 @@ INSERT INTO `comments` (`id`, `description`, `user_id`, `commentable_id`, `comme
 --
 
 CREATE TABLE `contacts` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `firstname` varchar(255) NOT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `relative_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `relative_id` bigint UNSIGNED DEFAULT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -158,7 +185,90 @@ INSERT INTO `contacts` (`id`, `firstname`, `lastname`, `birthday`, `relative_id`
 (15, 'Tun', 'Kyaw', '2024-01-09', 9, 1, '2024-01-17 01:41:13', '2024-01-17 01:41:13'),
 (16, 'Thu', 'Zar', '2024-01-16', 9, 1, '2024-01-17 01:41:27', '2024-01-17 01:41:27'),
 (17, 'Hnin Hnin', 'Khaing', '2024-01-15', 9, 1, '2024-01-17 01:41:45', '2024-01-17 01:41:45'),
-(18, 'Hla Myint', 'Maung', '2024-01-10', 9, 1, '2024-01-17 01:41:58', '2024-01-17 01:41:58');
+(18, 'Hla Myint', 'Maung', '2024-01-10', 9, 1, '2024-01-17 01:41:58', '2024-01-17 01:41:58'),
+(19, 'Aung', 'Kyaw', '2024-02-02', 4, 1, '2024-02-02 12:04:43', '2024-02-02 12:04:43'),
+(20, 'Honey', 'Nway Oo', '2024-02-07', 5, 2, '2024-02-02 12:08:43', '2024-02-02 12:08:43'),
+(21, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:42:54', '2024-02-02 12:42:54'),
+(22, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:43:10', '2024-02-02 12:43:10'),
+(23, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:45:24', '2024-02-02 12:45:24'),
+(24, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:45:40', '2024-02-02 12:45:40'),
+(25, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:45:53', '2024-02-02 12:45:53'),
+(26, 'U Ba', 'Aye', '2024-02-08', 13, 1, '2024-02-02 12:46:30', '2024-02-02 12:46:30'),
+(27, 'U Ba', 'Aye', '2024-02-07', 7, 1, '2024-02-02 12:48:00', '2024-02-02 12:48:00'),
+(28, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:54:49', '2024-02-02 12:54:49'),
+(29, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:56:34', '2024-02-02 12:56:34'),
+(30, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:56:53', '2024-02-02 12:56:53'),
+(31, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:57:04', '2024-02-02 12:57:04'),
+(32, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:57:11', '2024-02-02 12:57:11'),
+(33, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:57:23', '2024-02-02 12:57:23'),
+(34, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:58:40', '2024-02-02 12:58:40'),
+(35, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:58:48', '2024-02-02 12:58:48'),
+(36, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:58:55', '2024-02-02 12:58:55'),
+(37, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:59:11', '2024-02-02 12:59:11'),
+(38, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:59:29', '2024-02-02 12:59:29'),
+(39, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 12:59:49', '2024-02-02 12:59:49'),
+(40, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:00:03', '2024-02-02 13:00:03'),
+(41, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:00:13', '2024-02-02 13:00:13'),
+(42, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:01:23', '2024-02-02 13:01:23'),
+(43, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:01:31', '2024-02-02 13:01:31'),
+(44, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:01:50', '2024-02-02 13:01:50'),
+(45, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:02:01', '2024-02-02 13:02:01'),
+(46, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:03:50', '2024-02-02 13:03:50'),
+(47, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:03:54', '2024-02-02 13:03:54'),
+(48, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:04:37', '2024-02-02 13:04:37'),
+(49, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:04:58', '2024-02-02 13:04:58'),
+(50, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:05:08', '2024-02-02 13:05:08'),
+(51, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:05:12', '2024-02-02 13:05:12'),
+(52, 'U Myint', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:05:13', '2024-02-02 13:05:13'),
+(53, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:05:51', '2024-02-02 13:05:51'),
+(54, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:06:46', '2024-02-02 13:06:46'),
+(55, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:08', '2024-02-02 13:07:08'),
+(56, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:26', '2024-02-02 13:07:26'),
+(57, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:30', '2024-02-02 13:07:30'),
+(58, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:38', '2024-02-02 13:07:38'),
+(59, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:41', '2024-02-02 13:07:41'),
+(60, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:50', '2024-02-02 13:07:50'),
+(61, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:07:57', '2024-02-02 13:07:57'),
+(62, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:08:22', '2024-02-02 13:08:22'),
+(63, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:08:29', '2024-02-02 13:08:29'),
+(64, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:08:40', '2024-02-02 13:08:40'),
+(65, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:08:52', '2024-02-02 13:08:52'),
+(66, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:09:27', '2024-02-02 13:09:27'),
+(67, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:09:56', '2024-02-02 13:09:56'),
+(68, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:15', '2024-02-02 13:10:15'),
+(69, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:24', '2024-02-02 13:10:24'),
+(70, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:28', '2024-02-02 13:10:28'),
+(71, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:38', '2024-02-02 13:10:38'),
+(72, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:46', '2024-02-02 13:10:46'),
+(73, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:50', '2024-02-02 13:10:50'),
+(74, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:10:55', '2024-02-02 13:10:55'),
+(75, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:00', '2024-02-02 13:11:00'),
+(76, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:05', '2024-02-02 13:11:05'),
+(77, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:08', '2024-02-02 13:11:08'),
+(78, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:18', '2024-02-02 13:11:18'),
+(79, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:26', '2024-02-02 13:11:26'),
+(80, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:35', '2024-02-02 13:11:35'),
+(81, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:40', '2024-02-02 13:11:40'),
+(82, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:45', '2024-02-02 13:11:45'),
+(83, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:11:54', '2024-02-02 13:11:54'),
+(84, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:12:01', '2024-02-02 13:12:01'),
+(85, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:12:18', '2024-02-02 13:12:18'),
+(86, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:12:23', '2024-02-02 13:12:23'),
+(87, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:12:45', '2024-02-02 13:12:45'),
+(88, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:13:03', '2024-02-02 13:13:03'),
+(89, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:13:22', '2024-02-02 13:13:22'),
+(90, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:13:54', '2024-02-02 13:13:54'),
+(91, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:13:58', '2024-02-02 13:13:58'),
+(92, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:14:19', '2024-02-02 13:14:19'),
+(93, 'U Hla', 'Aye', '2024-02-02', 5, 1, '2024-02-02 13:16:11', '2024-02-02 13:16:11'),
+(94, 'U Hla', 'Aye', '2024-02-02', 7, 1, '2024-02-02 13:17:36', '2024-02-02 13:17:36'),
+(95, 'Aye Mya', 'Thu', '2024-02-07', 12, 1, '2024-02-07 00:57:10', '2024-02-07 00:57:10'),
+(96, 'Aye Mye', 'Phyu', '2024-02-08', 9, 1, '2024-02-07 00:59:17', '2024-02-07 00:59:17'),
+(97, 'Hla Myint', 'Ko', '2024-02-07', 7, 1, '2024-02-07 01:01:47', '2024-02-07 01:01:47'),
+(98, 'Thura', 'Myint', '2024-02-07', 9, 1, '2024-02-07 01:03:00', '2024-02-07 01:03:00'),
+(99, 'Aung', 'Myint', '2024-02-07', 9, 1, '2024-02-07 01:06:23', '2024-02-07 01:06:23'),
+(100, 'Hla Myint', 'Aye', '2024-02-07', 8, 1, '2024-02-07 01:10:32', '2024-02-07 01:10:32'),
+(101, 'Hla Myint', 'Aye', '2024-02-07', 9, 1, '2024-02-07 01:13:42', '2024-02-07 01:13:42');
 
 -- --------------------------------------------------------
 
@@ -167,10 +277,10 @@ INSERT INTO `contacts` (`id`, `firstname`, `lastname`, `birthday`, `relative_id`
 --
 
 CREATE TABLE `countries` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -191,9 +301,9 @@ INSERT INTO `countries` (`id`, `name`, `slug`, `user_id`, `created_at`, `updated
 --
 
 CREATE TABLE `dayables` (
-  `day_id` int(11) NOT NULL,
-  `dayable_id` int(11) NOT NULL,
-  `dayable_type` varchar(255) NOT NULL
+  `day_id` int NOT NULL,
+  `dayable_id` int NOT NULL,
+  `dayable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -218,7 +328,13 @@ INSERT INTO `dayables` (`day_id`, `dayable_id`, `dayable_type`) VALUES
 (4, 4, 'App\\Models\\Post'),
 (5, 4, 'App\\Models\\Post'),
 (6, 4, 'App\\Models\\Post'),
-(7, 4, 'App\\Models\\Post');
+(7, 4, 'App\\Models\\Post'),
+(2, 5, 'App\\Models\\Post'),
+(3, 5, 'App\\Models\\Post'),
+(4, 5, 'App\\Models\\Post'),
+(5, 5, 'App\\Models\\Post'),
+(6, 5, 'App\\Models\\Post'),
+(7, 5, 'App\\Models\\Post');
 
 -- --------------------------------------------------------
 
@@ -227,11 +343,11 @@ INSERT INTO `dayables` (`day_id`, `dayable_id`, `dayable_type`) VALUES
 --
 
 CREATE TABLE `days` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -241,11 +357,11 @@ CREATE TABLE `days` (
 --
 
 INSERT INTO `days` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Sunday', 'sunday', 3, 1, '2023-12-09 10:54:10', '2023-12-09 10:54:10'),
-(2, 'Monday', 'monday', 3, 1, '2023-12-09 10:54:17', '2023-12-09 10:54:17'),
-(3, 'Tuesday', 'tuesday', 3, 1, '2023-12-09 10:54:35', '2023-12-09 10:54:35'),
-(4, 'Wednesday', 'wednesday', 3, 1, '2023-12-09 10:54:45', '2023-12-09 10:54:45'),
-(5, 'Thursday', 'thursday', 3, 1, '2023-12-09 10:54:55', '2023-12-09 10:54:55'),
+(1, 'Sunday', 'sunday', 4, 1, '2023-12-09 10:54:10', '2024-01-30 11:27:38'),
+(2, 'Monday', 'monday', 3, 1, '2023-12-09 10:54:17', '2024-01-30 11:19:43'),
+(3, 'Tuesday', 'tuesday', 3, 1, '2023-12-09 10:54:35', '2024-01-30 11:20:31'),
+(4, 'Wednesday', 'wednesday', 3, 1, '2023-12-09 10:54:45', '2024-01-30 11:20:35'),
+(5, 'Thursday', 'thursday', 3, 1, '2023-12-09 10:54:55', '2024-01-30 11:20:36'),
 (6, 'Friday', 'friday', 3, 1, '2023-12-09 10:55:03', '2023-12-09 10:55:03'),
 (7, 'Saturday', 'saturday', 3, 1, '2023-12-09 10:55:11', '2023-12-09 10:55:11');
 
@@ -256,11 +372,11 @@ INSERT INTO `days` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, 
 --
 
 CREATE TABLE `edulinks` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `classdate` date NOT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -308,12 +424,12 @@ INSERT INTO `edulinks` (`id`, `classdate`, `post_id`, `url`, `user_id`, `created
 --
 
 CREATE TABLE `enrolls` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `stage_id` enum('1','2','3') NOT NULL DEFAULT '2' COMMENT '0 = Approved, 2 = Pending , 3 = Reject',
-  `remark` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `stage_id` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '2' COMMENT '0 = Approved, 2 = Pending , 3 = Reject',
+  `remark` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -342,14 +458,35 @@ INSERT INTO `enrolls` (`id`, `image`, `post_id`, `user_id`, `stage_id`, `remark`
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `follower_user`
+--
+
+CREATE TABLE `follower_user` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `follower_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `follower_user`
+--
+
+INSERT INTO `follower_user` (`id`, `user_id`, `follower_id`, `created_at`, `updated_at`) VALUES
+(3, 2, 1, '2024-02-10 12:48:47', '2024-02-10 12:48:47');
 
 -- --------------------------------------------------------
 
@@ -358,10 +495,10 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `genders` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -378,24 +515,69 @@ INSERT INTO `genders` (`id`, `name`, `slug`, `user_id`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint UNSIGNED NOT NULL,
+  `reserved_at` int UNSIGNED DEFAULT NULL,
+  `available_at` int UNSIGNED NOT NULL,
+  `created_at` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `leaves`
 --
 
 CREATE TABLE `leaves` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
   `startdate` date NOT NULL,
   `enddate` date NOT NULL,
-  `tag` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` longtext NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `stage_id` enum('1','2','3') NOT NULL DEFAULT '2' COMMENT '1 = Approved, 2 = Pending , 3 = Reject',
-  `authorize_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `tag` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stage_id` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '2' COMMENT '1 = Approved, 2 = Pending , 3 = Reject',
+  `authorize_id` bigint UNSIGNED DEFAULT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `leaves`
+--
+
+INSERT INTO `leaves` (`id`, `post_id`, `startdate`, `enddate`, `tag`, `title`, `content`, `image`, `stage_id`, `authorize_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(4, 3, '2024-01-16', '2024-01-15', 2, 'Hello', '<p>Hello</p>', 'assets/img/leaves/165ae33a97c342AAO_photo.jpg', '3', NULL, 1, '2024-01-22 09:21:45', '2024-01-27 11:09:51'),
+(5, 1, '2024-01-16', '2024-01-18', 2, 'Hello Class', '<p>Hi</p>', NULL, '2', NULL, 1, '2024-01-22 09:22:13', '2024-01-27 11:04:36'),
+(6, 3, '2024-01-21', '2024-01-21', 3, 'Helllo Hi', '<p>Hello</p>', 'assets/img/leaves/165ae33e695953AAO_photo.jpg', '1', NULL, 1, '2024-01-22 09:22:46', '2024-01-22 15:38:42'),
+(8, 3, '2024-01-25', '2024-01-30', 1, 'Hello Sir', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 01:31:02', '2024-01-31 01:31:02'),
+(9, 4, '2024-01-24', '2024-01-25', 3, 'Hello Sir Nice', 'Hi Say Somethig', NULL, '2', NULL, 2, '2024-01-31 01:54:21', '2024-01-31 01:54:21'),
+(10, 3, '2024-01-24', '2024-01-24', 1, 'Hello Sir', 'Hello Sir Nice', NULL, '2', NULL, 2, '2024-01-31 01:55:10', '2024-01-31 01:55:10'),
+(11, 3, '2024-01-31', '2024-01-31', 2, 'Hello Sir', '<p>Geeel</p>', NULL, '2', NULL, 1, '2024-01-31 01:56:30', '2024-01-31 01:56:30'),
+(12, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:13:36', '2024-01-31 02:13:36'),
+(13, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:14:10', '2024-01-31 02:14:10'),
+(14, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:14:33', '2024-01-31 02:14:33'),
+(15, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:14:51', '2024-01-31 02:14:51'),
+(16, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:15:01', '2024-01-31 02:15:01'),
+(17, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:17:47', '2024-01-31 02:17:47'),
+(18, 1, '2024-01-31', '2024-01-31', 2, 'Hello', '<p>Hello</p>', NULL, '2', NULL, 1, '2024-01-31 02:18:24', '2024-01-31 02:18:24'),
+(19, 3, '2024-01-31', '2024-01-31', 2, 'Hello Aung AUng', '<p>Hello Aung AUng</p>', NULL, '2', NULL, 1, '2024-01-31 02:24:31', '2024-01-31 02:24:31'),
+(20, 3, '2024-02-01', '2024-02-01', 1, 'Hello Admin', '<p>Hello Admin</p>', NULL, '2', NULL, 1, '2024-02-01 01:00:24', '2024-02-01 01:00:24'),
+(21, 3, '2024-02-01', '2024-02-01', 1, 'Hello Admin', '<p>Hello Admin</p>', NULL, '2', NULL, 2, '2024-02-01 01:02:29', '2024-02-01 01:02:29'),
+(22, 3, '2024-02-01', '2024-02-01', 1, 'Hello Admin 1', '<p>Hello Admin</p>', NULL, '2', NULL, 2, '2024-02-01 01:04:15', '2024-02-01 01:04:15'),
+(23, 2, '2024-02-01', '2024-02-01', 1, 'Hello Admin', '<p>Hello Admin</p>', NULL, '2', NULL, 2, '2024-02-01 01:23:10', '2024-02-01 01:23:10'),
+(24, 4, '2024-02-01', '2024-02-01', 1, 'Hello Admin', '<p>Hello</p>', NULL, '2', NULL, 2, '2024-02-01 01:27:17', '2024-02-01 01:27:17'),
+(25, 4, '2024-02-01', '2024-02-01', 1, 'Hello Admin 1', '<p>Hello</p>', NULL, '2', NULL, 2, '2024-02-01 01:27:45', '2024-02-01 01:27:45'),
+(26, 2, '2024-02-01', '2024-02-01', 1, 'Hello Admin', '<p>Hello&nbsp;</p>', NULL, '2', NULL, 2, '2024-02-01 01:40:47', '2024-02-01 01:40:47'),
+(27, 3, '2024-02-02', '2024-02-02', 2, 'Hello Aung Aung', '<p>Hi</p>', 'assets/img/leaves/165bcceca339faselectboxbutton.png', '2', NULL, 1, '2024-02-02 11:15:22', '2024-02-02 11:15:22');
 
 -- --------------------------------------------------------
 
@@ -404,9 +586,9 @@ CREATE TABLE `leaves` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -437,7 +619,44 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2024_01_12_180942_create_edulinks_table', 4),
 (22, '2024_01_14_183655_create_relatives_table', 5),
 (23, '2024_01_14_183844_create_contacts_table', 5),
-(25, '2024_01_20_181547_create_leaves_table', 6);
+(25, '2024_01_20_181547_create_leaves_table', 6),
+(26, '2024_01_31_073259_create_notifications_table', 7),
+(27, '2024_02_02_071110_create_announcements_table', 8),
+(28, '2024_02_07_071537_create_jobs_table', 9),
+(29, '2024_02_09_181612_create_post_like_table', 10),
+(31, '2024_02_10_183529_create_follower_user_table', 11);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('00367661-47bf-493b-a047-cfb0b3731039', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 4, '{\"id\":18,\"title\":\"One\",\"image\":\"assets\\/img\\/announcements\\/165bccdb44c4c2selectboxbutton.png\"}', NULL, '2024-02-02 11:10:44', '2024-02-02 11:10:44'),
+('3ec8d071-cf70-4cb8-9611-08778676e0fb', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 2, '{\"id\":18,\"title\":\"One\",\"image\":\"assets\\/img\\/announcements\\/165bccdb44c4c2selectboxbutton.png\"}', '2024-02-02 11:15:26', '2024-02-02 11:10:44', '2024-02-02 11:10:44'),
+('63bc36bb-23d6-4562-aba5-df4968695072', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 3, '{\"id\":19,\"title\":\"Two\",\"image\":\"assets\\/img\\/announcements\\/165bcce2b9ce9cselectboxbutton.png\"}', NULL, '2024-02-02 11:12:43', '2024-02-02 11:12:43'),
+('803ee2f7-81bb-4052-8bbd-a27c468b1954', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 2, '{\"id\":19,\"title\":\"Two\",\"image\":\"assets\\/img\\/announcements\\/165bcce2b9ce9cselectboxbutton.png\"}', '2024-02-02 12:07:31', '2024-02-02 11:12:43', '2024-02-02 11:12:43'),
+('a0461fcf-f180-48d6-9187-ba187a7190d4', 'App\\Notifications\\LeaveNotify', 'App\\Models\\User', 2, '{\"id\":27,\"title\":\"Hello Aung Aung\",\"studentId\":\"WDF1001\"}', '2024-02-02 11:18:14', '2024-02-02 11:15:22', '2024-02-02 11:15:22'),
+('aca6391b-6012-45c9-81a5-ae1d4abda99a', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 4, '{\"id\":19,\"title\":\"Two\",\"image\":\"assets\\/img\\/announcements\\/165bcce2b9ce9cselectboxbutton.png\"}', NULL, '2024-02-02 11:12:43', '2024-02-02 11:12:43'),
+('b0bdfb03-75a1-40e9-9b21-36b7fad0ef5c', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 4, '{\"id\":17,\"title\":\"One\",\"image\":\"assets\\/img\\/announcements\\/165bccd78bd807selectboxbutton.png\"}', NULL, '2024-02-02 11:09:44', '2024-02-02 11:09:44'),
+('d5e4968a-b071-48ba-8dc9-ed2c49af6ca5', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 3, '{\"id\":17,\"title\":\"One\",\"image\":\"assets\\/img\\/announcements\\/165bccd78bd807selectboxbutton.png\"}', NULL, '2024-02-02 11:09:44', '2024-02-02 11:09:44'),
+('e539147f-6947-4f63-8abb-01c48ffde529', 'App\\Notifications\\AnnouncementNotify', 'App\\Models\\User', 3, '{\"id\":18,\"title\":\"One\",\"image\":\"assets\\/img\\/announcements\\/165bccdb44c4c2selectboxbutton.png\"}', NULL, '2024-02-02 11:10:44', '2024-02-02 11:10:44');
 
 -- --------------------------------------------------------
 
@@ -446,8 +665,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -458,12 +677,12 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -477,21 +696,21 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `posts` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `content` longtext NOT NULL,
-  `fee` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fee` decimal(8,2) NOT NULL DEFAULT '0.00',
   `startdate` date DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `starttime` time NOT NULL,
   `endtime` time NOT NULL,
-  `type_id` bigint(20) UNSIGNED NOT NULL,
-  `tag_id` bigint(20) UNSIGNED NOT NULL,
-  `attshow` bigint(20) UNSIGNED NOT NULL DEFAULT 4,
-  `status_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `type_id` bigint UNSIGNED NOT NULL,
+  `tag_id` bigint UNSIGNED NOT NULL,
+  `attshow` bigint UNSIGNED NOT NULL DEFAULT '4',
+  `status_id` bigint UNSIGNED NOT NULL DEFAULT '1',
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -501,10 +720,33 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `image`, `title`, `slug`, `content`, `fee`, `startdate`, `enddate`, `starttime`, `endtime`, `type_id`, `tag_id`, `attshow`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'assets/img/posts/1657448db43350Screenshot (1).png', 'WDF batch 2', 'wdf-batch-2', 'Hello Sir', 0.00, '2023-12-06', '2023-12-11', '19:30:00', '21:30:00', 1, 1, 3, 7, 1, '2023-12-09 11:00:43', '2023-12-09 13:21:20'),
-(2, 'assets/img/posts/16574490c1e34dScreenshot (1).png', 'CSS Immediate', 'css-immediate', 'Hello Sir', 50000.00, '2023-12-07', '2023-12-13', '20:31:00', '22:31:00', 2, 2, 3, 7, 1, '2023-12-09 11:01:32', '2023-12-09 11:01:32'),
-(3, 'assets/img/posts/1657d857e4dfb2656c04d5757ef1701577941logobo.jpg', 'Js Small App(batch-2)', 'js-small-appbatch-2', 'Hello Sir', 50000.00, '2023-12-16', '2023-12-19', '20:39:00', '20:39:00', 2, 3, 3, 7, 1, '2023-12-16 11:09:50', '2023-12-16 11:09:50'),
-(4, 'assets/img/posts/16592105b6b911viber_image_2022-08-11_06-46-44-901.jpg', 'Ubuntu Linux Batch 2', 'ubuntu-linux-batch-2', '<p><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">The fastest way to get </span><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 0);\">Summernot</span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">e is to download the <a href=\"https:www.google.com\" target=\"_blank\">precompiled</a> and minified versions of our CSS and JavaScript. No<b> documentation </b>or origina<u>l source code files </u>are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get </span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); background-color: rgb(0, 0, 255);\">Summernote</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\"> is to download the</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; text-align: var(--bs-body-text-align);\"><b> precompiled </b></span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><br></p>', 2500.00, '2024-01-01', '2024-01-01', '07:35:00', '07:36:00', 2, 6, 3, 7, 1, '2024-01-01 01:07:39', '2024-01-01 01:07:39');
+(1, 'assets/img/posts/1657448db43350Screenshot (1).png', 'WDF batch 2', 'wdf-batch-2', 'Hello Sir', '0.00', '2023-12-06', '2023-12-11', '19:30:00', '21:30:00', 1, 1, 3, 7, 1, '2023-12-09 11:00:43', '2023-12-09 13:21:20'),
+(2, 'assets/img/posts/16574490c1e34dScreenshot (1).png', 'CSS Immediate', 'css-immediate', 'Hello Sir', '50000.00', '2023-12-07', '2023-12-13', '20:31:00', '22:31:00', 2, 2, 3, 7, 1, '2023-12-09 11:01:32', '2023-12-09 11:01:32'),
+(3, 'assets/img/posts/1657d857e4dfb2656c04d5757ef1701577941logobo.jpg', 'Js Small App(batch-2)', 'js-small-appbatch-2', 'Hello Sir', '50000.00', '2023-12-16', '2023-12-19', '20:39:00', '20:39:00', 2, 3, 3, 7, 1, '2023-12-16 11:09:50', '2023-12-16 11:09:50'),
+(4, 'assets/img/posts/16592105b6b911viber_image_2022-08-11_06-46-44-901.jpg', 'Ubuntu Linux Batch 2', 'ubuntu-linux-batch-2', '<p><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">The fastest way to get </span><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 0);\">Summernot</span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">e is to download the <a href=\"https:www.google.com\" target=\"_blank\">precompiled</a> and minified versions of our CSS and JavaScript. No<b> documentation </b>or origina<u>l source code files </u>are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get </span><span style=\"color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align); background-color: rgb(0, 0, 255);\">Summernote</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\"> is to download the</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; text-align: var(--bs-body-text-align);\"><b> precompiled </b></span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(104, 116, 127); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\">The fastest way to get Summernote is to download the precompiled and minified versions of our CSS and JavaScript. No documentation or original source code files are included.</span><br></p>', '2500.00', '2024-01-01', '2024-01-01', '07:35:00', '07:36:00', 2, 6, 3, 7, 1, '2024-01-01 01:07:39', '2024-01-01 01:07:39'),
+(5, 'assets/img/posts/165c619d551a47Screenshot from 2024-02-07 13-59-10.png', 'PHP Batch 2', 'php-batch-2', '35000', '35000.00', '2024-02-14', '2024-02-20', '20:55:00', '21:55:00', 1, 2, 3, 7, 1, '2024-02-09 12:25:57', '2024-02-09 12:25:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_like`
+--
+
+CREATE TABLE `post_like` (
+  `id` bigint UNSIGNED NOT NULL,
+  `post_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `post_like`
+--
+
+INSERT INTO `post_like` (`id`, `post_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(2, 2, 1, '2024-02-09 12:12:03', '2024-02-09 12:12:03'),
+(8, 5, 1, '2024-02-09 12:30:42', '2024-02-09 12:30:42');
 
 -- --------------------------------------------------------
 
@@ -513,11 +755,11 @@ INSERT INTO `posts` (`id`, `image`, `title`, `slug`, `content`, `fee`, `startdat
 --
 
 CREATE TABLE `relatives` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -527,7 +769,7 @@ CREATE TABLE `relatives` (
 --
 
 INSERT INTO `relatives` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Mother', 'mother', 3, 1, '2023-11-21 15:45:34', '2024-01-23 12:33:24'),
+(1, 'Mother', 'mother', 4, 1, '2023-11-21 15:45:34', '2024-02-10 17:28:48'),
 (2, 'Father', 'father', 3, 1, '2024-01-15 12:33:24', '2024-01-14 12:33:24'),
 (3, 'Parents', 'parents', 3, 1, '2023-11-24 11:33:52', '2023-11-24 13:21:53'),
 (4, 'Brother', 'brother', 3, 1, '2023-11-24 13:21:53', '2023-11-24 11:33:52'),
@@ -550,12 +792,12 @@ INSERT INTO `relatives` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_
 --
 
 CREATE TABLE `roles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL DEFAULT '1',
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -565,10 +807,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `image`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'assets/img/roles/1659d1065cba77viber_image_2022-08-11_06-46-44-901.jpg', 'Admin', 'admin', 3, 1, '2024-01-09 09:22:45', '2024-01-09 09:22:45'),
-(2, 'assets/img/roles/1659d10750a298viber_image_2022-08-11_06-46-44-901.jpg', 'Teacher', 'teacher', 4, 1, '2024-01-09 09:23:01', '2024-01-09 09:23:36'),
-(3, 'assets/img/roles/1659d1083f0e47viber_image_2022-08-11_06-46-44-901.jpg', 'Student', 'student', 3, 1, '2024-01-09 09:23:15', '2024-01-09 09:23:15'),
-(4, 'assets/img/roles/1659d10900c026viber_image_2022-08-11_06-46-44-901.jpg', 'Guest', 'guest', 3, 1, '2024-01-09 09:23:28', '2024-01-09 09:23:28');
+(1, 'assets/img/roles/1659d1065cba77viber_image_2022-08-11_06-46-44-901.jpg', 'Admin', 'admin', 3, 1, '2024-01-09 09:22:45', '2024-01-30 11:46:32'),
+(2, 'assets/img/roles/1659d10750a298viber_image_2022-08-11_06-46-44-901.jpg', 'Teacher', 'teacher', 3, 1, '2024-01-09 09:23:01', '2024-01-30 11:46:32'),
+(3, 'assets/img/roles/1659d1083f0e47viber_image_2022-08-11_06-46-44-901.jpg', 'Student', 'student', 3, 1, '2024-01-09 09:23:15', '2024-01-30 11:46:34'),
+(4, 'assets/img/roles/1659d10900c026viber_image_2022-08-11_06-46-44-901.jpg', 'Guest', 'guest', 3, 1, '2024-01-09 09:23:28', '2024-01-30 11:46:36');
 
 -- --------------------------------------------------------
 
@@ -577,11 +819,11 @@ INSERT INTO `roles` (`id`, `image`, `name`, `slug`, `status_id`, `user_id`, `cre
 --
 
 CREATE TABLE `stages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -591,13 +833,13 @@ CREATE TABLE `stages` (
 --
 
 INSERT INTO `stages` (`id`, `name`, `slug`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 'Approved', 'approved', 1, 3, '2023-12-09 12:58:07', '2023-12-09 12:58:07'),
+(1, 'Approved', 'approved', 1, 4, '2023-12-09 12:58:07', '2024-02-10 16:08:18'),
 (2, 'Pending', 'pending', 1, 3, '2023-12-09 12:58:17', '2023-12-09 12:58:17'),
 (3, 'Reject', 'reject', 1, 3, '2023-12-09 12:58:25', '2023-12-09 12:58:25'),
-(4, 'Complete', 'complete', 1, 3, '2023-12-09 12:58:36', '2023-12-09 12:58:36'),
+(4, 'Complete', 'complete', 1, 3, '2023-12-09 12:58:36', '2024-01-27 12:16:31'),
 (5, 'Incomplete', 'incomplete', 1, 3, '2023-12-09 12:58:43', '2023-12-09 12:58:43'),
 (6, 'Loading', 'loading', 1, 3, '2023-12-09 12:58:52', '2023-12-09 12:58:52'),
-(7, 'Processing', 'processing', 1, 3, '2023-12-09 12:59:06', '2023-12-09 12:59:06'),
+(7, 'Processing', 'processing', 1, 4, '2023-12-09 12:59:06', '2024-01-30 11:16:59'),
 (8, 'Passed', 'passed', 1, 3, '2023-12-09 12:59:22', '2023-12-09 12:59:22'),
 (9, 'Request', 'request', 1, 3, '2023-12-09 12:59:32', '2023-12-09 12:59:32'),
 (10, 'Waiting', 'waiting', 1, 3, '2023-12-09 12:59:43', '2023-12-09 12:59:43'),
@@ -611,10 +853,10 @@ INSERT INTO `stages` (`id`, `name`, `slug`, `user_id`, `status_id`, `created_at`
 --
 
 CREATE TABLE `statuses` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -650,14 +892,14 @@ INSERT INTO `statuses` (`id`, `name`, `slug`, `user_id`, `created_at`, `updated_
 --
 
 CREATE TABLE `students` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `regnumber` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `remark` text DEFAULT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `regnumber` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remark` text COLLATE utf8mb4_unicode_ci,
+  `status_id` bigint UNSIGNED NOT NULL DEFAULT '1',
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -679,11 +921,11 @@ INSERT INTO `students` (`id`, `regnumber`, `firstname`, `lastname`, `slug`, `rem
 --
 
 CREATE TABLE `tags` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -693,7 +935,7 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'WDF', 'wdf', 3, 1, '2023-12-09 10:56:06', '2023-12-09 10:56:06'),
+(1, 'WDF', 'wdf', 4, 1, '2023-12-09 10:56:06', '2024-01-30 11:38:28'),
 (2, 'CSS immedirate', 'css-immedirate', 3, 1, '2023-12-09 10:56:29', '2023-12-09 10:56:29'),
 (3, 'Jquery', 'jquery', 3, 1, '2023-12-09 10:56:38', '2024-01-12 09:18:56'),
 (4, 'Javascript Small App', 'javascript-small-app', 3, 1, '2023-12-09 10:56:45', '2024-01-12 09:19:11'),
@@ -717,11 +959,11 @@ INSERT INTO `tags` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, 
 --
 
 CREATE TABLE `types` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `status_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -731,8 +973,8 @@ CREATE TABLE `types` (
 --
 
 INSERT INTO `types` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Free', 'free', 3, 1, '2023-12-09 10:55:32', '2023-12-09 10:55:32'),
-(2, 'Paid', 'paid', 3, 1, '2023-12-09 10:55:40', '2023-12-09 10:55:40');
+(1, 'Free', 'free', 4, 1, '2023-12-09 10:55:32', '2024-01-30 11:38:40'),
+(2, 'Paid', 'paid', 3, 1, '2023-12-09 10:55:40', '2024-01-27 12:03:57');
 
 -- --------------------------------------------------------
 
@@ -741,12 +983,12 @@ INSERT INTO `types` (`id`, `name`, `slug`, `status_id`, `user_id`, `created_at`,
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -756,14 +998,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', '7eclTEqz8v3cr12rTOQSRLv0JvD7iaeeozm2n1FsrYh82Vr13I8yA0aWQ8ez', '2023-12-09 10:50:23', '2023-12-09 10:50:23'),
-(2, 'aung aung', 'aungaung@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', 'JdSK7rFsDtNT0bHIDWpItX2wEoFtCNf1RkgBA5BQn5sRWETuCJvR2AF8WQHG', '2023-12-09 10:50:23', '2023-12-09 10:50:23'),
+(1, 'admin', 'ninthprogramming.9p.hotmail@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', 'RXkfjCWWMss4cci547PGQ7HblzUJc05jl3vRpcH4MFZQIl2EUnuOoy1qC30B', '2023-12-09 10:50:23', '2023-12-09 10:50:23'),
+(2, 'aung aung', 'aungaung@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', 'YDDb7fYAqGzs2fDHO2SDI7Z1cr8PjBqcJVKVwzjXXUWw2mRyN2egIlNMXirE', '2023-12-09 10:50:23', '2023-12-09 10:50:23'),
 (3, 'su su', 'susu@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', 'gVRYzSL0dWfef463EykskN1uA1KgJeGYYCwODGKHNk0dgzNCHDcBK8OtSxZz', '2023-12-09 10:50:23', '2023-12-09 10:50:23'),
 (4, 'yu yu', 'yuyu@gmail.com', NULL, '$2y$10$1IJOPwzRt17qan.mQ1tcAOzoE1EuPKk5Um9990vart4nJ9KD2fiJK', 'qtmkq8krJU4NFL29WzPsFY2lZ0pm6SuHM5pVBK23zYvB3zk4Rsi1B7bG44aq', '2023-12-09 10:50:23', '2023-12-09 10:50:23');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `attendances`
@@ -829,10 +1077,25 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `follower_user`
+--
+ALTER TABLE `follower_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `follower_user_user_id_foreign` (`user_id`),
+  ADD KEY `users_follower_id` (`follower_id`);
+
+--
 -- Indexes for table `genders`
 --
 ALTER TABLE `genders`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
 
 --
 -- Indexes for table `leaves`
@@ -845,6 +1108,13 @@ ALTER TABLE `leaves`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -865,6 +1135,14 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `post_like`
+--
+ALTER TABLE `post_like`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_like_post_id_foreign` (`post_id`),
+  ADD KEY `posts_user_id` (`user_id`);
 
 --
 -- Indexes for table `relatives`
@@ -923,142 +1201,166 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `days`
 --
 ALTER TABLE `days`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `edulinks`
 --
 ALTER TABLE `edulinks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `enrolls`
 --
 ALTER TABLE `enrolls`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `follower_user`
+--
+ALTER TABLE `follower_user`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `genders`
 --
 ALTER TABLE `genders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `post_like`
+--
+ALTER TABLE `post_like`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `relatives`
 --
 ALTER TABLE `relatives`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stages`
 --
 ALTER TABLE `stages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -1069,6 +1371,20 @@ ALTER TABLE `users`
 --
 ALTER TABLE `contacts`
   ADD CONSTRAINT `contacts_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `follower_user`
+--
+ALTER TABLE `follower_user`
+  ADD CONSTRAINT `follower_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_follower_id` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `post_like`
+--
+ALTER TABLE `post_like`
+  ADD CONSTRAINT `post_like_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `posts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

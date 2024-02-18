@@ -97,9 +97,11 @@ Route::middleware('auth')->group(function () {
     Route::resource("categories",CategoriesController::class);
     Route::get("categoriesstatus",[CategoriesController::class,"categoriesstatus"]);
 
-    Route::resource("types",TypesController::class);
+    Route::resource("types",TypesController::class)->except("destory"); // destory မှ တစ်ပါး ကျန်တာအားလံုး resource ဖြင့်သံုးမည်
     // type ထဲရှိ method ေခါ်ရန်
     Route::get("/typesstatus",[TypesController::class,"typestatus"]);
+    Route::get("/typesdelete",[TypesController::class,"destroy"])->name("types.delete");
+    // delete ကို ajax ဖြင့် တည်ေဆာက်မည်
 
 
     Route::resource("relatives",RelativesController::class);
@@ -127,9 +129,6 @@ Route::middleware('auth')->group(function () {
     // route name ပေးပါက default နှင့် မှားနိုင်သည့်အတွက် name အား parameter သံုးခုသံုးသင့်သည် route name ထဲမရှိတဲ့ကောင်အား ကွဲကွဲပြာပြားပေးသင့်သည်
 
 
-
-    
-   
     
 });
 
