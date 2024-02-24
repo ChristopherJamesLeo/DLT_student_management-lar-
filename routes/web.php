@@ -26,6 +26,7 @@ use App\Http\Controllers\UsersFollwerController;
 
 use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\PaymentmethodsController;
 
 
 
@@ -128,7 +129,7 @@ Route::middleware('auth')->group(function () {
     Route::get("notify/makrasread",[LeavesController::class,"makrasread"])->name("leaves.markasread");
     // route name ပေးပါက default နှင့် မှားနိုင်သည့်အတွက် name အား parameter သံုးခုသံုးသင့်သည် route name ထဲမရှိတဲ့ကောင်အား ကွဲကွဲပြာပြားပေးသင့်သည်
 
-
+    Route::resource("paymentmethods",PaymentmethodsController::class);
     
 });
 

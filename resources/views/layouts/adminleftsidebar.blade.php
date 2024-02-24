@@ -89,6 +89,8 @@
 
                                     <li class="nav-item nav-categories"><a href="{{route('countries.index')}}" class="nav-link text-white sidebarlinks">Countries</a></li>
 
+                                    <li class="nav-item nav-categories"><a href="{{route('paymentmethods.index')}}" class="nav-link text-white sidebarlinks">Payment Method</a></li>
+
                                     <li class="nav-item nav-categories"><a href="{{route('genders.index')}}" class="nav-link text-white sidebarlinks">Genders</a></li>
 
                                     <li class="nav-item nav-categories"><a href="{{route('relatives.index')}}" class="nav-link text-white sidebarlinks">Relative</a></li>
